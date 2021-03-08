@@ -23,3 +23,4 @@ jobs:
         with:
           file: ./**/target/site/jacoco/jacoco.xml
           name: codecov # Upload to Codecov
+      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh) # upload to codacy
