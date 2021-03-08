@@ -1,11 +1,20 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class QuickSortAlgorithm implements SortAlgorithm {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuickSortAlgorithm.class);
+
     @Override
     public int[] sort(int[] numbers) {
+        LOGGER.info("sorting array: {}", numbers);
         quickSort(numbers, 0, numbers.length - 1);
         return numbers;
     }

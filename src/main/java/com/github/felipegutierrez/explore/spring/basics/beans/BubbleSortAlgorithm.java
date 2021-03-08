@@ -1,11 +1,17 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BubbleSortAlgorithm implements SortAlgorithm {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BubbleSortAlgorithm.class);
+
     @Override
     public int[] sort(int[] numbers) {
+        LOGGER.info("sorting array: {}", numbers);
         bubbleSort(numbers);
         return numbers;
     }
