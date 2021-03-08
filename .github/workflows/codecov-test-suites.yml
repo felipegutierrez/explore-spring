@@ -1,0 +1,12 @@
+# bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r report.xml
+name: Run Test Suites
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 # Check out your repository
+      - run: mvn cobertura:cobertura # Run test
+      - run: bash <(curl -s https://codecov.io/bash) # Upload to Codecov

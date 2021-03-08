@@ -1,3 +1,5 @@
+fixes:
+  - "/home/runner/work/felipegutierrez/explore-spring/::" # Correct paths
 coverage:
   precision: 2
   round: nearest
