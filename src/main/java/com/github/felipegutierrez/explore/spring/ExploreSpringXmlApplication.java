@@ -3,14 +3,8 @@ package com.github.felipegutierrez.explore.spring;
 import com.github.felipegutierrez.explore.spring.basics.dao.PersonXmlDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-@Configuration
-@ComponentScan({"com.github.felipegutierrez.explore.spring.basics.beans",
-        "com.github.felipegutierrez.explore.spring.basics.dao",
-        "com.github.felipegutierrez.explore.spring.basics.business"})
 public class ExploreSpringXmlApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExploreSpringXmlApplication.class);
