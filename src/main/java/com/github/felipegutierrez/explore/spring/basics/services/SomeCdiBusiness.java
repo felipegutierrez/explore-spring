@@ -15,6 +15,10 @@ public class SomeCdiBusiness {
     @Value("${app.hostname}")
     private String hostname;
 
+    public SomeCdiBusiness(PersonCdiDao personCdiDao) {
+        this.personCdiDao = personCdiDao;
+    }
+
     public PersonCdiDao getPersonCdiDao() {
         return personCdiDao;
     }
