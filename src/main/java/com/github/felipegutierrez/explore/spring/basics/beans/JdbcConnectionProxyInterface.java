@@ -30,4 +30,9 @@ public class JdbcConnectionProxyInterface implements IJdbcConnection {
     public void finalMethod() {
         LOGGER.info("This is the final method to be executed at JdbcConnectionProxyInterface");
     }
+
+    @Override
+    public boolean connectionExists() {
+        return false;
+    }
 }

@@ -50,4 +50,8 @@ public class PersonDao {
     public void setJdbcConnectionProxyInterface(IJdbcConnection jdbcConnectionProxyInterface) {
         this.jdbcConnectionProxyInterface = jdbcConnectionProxyInterface;
     }
+
+    public boolean connectionExists() {
+        return this.jdbcConnectionProxyInterface.connectionExists();
+    }
 }

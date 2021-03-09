@@ -19,6 +19,9 @@
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <cobertura.version>2.7</cobertura.version>
         <build-plugin.jacoco.version>0.8.6</build-plugin.jacoco.version>
+        <junit.platform.runner.version>1.7.1</junit.platform.runner.version>
+        <mockito.junit.jupiter.version>2.23.0</mockito.junit.jupiter.version>
+        <junit.vintage.engine.version>5.2.0</junit.vintage.engine.version>
     </properties>
     <dependencies>
         <!-- #################### Spring #################### -->
@@ -58,7 +61,12 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -69,6 +77,18 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.runner.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junit.vintage.engine.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -93,6 +113,13 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.22.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.junit.platform</groupId>
+                                <artifactId>junit-platform-surefire-provider</artifactId>
+                                <!-- <version>1.0.1</version> -->
+                            </dependency>
+                        </dependencies>
                     </plugin>
 
                     <!-- setting cobertura and jacoco plugin -->

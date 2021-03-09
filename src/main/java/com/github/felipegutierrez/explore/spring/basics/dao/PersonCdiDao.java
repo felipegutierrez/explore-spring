@@ -16,4 +16,8 @@ public class PersonCdiDao {
     public void setJdbcConnection(IJdbcConnection jdbcConnection) {
         this.jdbcConnection = jdbcConnection;
     }
+
+    public boolean connectionExists() {
+        return this.jdbcConnection.connectionExists();
+    }
 }

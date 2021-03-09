@@ -10,4 +10,9 @@ public class JdbcConnectionXml implements IJdbcConnection {
     public JdbcConnectionXml() {
         LOGGER.info("This is my JdbcConnectionXml that is not a singleton bean.");
     }
+
+    @Override
+    public boolean connectionExists() {
+        return false;
+    }
 }

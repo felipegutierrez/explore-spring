@@ -17,4 +17,8 @@ public class PersonXmlDao {
     public void setJdbcConnectionXml(JdbcConnectionXml jdbcConnectionXml) {
         this.jdbcConnectionXml = jdbcConnectionXml;
     }
+
+    public boolean connectionExists() {
+        return this.jdbcConnectionXml.connectionExists();
+    }
 }

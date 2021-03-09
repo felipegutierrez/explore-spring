@@ -1,36 +1,38 @@
 package com.github.felipegutierrez.explore.spring.basics.services;
 
-import com.github.felipegutierrez.explore.spring.basics.beans.JdbcConnectionXml;
 import com.github.felipegutierrez.explore.spring.basics.dao.PersonCdiDao;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+@RunWith(JUnitPlatform.class)
 public class SomeCdiBusinessTest {
 
-    @Autowired
+    @Mock
+    PersonCdiDao personCdiDaoMock;
+
+    @InjectMocks
     SomeCdiBusiness someCdiBusiness;
 
     @Test
-    void testHostnameFromProperties() {
-        String result = someCdiBusiness.getHostname();
-        String expected = "http://127.0.0.1:8080";
-
-        assertEquals(expected, result);
-    }
-
-    @Test
     void testPersonDaoWithMock() {
-        PersonCdiDao personCdiDaoMock = mock(PersonCdiDao.class);
-        when(personCdiDaoMock.getJdbcConnection()).thenReturn(new JdbcConnectionXml());
-
         SomeCdiBusiness someCdiBusiness = new SomeCdiBusiness(personCdiDaoMock);
 
         assertEquals(personCdiDaoMock.hashCode(), someCdiBusiness.getPersonCdiDao().hashCode());
+    }
+
+    @Test
+    void testMockConnection() {
+        Mockito.when(personCdiDaoMock.connectionExists()).thenReturn(true);
+        assertTrue(personCdiDaoMock.connectionExists());
     }
 }
