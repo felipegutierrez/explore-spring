@@ -1,18 +1,18 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BubbleSortAlgorithmSpringTest {
+public class BubbleSortAlgorithmSpringXmlTest {
 
     @Test
     public void testIfBubbleSortAlgorithmCanSortArrayCorrectly() {
-        try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BubbleSortAlgorithm.class)) {
+        try (ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml")) {
 
             BubbleSortAlgorithm bubbleSortAlgorithm = applicationContext.getBean(BubbleSortAlgorithm.class);
             int[] result = bubbleSortAlgorithm.sort(new int[]{12, 4, 3, 70, 20, 0});
@@ -25,7 +25,7 @@ public class BubbleSortAlgorithmSpringTest {
 
     @Test
     public void bubbleSortBeanMustBeSingleton() {
-        try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BubbleSortAlgorithm.class)) {
+        try (ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml")) {
             BubbleSortAlgorithm bubbleSortAlgorithm01 = applicationContext.getBean(BubbleSortAlgorithm.class);
             BubbleSortAlgorithm bubbleSortAlgorithm02 = applicationContext.getBean(BubbleSortAlgorithm.class);
 
