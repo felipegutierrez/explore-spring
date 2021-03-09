@@ -12,9 +12,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component
-public class PersonDAO {
+public class PersonDao {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersonDAO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonDao.class);
 
     @Autowired
     @Qualifier("jdbcConnectionProxyTarget")

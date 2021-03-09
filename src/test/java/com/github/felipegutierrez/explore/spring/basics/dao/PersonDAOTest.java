@@ -16,8 +16,8 @@ public class PersonDAOTest {
 
     @Test
     void personDAOMustHaveSingletonJdbcConnectionBeans() {
-        PersonDAO personDAO01 = applicationContext.getBean(PersonDAO.class);
-        PersonDAO personDAO02 = applicationContext.getBean(PersonDAO.class);
+        PersonDao personDAO01 = applicationContext.getBean(PersonDao.class);
+        PersonDao personDAO02 = applicationContext.getBean(PersonDao.class);
 
         assertEquals(personDAO01.hashCode(), personDAO02.hashCode());
         assertEquals(personDAO01.getJdbcConnectionProxyTarget().hashCode(), personDAO02.getJdbcConnectionProxyTarget().hashCode());
