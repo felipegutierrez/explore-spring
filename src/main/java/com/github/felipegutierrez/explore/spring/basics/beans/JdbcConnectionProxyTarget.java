@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE,
         proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -16,6 +19,16 @@ public class JdbcConnectionProxyTarget {
 
     public JdbcConnectionProxyTarget() {
         // LOGGER.info("This is my JdbcConnection that is not a singleton bean.");
+    }
+
+    @PostConstruct
+    public void firstMethod() {
+        LOGGER.info("This is the first method to be executed at JdbcConnectionProxyTarget");
+    }
+
+    @PreDestroy
+    public void finalMethod() {
+        LOGGER.info("This is the final method to be executed at JdbcConnectionProxyTarget");
     }
 
 }

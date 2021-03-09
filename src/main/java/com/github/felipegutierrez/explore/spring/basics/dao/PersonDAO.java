@@ -2,12 +2,19 @@ package com.github.felipegutierrez.explore.spring.basics.dao;
 
 import com.github.felipegutierrez.explore.spring.basics.beans.IJdbcConnection;
 import com.github.felipegutierrez.explore.spring.basics.beans.JdbcConnectionProxyTarget;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 @Component
 public class PersonDAO {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonDAO.class);
 
     @Autowired
     @Qualifier("jdbcConnectionProxyTarget")
@@ -17,6 +24,15 @@ public class PersonDAO {
     @Qualifier("jdbcConnectionProxyInterface")
     private IJdbcConnection jdbcConnectionProxyInterface;
 
+    @PostConstruct
+    public void firstMethod() {
+        LOGGER.info("This is the first method to be executed at PersonDAO");
+    }
+
+    @PreDestroy
+    public void finalMethod() {
+        LOGGER.info("This is the final method to be executed at PersonDAO");
+    }
 
     public JdbcConnectionProxyTarget getJdbcConnectionProxyTarget() {
         return jdbcConnectionProxyTarget;
