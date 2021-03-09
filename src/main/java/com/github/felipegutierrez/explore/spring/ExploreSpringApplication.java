@@ -25,8 +25,10 @@ public class ExploreSpringApplication {
         PersonDAO personDAO02 = applicationContext.getBean(PersonDAO.class);
 
         LOGGER.info("DAO 01: {}, {}", personDAO01.hashCode(), personDAO01);
-        LOGGER.info("DAO 01 JDBCConnection: {}, {}", personDAO01.getJdbcConnection().hashCode(), personDAO01.getJdbcConnection());
+        LOGGER.info("DAO 01 JDBCConnection proxy target: {}, {}", personDAO01.getJdbcConnectionProxyTarget().hashCode(), personDAO01.getJdbcConnectionProxyTarget());
+        LOGGER.info("DAO 01 JDBCConnection proxy interface: {}, {}", personDAO01.getJdbcConnectionProxyInterface().hashCode(), personDAO01.getJdbcConnectionProxyInterface());
         LOGGER.info("DAO 02: {}, {}", personDAO02.hashCode(), personDAO02);
-        LOGGER.info("DAO 02 JDBCConnection: {}, {}", personDAO02.getJdbcConnection().hashCode(), personDAO02.getJdbcConnection());
+        LOGGER.info("DAO 02 JDBCConnection proxy target: {}, {}", personDAO02.getJdbcConnectionProxyTarget().hashCode(), personDAO02.getJdbcConnectionProxyTarget());
+        LOGGER.info("DAO 02 JDBCConnection proxy interface: {}, {}", personDAO02.getJdbcConnectionProxyInterface().hashCode(), personDAO02.getJdbcConnectionProxyInterface());
     }
 }

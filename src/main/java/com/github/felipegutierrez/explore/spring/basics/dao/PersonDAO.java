@@ -1,24 +1,36 @@
 package com.github.felipegutierrez.explore.spring.basics.dao;
 
-import com.github.felipegutierrez.explore.spring.basics.beans.JdbcConnection;
+import com.github.felipegutierrez.explore.spring.basics.beans.IJdbcConnection;
+import com.github.felipegutierrez.explore.spring.basics.beans.JdbcConnectionProxyTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PersonDAO {
 
     @Autowired
-    private JdbcConnection jdbcConnection;
+    @Qualifier("jdbcConnectionProxyTarget")
+    private JdbcConnectionProxyTarget jdbcConnectionProxyTarget;
 
-    public PersonDAO(JdbcConnection jdbcConnection) {
-        this.jdbcConnection = jdbcConnection;
+    @Autowired
+    @Qualifier("jdbcConnectionProxyInterface")
+    private IJdbcConnection jdbcConnectionProxyInterface;
+
+
+    public JdbcConnectionProxyTarget getJdbcConnectionProxyTarget() {
+        return jdbcConnectionProxyTarget;
     }
 
-    public JdbcConnection getJdbcConnection() {
-        return jdbcConnection;
+    public void setJdbcConnectionProxyTarget(JdbcConnectionProxyTarget jdbcConnectionProxyTarget) {
+        this.jdbcConnectionProxyTarget = jdbcConnectionProxyTarget;
     }
 
-    public void setJdbcConnection(JdbcConnection jdbcConnection) {
-        this.jdbcConnection = jdbcConnection;
+    public IJdbcConnection getJdbcConnectionProxyInterface() {
+        return jdbcConnectionProxyInterface;
+    }
+
+    public void setJdbcConnectionProxyInterface(IJdbcConnection jdbcConnectionProxyInterface) {
+        this.jdbcConnectionProxyInterface = jdbcConnectionProxyInterface;
     }
 }

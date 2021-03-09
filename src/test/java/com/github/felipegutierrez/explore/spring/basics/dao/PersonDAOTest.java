@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
 public class PersonDAOTest {
@@ -19,6 +20,7 @@ public class PersonDAOTest {
         PersonDAO personDAO02 = applicationContext.getBean(PersonDAO.class);
 
         assertEquals(personDAO01.hashCode(), personDAO02.hashCode());
-        // assertNotEquals(personDAO01.getJdbcConnection(), personDAO02.getJdbcConnection().hashCode());
+        assertEquals(personDAO01.getJdbcConnectionProxyTarget().hashCode(), personDAO02.getJdbcConnectionProxyTarget().hashCode());
+        assertNotEquals(personDAO01.getJdbcConnectionProxyInterface().hashCode(), personDAO02.getJdbcConnectionProxyInterface().hashCode());
     }
 }

@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE,
         proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class JdbcConnection {
+public class JdbcConnectionProxyTarget {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcConnection.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcConnectionProxyTarget.class);
 
-    public JdbcConnection() {
+    public JdbcConnectionProxyTarget() {
         // LOGGER.info("This is my JdbcConnection that is not a singleton bean.");
     }
 
