@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Arrays;
 
 @SpringBootApplication
+@ComponentScan({"com.github.felipegutierrez.explore.spring.basics.beans", "com.github.felipegutierrez.explore.spring.basics.dao"})
 public class ExploreSpringApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExploreSpringApplication.class);
