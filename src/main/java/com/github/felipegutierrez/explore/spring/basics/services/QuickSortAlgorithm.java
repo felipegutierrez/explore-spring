@@ -1,12 +1,12 @@
-package com.github.felipegutierrez.explore.spring.basics.beans;
+package com.github.felipegutierrez.explore.spring.basics.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class QuickSortAlgorithm implements SortAlgorithm {
 

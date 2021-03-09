@@ -1,6 +1,7 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
 import com.github.felipegutierrez.explore.spring.ExploreSpringApplication;
+import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;

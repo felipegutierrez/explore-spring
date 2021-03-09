@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.spring.basics.business;
+package com.github.felipegutierrez.explore.spring.basics.services;
 
 import com.github.felipegutierrez.explore.spring.basics.dao.PersonCdiDao;
 

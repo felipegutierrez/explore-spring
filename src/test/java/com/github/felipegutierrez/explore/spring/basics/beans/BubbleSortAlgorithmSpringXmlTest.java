@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
+import com.github.felipegutierrez.explore.spring.basics.services.BubbleSortAlgorithm;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

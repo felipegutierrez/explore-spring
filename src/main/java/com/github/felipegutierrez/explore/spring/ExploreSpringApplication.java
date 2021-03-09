@@ -1,7 +1,7 @@
 package com.github.felipegutierrez.explore.spring;
 
-import com.github.felipegutierrez.explore.spring.basics.beans.QuickSortAlgorithm;
-import com.github.felipegutierrez.explore.spring.basics.business.SomeCdiBusiness;
+import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
+import com.github.felipegutierrez.explore.spring.basics.services.SomeCdiBusiness;
 import com.github.felipegutierrez.explore.spring.basics.dao.PersonDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 @Configuration
 @ComponentScan({"com.github.felipegutierrez.explore.spring.basics.beans",
         "com.github.felipegutierrez.explore.spring.basics.dao",
-        "com.github.felipegutierrez.explore.spring.basics.business"})
+        "com.github.felipegutierrez.explore.spring.basics.services"})
 public class ExploreSpringApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExploreSpringApplication.class);

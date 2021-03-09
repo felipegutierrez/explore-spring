@@ -9,7 +9,7 @@
 
     <context:component-scan base-package="com.github.felipegutierrez.explore.spring.basics.beans"/>
     <context:component-scan base-package="com.github.felipegutierrez.explore.spring.basics.dao"/>
-    <context:component-scan base-package="com.github.felipegutierrez.explore.spring.basics.business"/>
+    <context:component-scan base-package="com.github.felipegutierrez.explore.spring.basics.services"/>
 
     <bean id="jdbcConnectionXml" class="com.github.felipegutierrez.explore.spring.basics.beans.JdbcConnectionXml"/>
 

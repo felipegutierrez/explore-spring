@@ -4,7 +4,6 @@ import com.github.felipegutierrez.explore.spring.basics.beans.JdbcConnectionXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class PersonXmlDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonXmlDao.class);

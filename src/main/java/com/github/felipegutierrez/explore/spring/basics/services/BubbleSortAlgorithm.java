@@ -1,10 +1,10 @@
-package com.github.felipegutierrez.explore.spring.basics.beans;
+package com.github.felipegutierrez.explore.spring.basics.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class BubbleSortAlgorithm implements SortAlgorithm {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BubbleSortAlgorithm.class);
