@@ -1,17 +1,19 @@
 package com.github.felipegutierrez.explore.spring;
 
+import com.github.felipegutierrez.explore.spring.basics.dao.PersonDao;
 import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
 import com.github.felipegutierrez.explore.spring.basics.services.SomeCdiBusiness;
-import com.github.felipegutierrez.explore.spring.basics.dao.PersonDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.util.Arrays;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 @ComponentScan({"com.github.felipegutierrez.explore.spring.basics.beans",
         "com.github.felipegutierrez.explore.spring.basics.dao",
         "com.github.felipegutierrez.explore.spring.basics.services"})
@@ -38,6 +40,7 @@ public class ExploreSpringApplication {
 
             SomeCdiBusiness someCdiBusiness = applicationContext.getBean(SomeCdiBusiness.class);
             LOGGER.info("using CDI instead of Spring annotations: {}, DAO: {}", someCdiBusiness, someCdiBusiness.getPersonCdiDao());
+            LOGGER.info("Using the @Value(\"${app.hostname}\") property: {}", someCdiBusiness.getHostname());
         }
     }
 }
