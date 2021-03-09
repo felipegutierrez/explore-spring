@@ -14,4 +14,8 @@ public class SortAlgorithmImpl {
     public SortAlgorithmImpl(@Qualifier("quickSortAlgorithm") SortAlgorithm sortAlgorithm) {
         this.sortAlgorithm = sortAlgorithm;
     }
+
+    public SortAlgorithm getSortAlgorithm() {
+        return sortAlgorithm;
+    }
 }

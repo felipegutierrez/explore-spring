@@ -1,6 +1,7 @@
 package com.github.felipegutierrez.explore.spring;
 
 import com.github.felipegutierrez.explore.spring.basics.dao.PersonDao;
+import com.github.felipegutierrez.explore.spring.basics.services.BubbleSortAlgorithm;
 import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
 import com.github.felipegutierrez.explore.spring.basics.services.SomeCdiBusiness;
 import org.slf4j.Logger;
@@ -27,6 +28,10 @@ public class ExploreSpringApplication {
             QuickSortAlgorithm quickSortAlgorithm = applicationContext.getBean(QuickSortAlgorithm.class);
             int[] result = quickSortAlgorithm.sort(new int[]{12, 4, 3, 70, 20, 0});
             Arrays.stream(result).forEach(i -> System.out.println(i));
+
+            BubbleSortAlgorithm bubbleSortAlgorithm = applicationContext.getBean(BubbleSortAlgorithm.class);
+            int[] result01 = bubbleSortAlgorithm.sort(new int[]{12, 4, 3, 70, 20, 0});
+            Arrays.stream(result01).forEach(i -> System.out.println(i));
 
             PersonDao personDAO01 = applicationContext.getBean(PersonDao.class);
             PersonDao personDAO02 = applicationContext.getBean(PersonDao.class);

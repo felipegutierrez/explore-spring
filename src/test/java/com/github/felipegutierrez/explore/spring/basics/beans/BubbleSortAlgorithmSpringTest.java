@@ -1,36 +1,39 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
+import com.github.felipegutierrez.explore.spring.ExploreSpringApplication;
 import com.github.felipegutierrez.explore.spring.basics.services.BubbleSortAlgorithm;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = ExploreSpringApplication.class)
 public class BubbleSortAlgorithmSpringTest {
+
+    @Autowired
+    BubbleSortAlgorithm bubbleSortAlgorithm01;
+
+    @Autowired
+    BubbleSortAlgorithm bubbleSortAlgorithm02;
 
     @Test
     public void testIfBubbleSortAlgorithmCanSortArrayCorrectly() {
-        try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BubbleSortAlgorithm.class)) {
+        int[] result = bubbleSortAlgorithm01.sort(new int[]{12, 4, 3, 70, 20, 0});
+        Arrays.stream(result).forEach(i -> System.out.println(i));
+        int[] expected = new int[]{0, 3, 4, 12, 20, 70};
 
-            BubbleSortAlgorithm bubbleSortAlgorithm = applicationContext.getBean(BubbleSortAlgorithm.class);
-            int[] result = bubbleSortAlgorithm.sort(new int[]{12, 4, 3, 70, 20, 0});
-            Arrays.stream(result).forEach(i -> System.out.println(i));
-            int[] expected = new int[]{0, 3, 4, 12, 20, 70};
-
-            assertArrayEquals(expected, result);
-        }
+        assertArrayEquals(expected, result);
     }
 
     @Test
     public void bubbleSortBeanMustBeSingleton() {
-        try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(BubbleSortAlgorithm.class)) {
-            BubbleSortAlgorithm bubbleSortAlgorithm01 = applicationContext.getBean(BubbleSortAlgorithm.class);
-            BubbleSortAlgorithm bubbleSortAlgorithm02 = applicationContext.getBean(BubbleSortAlgorithm.class);
-
-            assertEquals(bubbleSortAlgorithm01.hashCode(), bubbleSortAlgorithm02.hashCode());
-        }
+        assertEquals(bubbleSortAlgorithm01.hashCode(), bubbleSortAlgorithm02.hashCode());
     }
 }
