@@ -1,0 +1,2 @@
+com/github/felipegutierrez/explore/spring/SpringWebApplicationTests.java
+ com.github.felipegutierrez.explore.spring.SpringWebApplicationTests

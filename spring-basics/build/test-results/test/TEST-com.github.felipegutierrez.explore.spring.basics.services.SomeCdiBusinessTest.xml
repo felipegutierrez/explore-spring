@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.felipegutierrez.explore.spring.basics.services.SomeCdiBusinessTest" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="cow-11" time="0.0">
+  <properties/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Mar 10, 2021 6:00:23 PM org.junit.vintage.engine.discovery.DefensiveAllDefaultPossibilitiesBuilder$DefensiveAnnotatedBuilder buildRunner
+WARNING: Ignoring test class using JUnitPlatform runner: com.github.felipegutierrez.explore.spring.basics.services.SomeCdiBusinessTest
+]]></system-err>
+</testsuite>

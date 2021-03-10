@@ -10,7 +10,7 @@
  - [Spring web](spring-web)
 
 ### Basic commands
- - `mvn clean`
- - `mvn package`
- - `mvn test`
+ - `gradle clean`
+ - `gradle build`
+ - `gradle test`
 
