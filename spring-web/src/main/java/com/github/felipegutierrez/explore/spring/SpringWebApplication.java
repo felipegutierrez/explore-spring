@@ -19,7 +19,10 @@ public class SpringWebApplication {
         LOGGER.info("use:");
         LOGGER.info("http://localhost:8080/");
         LOGGER.info("http://localhost:8080/actuator");
-        LOGGER.info("http://localhost:8080/books");
+        LOGGER.info("http://localhost:8080/books?ids=1,3,4");
+        LOGGER.info("http://localhost:8080/book?id=1");
+        LOGGER.info("http://localhost:8080/book/searchByName?name=of");
+        LOGGER.info("http://localhost:8080/book/searchByAuthor?author=a");
 
         Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(name ->
                 LOGGER.info(name)
