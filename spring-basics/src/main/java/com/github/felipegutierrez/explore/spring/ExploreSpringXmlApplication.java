@@ -1,7 +1,7 @@
 package com.github.felipegutierrez.explore.spring;
 
-import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
 import com.github.felipegutierrez.explore.spring.basics.dao.PersonXmlDao;
+import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

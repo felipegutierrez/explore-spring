@@ -4,3 +4,13 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/06261b73b18f43038e1dc36cafa90ff4)](https://www.codacy.com/gh/felipegutierrez/explore-spring/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=felipegutierrez/explore-spring&amp;utm_campaign=Badge_Coverage)
 
 # Explore Spring Framework
+
+### Modules
+ - [Spring basics](spring-basics)
+ - [Spring web](spring-web)
+
+### Basic commands
+ - `mvn clean`
+ - `mvn package`
+ - `mvn test`
+
