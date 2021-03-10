@@ -17,6 +17,8 @@ public class SpringWebApplication {
         ApplicationContext applicationContext =
                 SpringApplication.run(SpringWebApplication.class, args);
         LOGGER.info("use:");
+        LOGGER.info("http://localhost:8080/");
+        LOGGER.info("http://localhost:8080/actuator");
         LOGGER.info("http://localhost:8080/books");
 
         Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(name ->

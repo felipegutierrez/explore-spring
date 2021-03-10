@@ -16,6 +16,7 @@ public class BookController {
         this.bookList = new ArrayList<Book>();
         this.bookList.add(new Book(1L, "The portrait of Dorian Gray", "Oscar Wilde"));
         this.bookList.add(new Book(2L, "To be or not to be", "William Shakespeare"));
+        this.bookList.add(new Book(3L, "Sapiens: A Brief History of Humankind", "Yuval Noah Harari"));
     }
 
     @GetMapping("/books")

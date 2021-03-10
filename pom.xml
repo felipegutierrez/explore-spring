@@ -20,6 +20,9 @@
     <description>Exploring Spring framework</description>
     <properties>
         <java.version>1.8</java.version>
+        <springframework.boot.version>2.4.3</springframework.boot.version>
+        <springframework.core.version>5.3.4</springframework.core.version>
+        <springframework.data.rest>3.3.7.RELEASE</springframework.data.rest>
         <javax.inject.version>1</javax.inject.version>
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <cobertura.version>2.7</cobertura.version>
