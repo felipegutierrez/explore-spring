@@ -5,12 +5,17 @@
 
 # Explore Spring Framework
 
+Exploring Spring framework version 2.4.3 with [projectreactor](https://projectreactor.io/).
+
 ### Modules
- - [Spring basics](spring-basics)
- - [Spring web](spring-web)
+
+- [Spring basics](spring-basics)
+- [Spring web](spring-web)
+- [Spring reactive web](spring-web-react)
 
 ### Basic commands
- - `gradle clean`
- - `gradle build`
- - `gradle test`
+
+- `gradle clean`
+- `gradle build`
+- `gradle clean test --info`
 
