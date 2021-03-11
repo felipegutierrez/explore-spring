@@ -22,6 +22,13 @@ public class FluxAndMonoFactory {
                 .log();
     }
 
+    public Flux<String> createFluxUsingRepeat(List<String> data, Integer repeat) {
+        return Flux
+                .fromIterable(data)
+                .repeat(repeat)
+                .log();
+    }
+
     public Flux<String> createFluxUsingArray(String[] data) {
         return Flux.fromArray(data).log();
     }

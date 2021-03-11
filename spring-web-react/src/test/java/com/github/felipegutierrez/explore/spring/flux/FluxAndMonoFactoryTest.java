@@ -26,6 +26,19 @@ public class FluxAndMonoFactoryTest {
     }
 
     @Test
+    void testFluxUsingIterableRepeat() {
+        List<String> expect = Arrays.asList("Spring", "Spring Boot", "Reactive Spring");
+        Flux<String> stringFlux = fluxAndMonoFactory.createFluxUsingRepeat(expect, 4);
+        StepVerifier.create(stringFlux)
+                .expectNext("Spring", "Spring Boot", "Reactive Spring")
+                .expectNext("Spring", "Spring Boot", "Reactive Spring")
+                .expectNext("Spring", "Spring Boot", "Reactive Spring")
+                .expectNext("Spring", "Spring Boot", "Reactive Spring")
+                .expectNext("Spring", "Spring Boot", "Reactive Spring")
+                .verifyComplete();
+    }
+
+    @Test
     void testFluxUsingArray() {
         String[] expect = new String[]{"Spring", "Spring Boot", "Reactive Spring"};
         Flux<String> stringFlux = fluxAndMonoFactory.createFluxUsingArray(expect);
