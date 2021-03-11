@@ -78,4 +78,18 @@ public class FluxAndMonoFactoryTest {
                 .expectNextSequence(range)
                 .verifyComplete();
     }
+
+    @Test
+    void testFluxUsingIterableWithFilter() {
+        List<String> expect = Arrays.asList("java", "jdk", "Spring", "Spring Boot", "Reactive Spring");
+        Flux<String> stringFlux = fluxAndMonoFactory.createFluxUsingIterableWithFilter(expect);
+
+        StepVerifier.create(stringFlux)
+                .expectNext("Spring", "Spring Boot", "Reactive Spring")
+                .verifyComplete();
+
+        StepVerifier.create(stringFlux)
+                .expectNextCount(3)
+                .verifyComplete();
+    }
 }

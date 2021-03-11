@@ -7,6 +7,7 @@ import reactor.test.StepVerifier;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FluxAndMonoGenericTest {
 
@@ -81,6 +82,34 @@ public class FluxAndMonoGenericTest {
 
         StepVerifier.create(doubleMono)
                 .expectNext(Double.valueOf(expect))
+                .verifyComplete();
+    }
+
+    @Test
+    void testCreateGenericFluxStringWithFilter() {
+        List<String> expect = Arrays.asList("java", "jdk", "Spring", "Spring Boot", "Reactive Spring");
+
+        Predicate<String> predicate = n -> n.length() > 4;
+        Flux<String> stringFlux = myFluxMonoStringGenericTest.createFluxConverterWithFilter(expect, String::toString, predicate);
+
+        StepVerifier.create(stringFlux)
+                .expectNext("Spring")
+                .expectNext("Spring Boot")
+                .expectNext("Reactive Spring")
+                .verifyComplete();
+    }
+
+    @Test
+    void testCreateGenericFluxDoubleWithFilter() {
+        List<String> expect = Arrays.asList("1.0", "1234.45", "7654", "4.999");
+        Double[] expectedMessages = new Double[]{1.0, 1234.45, 7654.0, 4.999};
+
+        Predicate<Double> predicate = d -> d > 10.0;
+        Flux<Double> doubleFlux = myFluxMonoStringGenericTest.createFluxConverterWithFilter(expect, Double::parseDouble, predicate);
+
+        StepVerifier.create(doubleFlux)
+                .expectNext(expectedMessages[1])
+                .expectNext(expectedMessages[2])
                 .verifyComplete();
     }
 }

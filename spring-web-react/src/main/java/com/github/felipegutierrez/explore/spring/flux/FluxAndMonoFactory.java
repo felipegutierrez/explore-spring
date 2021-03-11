@@ -15,6 +15,13 @@ public class FluxAndMonoFactory {
         return Flux.fromIterable(data).log();
     }
 
+    public Flux<String> createFluxUsingIterableWithFilter(List<String> data) {
+        return Flux
+                .fromIterable(data)
+                .filter(value -> value.length() > 4)
+                .log();
+    }
+
     public Flux<String> createFluxUsingArray(String[] data) {
         return Flux.fromArray(data).log();
     }

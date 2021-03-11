@@ -6,6 +6,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 @Slf4j
 public class FluxAndMonoGeneric<IN> {
@@ -23,5 +24,16 @@ public class FluxAndMonoGeneric<IN> {
                 .map(mapper)
                 .log();
         return monoResult;
+    }
+
+    public <OUT> Flux<OUT> createFluxConverterWithFilter(List<IN> data,
+                                                Function<IN, OUT> mapper,
+                                                Predicate<OUT> predicate) {
+        Flux<OUT> fluxResult = Flux
+                .fromIterable(data)
+                .map(mapper)
+                .filter(predicate)
+                .log();
+        return fluxResult;
     }
 }

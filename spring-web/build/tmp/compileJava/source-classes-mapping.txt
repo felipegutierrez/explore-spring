@@ -1,6 +1,0 @@
-com/github/felipegutierrez/explore/spring/beans/Book.java
- com.github.felipegutierrez.explore.spring.beans.Book
-com/github/felipegutierrez/explore/spring/controller/BookController.java
- com.github.felipegutierrez.explore.spring.controller.BookController
-com/github/felipegutierrez/explore/spring/SpringWebApplication.java
- com.github.felipegutierrez.explore.spring.SpringWebApplication
