@@ -1,7 +1,9 @@
 package com.github.felipegutierrez.explore.spring.flux;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,14 +84,83 @@ public class FluxAndMonoBasicsTest {
     }
 
     @Test
-    void testCreateFluxConverterHandleException() {
-        String inputDataWithTypo = "1,23,3456,98a,127";
-        String expect = "1,23,3456";
+    void testCreateBasicFluxWithoutSubscribe() {
+        String expect = "Spring,Spring Boot,Reactive Spring";
         String delimiter = ",";
+        String[] messages = expect.split(delimiter);
 
-        Assertions.assertThrows(NumberFormatException.class,
-                () -> myFluxTest.createFluxConverterStringToInt(inputDataWithTypo.split(delimiter))
-        );
+        Flux<String> stringFlux = myFluxTest.createBasicFluxWithoutSubscribe(messages);
+
+        // the StepVerifier.create calls the subscribe for us
+        StepVerifier.create(stringFlux)
+                .expectNext(messages[0])
+                .expectNext(messages[1])
+                .expectNext(messages[2])
+                .verifyComplete();
+
+        StepVerifier.create(stringFlux)
+                .expectNext(messages)
+                .verifyComplete();
+
+        StepVerifier.create(stringFlux)
+                .expectNextCount(3)
+                .verifyComplete();
     }
 
+    @Test
+    void testCreateFluxConverterHandleException() {
+        String inputDataWithTypo = "1,23,3456,98a,127";
+        String delimiter = ",";
+        String[] messages = inputDataWithTypo.split(delimiter);
+        Integer[] expectedMessages = new Integer[]{1, 23, 3456};
+
+        Flux<Integer> integerFlux = myFluxTest.createFluxWithoutSubscribeConverterStringToInt(messages);
+        StepVerifier.create(integerFlux)
+                .expectNext(Integer.valueOf(messages[0]))
+                .expectNext(Integer.valueOf(messages[1]))
+                .expectNext(Integer.valueOf(messages[2]))
+                .expectError(NumberFormatException.class)
+                .verify();
+
+        StepVerifier.create(integerFlux)
+                .expectNext(expectedMessages)
+                .expectError(NumberFormatException.class)
+                .verify();
+
+        StepVerifier.create(integerFlux)
+                .expectNextCount(3)
+                .expectError(NumberFormatException.class)
+                .verify();
+    }
+
+    @Test
+    void testCreateBasicMono() {
+        String expect = "1258";
+
+        Mono<Integer> integerMono = myFluxTest.createMonoConverterStringToInt(expect);
+
+        StepVerifier.create(integerMono)
+                .expectNextCount(1)
+                .verifyComplete();
+
+        StepVerifier.create(integerMono)
+                .expectNext(Integer.valueOf(expect))
+                .verifyComplete();
+    }
+
+    @Test
+    void testCreateBasicMonoWithError() {
+        String expect = "Spring Boot Reactive";
+
+        Mono<Integer> integerMono = myFluxTest.createMonoConverterStringToInt(expect);
+
+        StepVerifier.create(integerMono)
+                .expectError(NumberFormatException.class)
+                .verify();
+
+        StepVerifier.create(integerMono)
+                .expectNextCount(0)
+                .expectError(NumberFormatException.class)
+                .verify();
+    }
 }

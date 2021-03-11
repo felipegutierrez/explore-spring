@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.spring.flux;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class FluxAndMonoBasics {
     public List<String> createBasicFlux(String[] data) {
         List<String> result = new ArrayList<String>();
 
-        Flux<String> stringFlux = Flux.just(data);
+        Flux<String> stringFlux = Flux.just(data).log();
 
         stringFlux.subscribe(value -> result.add(value));
 
@@ -30,7 +31,8 @@ public class FluxAndMonoBasics {
 
         Flux<String> stringFlux = Flux
                 .just(data01)
-                .concatWith(Flux.just(data02));
+                .concatWith(Flux.just(data02))
+                .log();
 
         stringFlux.subscribe(value -> result.add(value));
 
@@ -40,7 +42,7 @@ public class FluxAndMonoBasics {
     public List<String> createFluxWithComplete(String[] data, String completeMsg) {
         List<String> result = new ArrayList<String>();
 
-        Flux<String> stringFlux = Flux.just(data);
+        Flux<String> stringFlux = Flux.just(data).log();
 
         stringFlux.subscribe(value -> result.add(value),
                 throwable -> System.out.println("Exception is: " + throwable),
@@ -50,19 +52,52 @@ public class FluxAndMonoBasics {
     }
 
     public List<Integer> createFluxConverterStringToInt(String[] data) {
-        try {
-            List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<Integer>();
 
-            Flux<Integer> stringFlux = Flux
-                    .just(data)
-                    .map(value -> Integer.parseInt(value));
+        Flux<Integer> stringFlux = Flux
+                .just(data)
+                .map(value -> Integer.parseInt(value))
+                .log();
 
-            stringFlux.subscribe(value -> result.add(value));
+        stringFlux.subscribe(value -> result.add(value));
 
-            return result;
-        } catch (Exception ex) {
-            log.error("Exception at FluxAndMonoBasics.createFluxConverterStringToInt: {}", ex);
-            throw ex;
-        }
+        return result;
     }
+
+    public Flux<String> createBasicFluxWithoutSubscribe(String[] data) {
+        List<String> result = new ArrayList<String>();
+
+        Flux<String> stringFlux = Flux.just(data).log();
+
+        return stringFlux;
+    }
+
+    public Flux<Integer> createFluxWithoutSubscribeConverterStringToInt(String[] data) {
+        Flux<Integer> stringFlux = Flux
+                .just(data)
+                .map(value -> Integer.parseInt(value))
+                .log();
+        return stringFlux;
+    }
+
+    public Mono<Integer> createMonoConverterStringToInt(String data) {
+        Mono<Integer> integerMono = Mono.just(data)
+                .map(value -> Integer.parseInt(value))
+                .log();
+        return integerMono;
+    }
+
+//    public <OUT> Mono<OUT> createMonoConverterString(String data) {
+//        // Class<OUT> clazz = new Class<OUT>();
+//        // OUT instance = clazz.newInstance();
+//        // OUT instance = ((Class)((OUT)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();;
+//        OUT instance;
+//        Mono<OUT> integerMono = Mono.just(data)
+//                // .map(value -> Integer.parseInt(value))
+//                // .map(value -> clazz.cast(value) )
+//                .map(value -> instance.getClass().cast(value))
+//                .log();
+//
+//        return integerMono;
+//    }
 }
