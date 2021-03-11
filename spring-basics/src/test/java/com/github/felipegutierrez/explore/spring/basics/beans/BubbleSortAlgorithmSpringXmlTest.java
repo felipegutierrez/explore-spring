@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
+import com.github.felipegutierrez.explore.spring.ExploreSpringApplication;
 import com.github.felipegutierrez.explore.spring.basics.services.BubbleSortAlgorithm;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
+// @ContextConfiguration(locations = "/applicationContext.xml")
+@ContextConfiguration(classes = ExploreSpringApplication.class)
 public class BubbleSortAlgorithmSpringXmlTest {
 
     @Autowired

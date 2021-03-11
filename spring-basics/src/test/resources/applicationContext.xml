@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.github.felipegutierrez.explore.spring.basics.beans"/>
+    <context:component-scan base-package="com.github.felipegutierrez.explore.spring.basics.dao"/>
+    <context:component-scan base-package="com.github.felipegutierrez.explore.spring.basics.services"/>
+
+    <bean id="jdbcConnectionXml" class="com.github.felipegutierrez.explore.spring.basics.beans.JdbcConnectionXml"/>
+
+    <bean id="personXmlDao" class="com.github.felipegutierrez.explore.spring.basics.dao.PersonXmlDao">
+        <property name="jdbcConnectionXml" ref="jdbcConnectionXml"/>
+    </bean>
+
+</beans>

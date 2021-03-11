@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="SomeCdiBusinessTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-03-10T17:00:24" hostname="cow-11" time="0.469">
-  <properties/>
-  <testcase name="testMockConnection()" classname="SomeCdiBusinessTest" time="0.465"/>
-  <testcase name="testPersonDaoWithMock()" classname="SomeCdiBusinessTest" time="0.003"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

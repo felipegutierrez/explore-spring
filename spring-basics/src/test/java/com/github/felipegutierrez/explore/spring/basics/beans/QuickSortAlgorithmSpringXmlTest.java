@@ -1,9 +1,15 @@
 package com.github.felipegutierrez.explore.spring.basics.beans;
 
+import com.github.felipegutierrez.explore.spring.ExploreSpringApplication;
+import com.github.felipegutierrez.explore.spring.ExploreSpringXmlApplication;
 import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -13,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
+// @ContextConfiguration(locations = "/applicationContext.xml")
+@ContextConfiguration(classes = ExploreSpringApplication.class)
 public class QuickSortAlgorithmSpringXmlTest {
 
     @Autowired
