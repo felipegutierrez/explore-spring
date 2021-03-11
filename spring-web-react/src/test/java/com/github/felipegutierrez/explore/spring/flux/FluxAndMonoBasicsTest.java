@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.explore.spring.flux;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -78,6 +79,17 @@ public class FluxAndMonoBasicsTest {
                 .collect(Collectors.joining(delimiter));
 
         assertEquals(expect, actual);
+    }
+
+    @Test
+    void testCreateFluxConverterHandleException() {
+        String inputDataWithTypo = "1,23,3456,98a,127";
+        String expect = "1,23,3456";
+        String delimiter = ",";
+
+        Assertions.assertThrows(NumberFormatException.class,
+                () -> myFluxTest.createFluxConverterStringToInt(inputDataWithTypo.split(delimiter))
+        );
     }
 
 }

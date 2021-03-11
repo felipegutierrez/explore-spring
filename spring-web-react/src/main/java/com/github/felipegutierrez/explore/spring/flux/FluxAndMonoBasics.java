@@ -1,10 +1,12 @@
 package com.github.felipegutierrez.explore.spring.flux;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class FluxAndMonoBasics {
 
     public static void main(String[] args) {
@@ -48,14 +50,19 @@ public class FluxAndMonoBasics {
     }
 
     public List<Integer> createFluxConverterStringToInt(String[] data) {
-        List<Integer> result = new ArrayList<Integer>();
+        try {
+            List<Integer> result = new ArrayList<Integer>();
 
-        Flux<Integer> stringFlux = Flux
-                .just(data)
-                .map(value -> Integer.parseInt(value));
+            Flux<Integer> stringFlux = Flux
+                    .just(data)
+                    .map(value -> Integer.parseInt(value));
 
-        stringFlux.subscribe(value -> result.add(value));
+            stringFlux.subscribe(value -> result.add(value));
 
-        return result;
+            return result;
+        } catch (Exception ex) {
+            log.error("Exception at FluxAndMonoBasics.createFluxConverterStringToInt: {}", ex);
+            throw ex;
+        }
     }
 }

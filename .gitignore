@@ -1,4 +1,11 @@
 
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
 target**
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij
