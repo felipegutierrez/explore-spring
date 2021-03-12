@@ -16,7 +16,8 @@ public class FluxAndMonoGenericTest {
     @Test
     void testCreateGenericFluxWithString() {
         List<String> expect = Arrays.asList("Spring", "Spring Boot", "Reactive Spring");
-        Flux<String> stringFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, String::toString);
+        List<String> expectFallBack = Arrays.asList("Java 8", "Project reactor");
+        Flux<String> stringFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, String::toString, expectFallBack);
 
         StepVerifier.create(stringFlux)
                 .expectNext("Spring")
@@ -28,9 +29,10 @@ public class FluxAndMonoGenericTest {
     @Test
     void testCreateGenericFluxWithInteger() {
         List<String> expect = Arrays.asList("1", "1234", "7654", "34");
+        List<Integer> expectFallBack = Arrays.asList(8, 42);
         Integer[] expectedMessages = new Integer[]{1, 1234, 7654, 34};
 
-        Flux<Integer> integerFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Integer::parseInt);
+        Flux<Integer> integerFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Integer::parseInt, expectFallBack);
 
         StepVerifier.create(integerFlux)
                 .expectNext(expectedMessages[0])
@@ -44,22 +46,27 @@ public class FluxAndMonoGenericTest {
     void testCreateGenericFluxWithIntegerAndError() {
         List<String> expect = Arrays.asList("1", "1234", "765a", "34");
         Integer[] expectedMessages = new Integer[]{1, 1234};
+        List<Integer> expectFallBack = Arrays.asList(8, 42);
 
-        Flux<Integer> integerFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Integer::parseInt);
+        Flux<Integer> integerFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Integer::parseInt, expectFallBack);
 
         StepVerifier.create(integerFlux)
                 .expectNext(expectedMessages[0])
                 .expectNext(expectedMessages[1])
-                .expectError(NumberFormatException.class)
-                .verify();
+                .expectNextSequence(expectFallBack)
+                .verifyComplete()
+        // .expectError(NumberFormatException.class) // we are using onErrorResume so we don't expect an error
+        // .verify()
+        ;
     }
 
     @Test
     void testCreateGenericFluxWithDouble() {
         List<String> expect = Arrays.asList("1.0", "1234.45", "7654", "34.999");
+        List<Double> expectFallBack = Arrays.asList(8.0, 42.5);
         Double[] expectedMessages = new Double[]{1.0, 1234.45, 7654.0, 34.999};
 
-        Flux<Double> doubleFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Double::parseDouble);
+        Flux<Double> doubleFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Double::parseDouble, expectFallBack);
 
         StepVerifier.create(doubleFlux)
                 .expectNext(expectedMessages[0])
@@ -72,15 +79,19 @@ public class FluxAndMonoGenericTest {
     @Test
     void testCreateGenericFluxWithDoubleWithError() {
         List<String> expect = Arrays.asList("1.0", "1234.45", "765a", "34.999");
+        List<Double> expectFallBack = Arrays.asList(8.0, 42.5);
         Double[] expectedMessages = new Double[]{1.0, 1234.45};
 
-        Flux<Double> doubleFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Double::parseDouble);
+        Flux<Double> doubleFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Double::parseDouble, expectFallBack);
 
         StepVerifier.create(doubleFlux)
                 .expectNext(expectedMessages[0])
                 .expectNext(expectedMessages[1])
-                .expectError(NumberFormatException.class)
-                .verify();
+                .expectNextSequence(expectFallBack)
+                .verifyComplete()
+        // .expectError(NumberFormatException.class) // we are using onErrorResume so we don't expect an error
+        // .verify()
+        ;
     }
 
     @Test

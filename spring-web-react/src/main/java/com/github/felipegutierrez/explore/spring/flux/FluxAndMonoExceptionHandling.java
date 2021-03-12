@@ -9,7 +9,7 @@ import java.util.List;
 
 @Slf4j
 public class FluxAndMonoExceptionHandling {
-    public Flux<String> createFluxErrorHandling(List<String> data, List<String> resumeList) {
+    public Flux<String> createFluxErrorHandlingGuaranteeCompletion(List<String> data, List<String> resumeList) {
         return Flux
                 .fromIterable(data)
                 .concatWith(Flux.error(new RuntimeException("an exception occurred")))

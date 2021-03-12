@@ -15,7 +15,7 @@ public class FluxAndMonoExceptionHandlingTest {
 
     @Test
     public void testFluxErrorHandling() {
-        Flux<String> stringFlux = fluxAndMonoExceptionHandling.createFluxErrorHandling(expect, resumeList);
+        Flux<String> stringFlux = fluxAndMonoExceptionHandling.createFluxErrorHandlingGuaranteeCompletion(expect, resumeList);
         StepVerifier.create(stringFlux)
                 .expectSubscription()
                 .expectNextSequence(expect)
