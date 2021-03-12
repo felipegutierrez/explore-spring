@@ -6,20 +6,24 @@ import reactor.test.StepVerifier;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FluxAndMonoTransformationsTest {
 
-    FluxAndMonoTransformations fluxAndMonoFactory = new FluxAndMonoTransformations();
+    FluxAndMonoTransformations fluxAndMonoTransformations = new FluxAndMonoTransformations();
 
     List<String> expect = Arrays.asList(
             "Spring", "Spring Boot", "Reactive Spring",
             "java 8", "reactive programming", "java with lambda",
             "Scala", "Scala rocks", "but Java is catching up"
     );
+    List<String> list1 = Arrays.asList("A", "B", "C");
+    List<String> list2 = Arrays.asList("D", "E", "F");
 
     @Test
     void testFluxUsingIterable() {
-        Flux<String> stringFlux = fluxAndMonoFactory.createFluxUsingFlatMap(expect);
+        Flux<String> stringFlux = fluxAndMonoTransformations.createFluxUsingFlatMap(expect);
 
         StepVerifier.create(stringFlux)
                 .expectNextCount(18)
@@ -28,7 +32,7 @@ public class FluxAndMonoTransformationsTest {
 
     @Test
     void testFluxUsingIterableParallel() {
-        Flux<String> stringFlux = fluxAndMonoFactory.createFluxUsingFlatMapParallel(expect, 2);
+        Flux<String> stringFlux = fluxAndMonoTransformations.createFluxUsingFlatMapParallel(expect, 2);
         StepVerifier.create(stringFlux)
                 .expectNextCount(18)
                 .verifyComplete();
@@ -36,9 +40,61 @@ public class FluxAndMonoTransformationsTest {
 
     @Test
     void testFluxUsingIterableParallelMaintainOrder() {
-        Flux<String> stringFlux = fluxAndMonoFactory.createFluxUsingFlatMapParallelMaintainOrder(expect, 2);
+        Flux<String> stringFlux = fluxAndMonoTransformations.createFluxUsingFlatMapParallelMaintainOrder(expect, 2);
         StepVerifier.create(stringFlux)
                 .expectNextCount(18)
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingMerge() {
+        Flux<String> mergeFlux = fluxAndMonoTransformations.createFluxUsingMerge(list1, list2);
+        List<String> expect = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextSequence(expect)
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingMergeWithDelay() {
+        Flux<String> mergeFlux = fluxAndMonoTransformations.createFluxUsingMergeWithDelay(list1, list2);
+        List<String> expect = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                // .expectNextSequence(expect) // merge with delay does NOT preserve order
+                .expectNextCount(expect.size())
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingConcat() {
+        Flux<String> concatFlux = fluxAndMonoTransformations.createFluxUsingConcat(list1, list2);
+        List<String> expect = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+        StepVerifier.create(concatFlux)
+                .expectSubscription()
+                .expectNextSequence(expect)
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingConcatWithDelay() {
+        Flux<String> concatFlux = fluxAndMonoTransformations.createFluxUsingConcatWithDelay(list1, list2);
+        List<String> expect = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+        StepVerifier.create(concatFlux)
+                .expectSubscription()
+                .expectNextSequence(expect) // concat with delay DOES preserve order
+                // .expectNextCount(expect.size()) // if we use expectNextSequence() we cannot use another expectNextCount
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingZip() {
+        Flux<String> zipFlux = fluxAndMonoTransformations.createFluxUsingZip(list1, list2);
+        List<String> expect = Arrays.asList("AD", "BE", "CF");
+        StepVerifier.create(zipFlux)
+                .expectSubscription()
+                .expectNextSequence(expect)
                 .verifyComplete();
     }
 }
