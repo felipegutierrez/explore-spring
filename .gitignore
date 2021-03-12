@@ -6,7 +6,8 @@ spring-basics/build/**
 spring-web/build/**
 spring-web-react/build/**
 
-!gradle/wrapper/gradle-wrapper.jar
+# necessary to commit in order to execute github actions
+# !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
