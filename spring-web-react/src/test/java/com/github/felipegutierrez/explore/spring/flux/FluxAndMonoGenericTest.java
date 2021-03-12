@@ -41,6 +41,20 @@ public class FluxAndMonoGenericTest {
     }
 
     @Test
+    void testCreateGenericFluxWithIntegerAndError() {
+        List<String> expect = Arrays.asList("1", "1234", "765a", "34");
+        Integer[] expectedMessages = new Integer[]{1, 1234};
+
+        Flux<Integer> integerFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Integer::parseInt);
+
+        StepVerifier.create(integerFlux)
+                .expectNext(expectedMessages[0])
+                .expectNext(expectedMessages[1])
+                .expectError(NumberFormatException.class)
+                .verify();
+    }
+
+    @Test
     void testCreateGenericFluxWithDouble() {
         List<String> expect = Arrays.asList("1.0", "1234.45", "7654", "34.999");
         Double[] expectedMessages = new Double[]{1.0, 1234.45, 7654.0, 34.999};
@@ -53,6 +67,20 @@ public class FluxAndMonoGenericTest {
                 .expectNext(expectedMessages[2])
                 .expectNext(expectedMessages[3])
                 .verifyComplete();
+    }
+
+    @Test
+    void testCreateGenericFluxWithDoubleWithError() {
+        List<String> expect = Arrays.asList("1.0", "1234.45", "765a", "34.999");
+        Double[] expectedMessages = new Double[]{1.0, 1234.45};
+
+        Flux<Double> doubleFlux = myFluxMonoStringGenericTest.createFluxConverter(expect, Double::parseDouble);
+
+        StepVerifier.create(doubleFlux)
+                .expectNext(expectedMessages[0])
+                .expectNext(expectedMessages[1])
+                .expectError(NumberFormatException.class)
+                .verify();
     }
 
     @Test
