@@ -63,7 +63,6 @@ public class FluxAndMonoStreamsTest {
 
         StepVerifier.create(streamLongFlux)
                 .expectSubscription()
-                .thenAwait(Duration.ofSeconds(4))
                 .expectNext(0.0, 1.0, 2.0, 3.0)
                 .verifyComplete();
     }
