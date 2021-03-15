@@ -79,18 +79,21 @@ public class FluxMonoControllerTest {
 
     @Test
     public void fluxStreamTest_approach1() {
-        Flux<Integer> integerFlux = webTestClient
+        Flux<Long> longFlux = webTestClient
                 .get().uri("/fluxstream")
                 .accept(MediaType.APPLICATION_STREAM_JSON)
                 .exchange()
                 .expectStatus().isOk()
-                .returnResult(Integer.class)
+                .returnResult(Long.class)
                 .getResponseBody();
 
-        StepVerifier.create(integerFlux)
+        StepVerifier.create(longFlux)
                 .expectSubscription()
-                .expectNextSequence(fluxMonoController.list)
-                .verifyComplete();
+                .expectNext(0l)
+                .expectNext(1l)
+                .expectNext(2l)
+                .thenCancel()
+                .verify();
     }
 
     @Test

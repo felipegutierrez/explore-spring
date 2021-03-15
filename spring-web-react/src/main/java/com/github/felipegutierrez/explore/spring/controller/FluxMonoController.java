@@ -25,18 +25,9 @@ public class FluxMonoController {
     }
 
     @GetMapping(value = "/fluxstream", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Flux<Integer> returnFluxStream() {
+    public Flux<Long> returnFluxStream() {
         return Flux
-                .fromIterable(list)
-                .delayElements(Duration.ofSeconds(1))
-                .log();
-    }
-
-    @GetMapping(value = "/fluxlargestream", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Flux<Integer> returnFluxStreamLarge() {
-        return Flux
-                .fromIterable(largeList)
-                .delayElements(Duration.ofSeconds(1))
+                .interval(Duration.ofSeconds(1))
                 .log();
     }
 }
