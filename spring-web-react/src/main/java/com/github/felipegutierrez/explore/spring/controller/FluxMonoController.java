@@ -4,6 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.List;
@@ -14,7 +15,12 @@ import java.util.stream.IntStream;
 public class FluxMonoController {
 
     List<Integer> list = IntStream.range(0, 3).boxed().collect(Collectors.toList());
-    List<Integer> largeList = IntStream.range(0, 20).boxed().collect(Collectors.toList());
+
+    @GetMapping("/mono")
+    public Mono<Integer> returnMono() {
+        return Mono.just(1)
+                .log();
+    }
 
     @GetMapping("/flux")
     public Flux<Integer> returnFlux() {
