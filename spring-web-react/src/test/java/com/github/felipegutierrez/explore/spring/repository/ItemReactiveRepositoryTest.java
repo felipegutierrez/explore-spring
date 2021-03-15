@@ -23,7 +23,7 @@ public class ItemReactiveRepositoryTest {
     ItemReactiveRepository itemReactiveRepository;
 
     List<Item> itemList = Arrays.asList(
-            new Item(null, "Samsunf TV", 400.0),
+            new Item("samtv", "Samsung TV", 400.0),
             new Item(null, "LG TV", 420.0),
             new Item(null, "Sony", 500.0),
             new Item(null, "Google TV", 480.0),
@@ -45,6 +45,17 @@ public class ItemReactiveRepositoryTest {
         StepVerifier.create(itemReactiveRepository.findAll())
                 .expectSubscription()
                 .expectNextCount(itemList.size())
+                .verifyComplete();
+    }
+
+    @Test
+    public void getItemById() {
+        StepVerifier.create(itemReactiveRepository.findById("samtv"))
+                .expectSubscription()
+                .expectNextMatches(item -> item.getId().equals("samtv") &&
+                        item.getDescription().equals("Samsung TV") &&
+                        item.getPrice().equals(Double.valueOf(400.0))
+                )
                 .verifyComplete();
     }
 }
