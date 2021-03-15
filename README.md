@@ -20,10 +20,18 @@ Exploring Spring framework version 2.4.3 with [projectreactor](https://projectre
 - `gradle clean`
 - `gradle build`
 - `gradle clean test --info`
-
-
+- Starting MongoDB:
 ```
 cd spring-web-flux/
 docker-compose up
+docker ps
+docker volume ls
+mongo admin -u root -p rootpassword
+show dbs
 ```
-
+- Start spring-web-reactive application using Spring profiles:
+```
+cd spring-web-flux/
+gradle build -x test
+java -jar -Dspring.profiles.active=dev build/libs/spring-web-react-0.0.1.jar
+```
