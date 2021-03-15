@@ -10,6 +10,9 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
+/**
+ * comment implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive' at build.gradle in order to this application work
+ */
 @Configuration
 public class SampleRouterFunctionConfig {
 

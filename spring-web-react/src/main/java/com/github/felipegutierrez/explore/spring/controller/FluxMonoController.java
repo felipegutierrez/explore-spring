@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * comment implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive' at build.gradle in order to this application work
+ */
 @RestController
 public class FluxMonoController {
 
