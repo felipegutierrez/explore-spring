@@ -21,3 +21,9 @@ Exploring Spring framework version 2.4.3 with [projectreactor](https://projectre
 - `gradle build`
 - `gradle clean test --info`
 
+
+```
+cd spring-web-flux/
+docker-compose up
+```
+
