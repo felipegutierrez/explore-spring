@@ -41,4 +41,27 @@ public class ItemController {
     public Mono<Void> deleteItem(@PathVariable String id) {
         return itemReactiveRepository.deleteById(id);
     }
+
+    /**
+     * 1 - pass the ID and the Item to be updated
+     * 2 - retrieve the Item from MongoDB
+     * 3 - update the Item from MongoDB with the new price and Description
+     * 4 - update the Item on MongoDB
+     * 5 - return the saved Item
+     *
+     * @param id
+     * @param item
+     * @return
+     */
+    @PutMapping(ITEM_ENDPOINT_V1 + "/{id}")
+    public Mono<ResponseEntity<Item>> updateItem(@PathVariable String id, @RequestBody Item item) {
+        return itemReactiveRepository.findById(id)
+                .flatMap(currentItem -> {
+                    currentItem.setDescription(item.getDescription());
+                    currentItem.setPrice(item.getPrice());
+                    return itemReactiveRepository.save(currentItem);
+                })
+                .map(updatedItem -> new ResponseEntity<>(updatedItem, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }

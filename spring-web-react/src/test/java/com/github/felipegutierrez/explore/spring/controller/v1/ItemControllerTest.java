@@ -41,7 +41,7 @@ public class ItemControllerTest {
         return Arrays.asList(
                 new Item(null, "Samsung TV", 399.99),
                 new Item(null, "LG TV", 369.99),
-                new Item(null, "Google TV", 439.99),
+                new Item("gTvId", "Google TV", 439.99),
                 new Item("hardcodeID", "Sony TV", 424.99));
     }
 
@@ -136,5 +136,39 @@ public class ItemControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Void.class);
+    }
+
+    @Test
+    @Order(8)
+    public void updateItem() {
+        String id = "gTvId";
+        Double newPrice = 479.99;
+        String newDesc = "Google TV new generation";
+        Item newItem = new Item(null, newDesc, newPrice);
+        webTestClient.put().uri(ITEM_ENDPOINT_V1.concat("/{id}"), id, newItem)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(newItem), Item.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(id)
+                .jsonPath("$.description").isEqualTo(newDesc)
+                .jsonPath("$.price").isEqualTo(479.99);
+    }
+
+    @Test
+    @Order(9)
+    public void updateItemWithInvalidId() {
+        String id = "unknown";
+        Double newPrice = 479.99;
+        String newDesc = "Google TV new generation";
+        Item newItem = new Item(null, newDesc, newPrice);
+        webTestClient.put().uri(ITEM_ENDPOINT_V1.concat("/{id}"), id, newItem)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(newItem), Item.class)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
