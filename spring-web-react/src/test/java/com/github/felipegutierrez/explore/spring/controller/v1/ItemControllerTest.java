@@ -13,11 +13,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ENDPOINT_V1_ITEM_GET_ALL;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -53,12 +55,42 @@ public class ItemControllerTest {
 
     @Test
     @Order(1)
-    public void getAllItems() {
+    public void getAllItemsApproach01() {
         webTestClient.get().uri(ENDPOINT_V1_ITEM_GET_ALL)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBodyList(Item.class)
                 .hasSize(data().size());
+    }
+
+    @Test
+    @Order(2)
+    public void getAllItemsApproach02() {
+        webTestClient.get().uri(ENDPOINT_V1_ITEM_GET_ALL)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBodyList(Item.class)
+                .hasSize(data().size())
+                .consumeWith(response -> {
+                    List<Item> items = response.getResponseBody();
+                    items.forEach(item -> assertTrue(item.getId() != null));
+                });
+    }
+
+    @Test
+    @Order(3)
+    public void getAllItemsApproach03() {
+        Flux<Item> itemsFlux = webTestClient.get().uri(ENDPOINT_V1_ITEM_GET_ALL)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .returnResult(Item.class)
+                .getResponseBody();
+        StepVerifier.create(itemsFlux.log("getAllItemsApproach03"))
+                .expectSubscription()
+                .expectNextCount(data().size())
+                .verifyComplete();
     }
 }
