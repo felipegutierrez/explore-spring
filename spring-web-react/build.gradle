@@ -32,9 +32,10 @@ dependencies {
 
 test {
     // uncomment to speed up tests when there are errors but do NOT commit uncommented
+    exclude 'com/github/felipegutierrez/explore/spring/controller/FluxMonoControllerTest*'
+    // exclude 'com/github/felipegutierrez/explore/spring/controller/v1/ItemControllerTest*'
     // exclude 'com/github/felipegutierrez/explore/spring/flux/**'
     // exclude 'com/github/felipegutierrez/explore/spring/document/**'
-    // exclude 'com/github/felipegutierrez/explore/spring/controller/**'
     // exclude 'com/github/felipegutierrez/explore/spring/repository/**'
     // exclude 'com/github/felipegutierrez/explore/spring/handler/**'
     useJUnitPlatform()

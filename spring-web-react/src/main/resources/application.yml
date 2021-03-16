@@ -8,11 +8,11 @@ spring:
       on-profile: dev
   data.mongodb:
     uri: ${MONGODB_URI:mongodb://root:rootpassword@localhost:27017/local?authSource=admin}
-#    host: localhost
-#    port: 27017
-#    database: local
-#    username: root
-#    password: rootpassword
+---
+spring:
+  config:
+    activate:
+      on-profile: test
 ---
 spring:
   config:
