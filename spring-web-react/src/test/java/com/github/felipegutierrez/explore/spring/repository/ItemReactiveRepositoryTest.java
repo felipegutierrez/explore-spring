@@ -138,7 +138,15 @@ public class ItemReactiveRepositoryTest {
                 .verifyComplete();
     }
 
-    /*
+    @Test
+    @Order(8)
+    public void findItemByPriceLowerThan() {
+        StepVerifier.create(itemReactiveRepository.findItemByPriceLowerThan(Double.valueOf(430.0)))
+                .expectSubscription()
+                .expectNextCount(4)
+                .verifyComplete();
+    }
+/*
     @Test
     public void getThreeItemsByDescription() {
         StepVerifier.create(itemReactiveRepository.containsDescription("TV").log("getThreeItemsByDescription"))
