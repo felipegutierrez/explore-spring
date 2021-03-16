@@ -13,13 +13,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ENDPOINT_V1_ITEM_GET;
-import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ENDPOINT_V1_ITEM_GET_ALL;
+import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_ENDPOINT_V1;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -57,7 +57,7 @@ public class ItemControllerTest {
     @Test
     @Order(1)
     public void getAllItemsApproach01() {
-        webTestClient.get().uri(ENDPOINT_V1_ITEM_GET_ALL)
+        webTestClient.get().uri(ITEM_ENDPOINT_V1)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ public class ItemControllerTest {
     @Test
     @Order(2)
     public void getAllItemsApproach02() {
-        webTestClient.get().uri(ENDPOINT_V1_ITEM_GET_ALL)
+        webTestClient.get().uri(ITEM_ENDPOINT_V1)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
@@ -83,7 +83,7 @@ public class ItemControllerTest {
     @Test
     @Order(3)
     public void getAllItemsApproach03() {
-        Flux<Item> itemsFlux = webTestClient.get().uri(ENDPOINT_V1_ITEM_GET_ALL)
+        Flux<Item> itemsFlux = webTestClient.get().uri(ITEM_ENDPOINT_V1)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
@@ -98,7 +98,7 @@ public class ItemControllerTest {
     @Test
     @Order(4)
     public void getItem() {
-        webTestClient.get().uri(ENDPOINT_V1_ITEM_GET.concat("/{id}"), "hardcodeID")
+        webTestClient.get().uri(ITEM_ENDPOINT_V1.concat("/{id}"), "hardcodeID")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -108,8 +108,23 @@ public class ItemControllerTest {
     @Test
     @Order(5)
     public void getItemNotFound() {
-        webTestClient.get().uri(ENDPOINT_V1_ITEM_GET.concat("/{id}"), "unknownID")
+        webTestClient.get().uri(ITEM_ENDPOINT_V1.concat("/{id}"), "unknownID")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    @Order(6)
+    public void createItem() {
+        Item newItem = new Item(null, "piano course", 49.99);
+        webTestClient.post().uri(ITEM_ENDPOINT_V1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(newItem), Item.class)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody()
+                .jsonPath("$.id").isNotEmpty()
+                .jsonPath("$.description").isEqualTo("piano course")
+                .jsonPath("$.price").isEqualTo(49.99);
     }
 }
