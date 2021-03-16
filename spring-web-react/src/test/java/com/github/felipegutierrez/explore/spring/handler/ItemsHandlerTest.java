@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
@@ -92,5 +93,82 @@ public class ItemsHandlerTest {
                 .expectSubscription()
                 .expectNextCount(data().size())
                 .verifyComplete();
+    }
+
+    @Test
+    @Order(4)
+    public void getItem() {
+        webTestClient.get().uri(ITEM_FUNCTIONAL_ENDPOINT_V1.concat("/{id}"), "hardcodeID")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.price", 424.99);
+    }
+
+    @Test
+    @Order(5)
+    public void getItemNotFound() {
+        webTestClient.get().uri(ITEM_FUNCTIONAL_ENDPOINT_V1.concat("/{id}"), "unknownID")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    @Order(6)
+    public void createItem() {
+        Item newItem = new Item(null, "piano course", 49.99);
+        webTestClient.post().uri(ITEM_FUNCTIONAL_ENDPOINT_V1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(newItem), Item.class)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody()
+                .jsonPath("$.id").isNotEmpty()
+                .jsonPath("$.description").isEqualTo("piano course")
+                .jsonPath("$.price").isEqualTo(49.99);
+    }
+
+    @Test
+    @Order(7)
+    public void deleteItem() {
+        webTestClient.delete().uri(ITEM_FUNCTIONAL_ENDPOINT_V1.concat("/{id}"), "hardcodeID")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Void.class);
+    }
+
+    @Test
+    @Order(8)
+    public void updateItem() {
+        String id = "gTvId";
+        Double newPrice = 479.99;
+        String newDesc = "Google TV new generation";
+        Item newItem = new Item(null, newDesc, newPrice);
+        webTestClient.put().uri(ITEM_FUNCTIONAL_ENDPOINT_V1.concat("/{id}"), id, newItem)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(newItem), Item.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.id").isEqualTo(id)
+                .jsonPath("$.description").isEqualTo(newDesc)
+                .jsonPath("$.price").isEqualTo(479.99);
+    }
+
+    @Test
+    @Order(9)
+    public void updateItemWithInvalidId() {
+        String id = "unknown";
+        Double newPrice = 479.99;
+        String newDesc = "Google TV new generation";
+        Item newItem = new Item(null, newDesc, newPrice);
+        webTestClient.put().uri(ITEM_FUNCTIONAL_ENDPOINT_V1.concat("/{id}"), id, newItem)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(newItem), Item.class)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
