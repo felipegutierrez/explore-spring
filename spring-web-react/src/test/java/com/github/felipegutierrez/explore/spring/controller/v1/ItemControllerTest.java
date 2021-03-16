@@ -18,6 +18,7 @@ import reactor.test.StepVerifier;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ENDPOINT_V1_ITEM_GET;
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ENDPOINT_V1_ITEM_GET_ALL;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -92,5 +93,23 @@ public class ItemControllerTest {
                 .expectSubscription()
                 .expectNextCount(data().size())
                 .verifyComplete();
+    }
+
+    @Test
+    @Order(4)
+    public void getItem() {
+        webTestClient.get().uri(ENDPOINT_V1_ITEM_GET.concat("/{id}"), "hardcodeID")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.price", 424.99);
+    }
+
+    @Test
+    @Order(5)
+    public void getItemNotFound() {
+        webTestClient.get().uri(ENDPOINT_V1_ITEM_GET.concat("/{id}"), "unknownID")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
