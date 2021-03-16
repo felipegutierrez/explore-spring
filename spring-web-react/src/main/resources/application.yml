@@ -7,9 +7,12 @@ spring:
     activate:
       on-profile: dev
   data.mongodb:
-    host: localhost
-    port: 27017
-    database: local
+    uri: ${MONGODB_URI:mongodb://root:rootpassword@localhost:27017/local?authSource=admin}
+#    host: localhost
+#    port: 27017
+#    database: local
+#    username: root
+#    password: rootpassword
 ---
 spring:
   config:
