@@ -1,12 +1,13 @@
 package com.github.felipegutierrez.explore.spring.handler;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
@@ -16,7 +17,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
+@DirtiesContext
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureWebTestClient
 public class SampleHandlerFunctionTest {
@@ -27,10 +29,10 @@ public class SampleHandlerFunctionTest {
     SampleHandlerFunction sampleHandlerFunction = new SampleHandlerFunction();
 
     @Test
-    public void fluxTest_approach1() {
+    public void functionalFluxTest_approach1() {
         Flux<Integer> integerFlux = webTestClient
                 .get().uri("/functional/flux")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(Integer.class)
@@ -43,7 +45,7 @@ public class SampleHandlerFunctionTest {
     }
 
     @Test
-    public void fluxTest_approach2() {
+    public void functionalFluxTest_approach2() {
         webTestClient
                 .get().uri("/functional/flux")
                 .accept(MediaType.APPLICATION_JSON)
@@ -55,7 +57,7 @@ public class SampleHandlerFunctionTest {
     }
 
     @Test
-    public void fluxTest_approach3() {
+    public void functionalFluxTest_approach3() {
         EntityExchangeResult<List<Integer>> entityExchangeResult = webTestClient
                 .get().uri("/functional/flux")
                 .accept(MediaType.APPLICATION_JSON)
@@ -67,7 +69,7 @@ public class SampleHandlerFunctionTest {
     }
 
     @Test
-    public void fluxTest_approach4() {
+    public void functionalFluxTest_approach4() {
         webTestClient
                 .get().uri("/functional/flux")
                 .accept(MediaType.APPLICATION_JSON)
@@ -78,7 +80,7 @@ public class SampleHandlerFunctionTest {
     }
 
     @Test
-    public void monoTest_approach1() {
+    public void functionalMonoTest_approach1() {
         webTestClient
                 .get().uri("/functional/mono")
                 .accept(MediaType.APPLICATION_JSON)
@@ -89,7 +91,7 @@ public class SampleHandlerFunctionTest {
     }
 
     @Test
-    public void fluxStreamTest_approach1() {
+    public void functionalFluxStreamTest_approach1() {
         Flux<Long> longFlux = webTestClient
                 .get().uri("/functional/fluxstream")
                 .accept(MediaType.APPLICATION_STREAM_JSON)

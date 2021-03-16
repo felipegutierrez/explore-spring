@@ -17,9 +17,9 @@ Exploring Spring framework version 2.4.3 with [projectreactor](https://projectre
 
 ### Basic commands
 
-- `gradle clean`
-- `gradle build`
-- `gradle clean test --info`
+- `./gradlew clean`
+- `./gradlew build`
+- `./gradlew test --info`
 - Starting MongoDB:
 ```
 cd spring-web-flux/
