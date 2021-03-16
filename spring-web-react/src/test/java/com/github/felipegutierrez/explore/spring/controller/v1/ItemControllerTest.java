@@ -127,4 +127,14 @@ public class ItemControllerTest {
                 .jsonPath("$.description").isEqualTo("piano course")
                 .jsonPath("$.price").isEqualTo(49.99);
     }
+
+    @Test
+    @Order(7)
+    public void deleteItem() {
+        webTestClient.delete().uri(ITEM_ENDPOINT_V1.concat("/{id}"), "hardcodeID")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Void.class);
+    }
 }
