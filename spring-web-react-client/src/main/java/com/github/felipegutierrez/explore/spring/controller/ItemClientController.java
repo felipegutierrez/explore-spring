@@ -1,9 +1,8 @@
 package com.github.felipegutierrez.explore.spring.controller;
 
 import com.github.felipegutierrez.explore.spring.domain.Item;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -90,5 +89,38 @@ public class ItemClientController {
         return webClient.get().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Item.class))
                 .log("Item in client project exchange: ");
+    }
+
+    /**
+     * using: http POST http://localhost:8081/client/createItem < spring-web-react-client/src/main/resources/sampleItem.json
+     *
+     * @param item
+     * @return
+     */
+    @PostMapping("/client/createItem")
+    public Mono<Item> createItem(@RequestBody Item item) {
+        Mono<Item> itemMono = Mono.just(item);
+        return webClient.post().uri(ITEM_ENDPOINT_V1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(itemMono, Item.class)
+                .retrieve()
+                .bodyToMono(Item.class)
+                .log("created item: ");
+    }
+
+    /**
+     * using: http POST http://localhost:8081/client/createItemExchange < spring-web-react-client/src/main/resources/sampleItem.json
+     *
+     * @param item
+     * @return
+     */
+    @PostMapping("/client/createItemExchange")
+    public Mono<Item> createItemExchange(@RequestBody Item item) {
+        Mono<Item> itemMono = Mono.just(item);
+        return webClient.post().uri(ITEM_ENDPOINT_V1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(itemMono, Item.class)
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Item.class))
+                .log("created item: ");
     }
 }
