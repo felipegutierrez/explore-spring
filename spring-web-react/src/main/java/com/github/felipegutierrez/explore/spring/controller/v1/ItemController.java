@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_ENDPOINT_V1;
+import static com.github.felipegutierrez.explore.spring.util.ItemConstants.RUNTIME_EXCEPTION_MSG;
 
 @RestController
 @Slf4j
@@ -82,7 +83,7 @@ public class ItemController {
     public Flux<Item> runtimeException() {
         return itemReactiveRepository
                 .findAll()
-                .concatWith(Mono.error(new RuntimeException("A RuntimeException occurred in the Item end-point. Please contact the system administrator.")));
+                .concatWith(Mono.error(new RuntimeException(RUNTIME_EXCEPTION_MSG)));
     }
 
     /**

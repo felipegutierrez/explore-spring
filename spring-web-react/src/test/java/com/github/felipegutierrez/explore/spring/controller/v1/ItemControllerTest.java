@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_ENDPOINT_V1;
+import static com.github.felipegutierrez.explore.spring.util.ItemConstants.RUNTIME_EXCEPTION_MSG;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -170,5 +171,26 @@ public class ItemControllerTest {
                 .body(Mono.just(newItem), Item.class)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    @Order(10)
+    public void testRuntimeException() {
+        // http://localhost:8080/v1/item/runtimeException
+        webTestClient.get().uri(ITEM_ENDPOINT_V1.concat("/runtimeException"))
+                .exchange()
+                .expectStatus().is5xxServerError()
+                .expectBody(String.class)
+                .isEqualTo(RUNTIME_EXCEPTION_MSG);
+    }
+
+    @Test
+    @Order(11)
+    public void testException() {
+        // http://localhost:8080/v1/item/exception
+        webTestClient.get().uri(ITEM_ENDPOINT_V1.concat("/exception"))
+                .exchange()
+                .expectStatus().is5xxServerError()
+                .expectBody(String.class);
     }
 }
