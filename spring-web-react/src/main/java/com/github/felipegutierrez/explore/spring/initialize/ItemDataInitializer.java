@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.spring.initialize;
 
 import com.github.felipegutierrez.explore.spring.document.Item;
 import com.github.felipegutierrez.explore.spring.document.ItemCapped;
+import com.github.felipegutierrez.explore.spring.repository.ItemCappedReactiveRepository;
 import com.github.felipegutierrez.explore.spring.repository.ItemReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,12 +28,16 @@ public class ItemDataInitializer implements CommandLineRunner {
     ItemReactiveRepository itemReactiveRepository;
 
     @Autowired
+    ItemCappedReactiveRepository itemCappedReactiveRepository;
+
+    @Autowired
     MongoOperations mongoOperations;
 
     @Override
     public void run(String... args) throws Exception {
-        initialDataSetup();
+        initialDataItemSetup();
         createCappedCollection();
+        initialDataItemCappedSetup();
     }
 
     private void createCappedCollection() {
@@ -48,11 +54,19 @@ public class ItemDataInitializer implements CommandLineRunner {
                 new Item("hardcodeID", "Sony TV", 424.99));
     }
 
-    private void initialDataSetup() {
+    private void initialDataItemSetup() {
         itemReactiveRepository.deleteAll()
                 .thenMany(Flux.fromIterable(data()))
                 .flatMap(itemReactiveRepository::save)
                 .thenMany(itemReactiveRepository.findAll())
                 .subscribe(item -> log.info("Item inserted from CommandLineRunner: {}", item));
+    }
+
+    private void initialDataItemCappedSetup() {
+        Flux<ItemCapped> itemCappedFlux = Flux.interval(Duration.ofSeconds(1))
+                .map(i -> new ItemCapped(null, "random item capped " + i, 100.0 + i));
+        itemCappedReactiveRepository
+                .insert(itemCappedFlux)
+                .subscribe(itemCapped -> log.info("Inserted ItemCapped: {}", itemCapped));
     }
 }
