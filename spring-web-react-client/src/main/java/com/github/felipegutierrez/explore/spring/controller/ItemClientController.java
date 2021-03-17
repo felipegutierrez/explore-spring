@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.spring.controller;
 
 import com.github.felipegutierrez.explore.spring.domain.Item;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -61,6 +62,31 @@ public class ItemClientController {
     @GetMapping("/client/exchange/singleItem")
     public Mono<Item> getItemUsingExchange() {
         String id = "hardcodeID";
+        return webClient.get().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Item.class))
+                .log("Item in client project exchange: ");
+    }
+
+    /**
+     * using: http GET http://localhost:8081/client/retrieve/hardcodeID
+     *
+     * @return
+     */
+    @GetMapping("/client/retrieve" + "/{id}")
+    public Mono<Item> getItemUsingRetrieve(@PathVariable String id) {
+        return webClient.get().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
+                .retrieve()
+                .bodyToMono(Item.class)
+                .log("Item in client project retrieve: ");
+    }
+
+    /**
+     * using: http GET http://localhost:8081/client/exchange/hardcodeID
+     *
+     * @return
+     */
+    @GetMapping("/client/exchange" + "/{id}")
+    public Mono<Item> getItemUsingExchange(@PathVariable String id) {
         return webClient.get().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Item.class))
                 .log("Item in client project exchange: ");
