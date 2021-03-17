@@ -125,7 +125,6 @@ public class ItemClientController {
     }
 
     /**
-     *
      * using: http PUT http://localhost:8081/client/updateItem/hardcodeID < spring-web-react-client/src/main/resources/sampleItemToUpdate.json
      *
      * @param id
@@ -143,7 +142,6 @@ public class ItemClientController {
     }
 
     /**
-     *
      * using: http PUT http://localhost:8081/client/updateItemExchange/hardcodeID < spring-web-react-client/src/main/resources/sampleItemToUpdate.json
      *
      * @param id
@@ -158,4 +156,32 @@ public class ItemClientController {
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Item.class))
                 .log("updated item exchange: ");
     }
+
+    /**
+     * using: http DELETE http://localhost:8081/client/deleteItem/hardcodeID
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/client/deleteItem" + "/{id}")
+    public Mono<Void> deleteItem(@PathVariable String id) {
+        return webClient.delete().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .log("deleted item: ");
+    }
+
+    /**
+     * using: http DELETE http://localhost:8081/client/deleteItemExchange/hardcodeID
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/client/deleteItemExchange" + "/{id}")
+    public Mono<Void> deleteItemExchange(@PathVariable String id) {
+        return webClient.delete().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Void.class))
+                .log("deleted item: ");
+    }
+
 }
