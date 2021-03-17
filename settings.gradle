@@ -4,3 +4,4 @@ rootProject.name = "explore-spring"
 include(":spring-web")
 include(":spring-basics")
 include(":spring-web-react")
+include(":spring-web-react-client")
