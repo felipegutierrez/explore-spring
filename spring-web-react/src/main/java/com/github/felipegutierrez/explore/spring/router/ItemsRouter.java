@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
+import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_CAPPED_STREAM_FUNCTIONAL_ENDPOINT_V1;
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_FUNCTIONAL_ENDPOINT_V1;
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 
@@ -34,5 +35,12 @@ public class ItemsRouter {
         return RouterFunctions
                 .route(GET("/v1/func/runtimeexception").and(accept(MediaType.APPLICATION_JSON)),
                         itemsHandler::itemsRuntimeException);
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> itemCappedStreamRouter(ItemsHandler itemsHandler) {
+        return RouterFunctions
+                .route(GET(ITEM_CAPPED_STREAM_FUNCTIONAL_ENDPOINT_V1).and(accept(MediaType.APPLICATION_JSON)),
+                        itemsHandler::itemsCappedStream);
     }
 }

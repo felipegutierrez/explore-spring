@@ -1,6 +1,8 @@
 package com.github.felipegutierrez.explore.spring.handler;
 
 import com.github.felipegutierrez.explore.spring.document.Item;
+import com.github.felipegutierrez.explore.spring.document.ItemCapped;
+import com.github.felipegutierrez.explore.spring.repository.ItemCappedReactiveRepository;
 import com.github.felipegutierrez.explore.spring.repository.ItemReactiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ public class ItemsHandler {
 
     @Autowired
     ItemReactiveRepository itemReactiveRepository;
+
+    @Autowired
+    ItemCappedReactiveRepository itemCappedReactiveRepository;
 
     public Mono<ServerResponse> getAllItems(ServerRequest serverRequest) {
         return ServerResponse.ok()
@@ -71,5 +76,11 @@ public class ItemsHandler {
 
     public Mono<ServerResponse> itemsRuntimeException(ServerRequest serverRequest) {
         throw new RuntimeException("A RuntimeException occurred");
+    }
+
+    public Mono<ServerResponse> itemsCappedStream(ServerRequest serverRequest) {
+        return ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_STREAM_JSON)
+                .body(itemCappedReactiveRepository.findItemsBy(), ItemCapped.class);
     }
 }
