@@ -171,4 +171,14 @@ public class ItemsHandlerTest {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    @Order(10)
+    public void runtimeException() {
+        webTestClient.get().uri("/v1/func/runtimeexception")
+                .exchange()
+                .expectStatus().is5xxServerError()
+                .expectBody()
+                .jsonPath("$.message", "A RuntimeException occurred");
+    }
 }
