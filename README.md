@@ -13,7 +13,8 @@ Exploring Spring framework version 2.4.3 with [projectreactor](https://projectre
 
 - [Spring basics](spring-basics)
 - [Spring web](spring-web)
-- [Spring reactive web](spring-web-react)
+- [Spring reactive web server](spring-web-react)
+- [Spring reactive web client](spring-web-react-client)
 
 ### Basic commands
 
