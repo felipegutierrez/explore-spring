@@ -40,14 +40,6 @@ public class ItemCappedStreamControllerTest {
     @Autowired
     MongoOperations mongoOperations;
 
-    public List<ItemCapped> data() {
-        return Arrays.asList(
-                new ItemCapped(null, "Samsung TV", 399.99),
-                new ItemCapped(null, "LG TV", 369.99),
-                new ItemCapped("gTvId", "Google TV", 439.99),
-                new ItemCapped("hardcodeID", "Sony TV", 424.99));
-    }
-
     @BeforeAll
     public void setUp() {
         mongoOperations.dropCollection(ItemCapped.class);

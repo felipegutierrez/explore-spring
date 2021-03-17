@@ -1,12 +1,16 @@
 package com.github.felipegutierrez.explore.spring.handler;
 
 import com.github.felipegutierrez.explore.spring.document.Item;
+import com.github.felipegutierrez.explore.spring.document.ItemCapped;
+import com.github.felipegutierrez.explore.spring.repository.ItemCappedReactiveRepository;
 import com.github.felipegutierrez.explore.spring.repository.ItemReactiveRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.CollectionOptions;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,9 +20,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_CAPPED_STREAM_FUNCTIONAL_ENDPOINT_V1;
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_FUNCTIONAL_ENDPOINT_V1;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -37,6 +43,12 @@ public class ItemsHandlerTest {
     @Autowired
     ItemReactiveRepository itemReactiveRepository;
 
+    @Autowired
+    ItemCappedReactiveRepository itemCappedReactiveRepository;
+
+    @Autowired
+    MongoOperations mongoOperations;
+
     public List<Item> data() {
         return Arrays.asList(
                 new Item(null, "Samsung TV", 399.99),
@@ -52,6 +64,18 @@ public class ItemsHandlerTest {
                 .flatMap(itemReactiveRepository::save)
                 .doOnNext(item -> System.out.println("inserted item: " + item))
                 .blockLast();
+
+        // setup data for the ItemCapped Stream handler
+        mongoOperations.dropCollection(ItemCapped.class);
+        mongoOperations.createCollection(ItemCapped.class,
+                CollectionOptions.empty().maxDocuments(20).size(50_000).capped());
+        Flux<ItemCapped> itemCappedFlux = Flux.interval(Duration.ofMillis(100))
+                .map(i -> new ItemCapped(null, "random item capped " + i, 100.0 + i))
+                .take(5);
+        itemCappedReactiveRepository
+                .insert(itemCappedFlux)
+                .doOnNext(itemCapped -> System.out.println("Inserted ItemCapped: " + itemCapped))
+                .blockLast(); // to wait all 5 itemCapped be inserted
     }
 
     @Test
@@ -180,5 +204,21 @@ public class ItemsHandlerTest {
                 .expectStatus().is5xxServerError()
                 .expectBody()
                 .jsonPath("$.message", "A RuntimeException occurred");
+    }
+
+    @Test
+    @Order(11)
+    public void getStreamItemCapped() {
+        Flux<ItemCapped> itemCappedFlux = webTestClient.get().uri(ITEM_CAPPED_STREAM_FUNCTIONAL_ENDPOINT_V1)
+                .exchange()
+                .expectStatus().isOk()
+                .returnResult(ItemCapped.class)
+                .getResponseBody()
+                .take(5);
+        StepVerifier.create(itemCappedFlux)
+                .expectSubscription()
+                .expectNextCount(5)
+                .thenCancel()
+                .verify();
     }
 }
