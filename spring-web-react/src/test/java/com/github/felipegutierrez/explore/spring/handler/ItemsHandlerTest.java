@@ -175,7 +175,7 @@ public class ItemsHandlerTest {
     @Test
     @Order(10)
     public void runtimeException() {
-        webTestClient.get().uri("/v1/func/runtimeexception")
+        webTestClient.get().uri(ITEM_FUNCTIONAL_ENDPOINT_V1.concat("/runtimeexception"))
                 .exchange()
                 .expectStatus().is5xxServerError()
                 .expectBody()

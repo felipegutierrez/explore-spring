@@ -1,6 +1,8 @@
 package com.github.felipegutierrez.explore.spring.controller;
 
 import com.github.felipegutierrez.explore.spring.domain.Item;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,6 +12,7 @@ import reactor.core.publisher.Mono;
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_ENDPOINT_V1;
 
 @RestController
+@Slf4j
 public class ItemClientController {
 
     WebClient webClient = WebClient.create("http://localhost:8080");
@@ -184,4 +187,33 @@ public class ItemClientController {
                 .log("deleted item: ");
     }
 
+    @GetMapping("/client/retrieve/error")
+    public Flux<Item> errorRetrieve() {
+        return webClient.get().uri("/v1/func/runtimeexception")
+                .retrieve()
+                .onStatus(HttpStatus::is5xxServerError, clientResponse -> {
+                    Mono<String> errorMono = clientResponse.bodyToMono(String.class);
+                    return errorMono.flatMap(errorMsg -> {
+                        log.error("The error message is: {}", errorMsg);
+                        return Mono.error(new RuntimeException(errorMsg));
+                    });
+                })
+                .bodyToFlux(Item.class);
+    }
+
+    @GetMapping("/client/exchange/error")
+    public Flux<Item> errorExchange() {
+        return webClient.get().uri("/v1/func/runtimeexception")
+                .exchangeToFlux(clientResponse -> {
+                    if (clientResponse.statusCode().is5xxServerError()) {
+                        return clientResponse.bodyToFlux(String.class)
+                                .flatMap(errorMsg -> {
+                                    log.error("Error message on errorExchange: {}", errorMsg);
+                                    return Mono.error(new RuntimeException(errorMsg));
+                                });
+                    } else {
+                        return clientResponse.bodyToFlux(Item.class);
+                    }
+                });
+    }
 }
