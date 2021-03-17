@@ -123,4 +123,39 @@ public class ItemClientController {
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Item.class))
                 .log("created item: ");
     }
+
+    /**
+     *
+     * using: http PUT http://localhost:8081/client/updateItem/hardcodeID < spring-web-react-client/src/main/resources/sampleItemToUpdate.json
+     *
+     * @param id
+     * @param item
+     * @return
+     */
+    @PutMapping("/client/updateItem" + "/{id}")
+    public Mono<Item> updateItem(@PathVariable String id, @RequestBody Item item) {
+        Mono<Item> itemMono = Mono.just(item);
+        return webClient.put().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
+                .body(itemMono, Item.class)
+                .retrieve()
+                .bodyToMono(Item.class)
+                .log("updated item: ");
+    }
+
+    /**
+     *
+     * using: http PUT http://localhost:8081/client/updateItemExchange/hardcodeID < spring-web-react-client/src/main/resources/sampleItemToUpdate.json
+     *
+     * @param id
+     * @param item
+     * @return
+     */
+    @PutMapping("/client/updateItemExchange" + "/{id}")
+    public Mono<Item> updateItemExchange(@PathVariable String id, @RequestBody Item item) {
+        Mono<Item> itemMono = Mono.just(item);
+        return webClient.put().uri(ITEM_ENDPOINT_V1 + "/{id}", id)
+                .body(itemMono, Item.class)
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(Item.class))
+                .log("updated item exchange: ");
+    }
 }
