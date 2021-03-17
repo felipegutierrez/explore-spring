@@ -19,12 +19,13 @@ public class ItemController {
     @Autowired
     ItemReactiveRepository itemReactiveRepository;
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-        log.error("Exception caught in handleRuntimeException: {}", ex);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ex.getMessage());
-    }
+    // moved to the global handler
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+//        log.error("Exception caught in handleRuntimeException: {}", ex);
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(ex.getMessage());
+//    }
 
     @GetMapping(ITEM_ENDPOINT_V1)
     public Flux<Item> getAllItems() {
@@ -81,6 +82,18 @@ public class ItemController {
     public Flux<Item> runtimeException() {
         return itemReactiveRepository
                 .findAll()
-                .concatWith(Mono.error(new RuntimeException("An error occurred in the Item end-point. Please contact the system administrator.")));
+                .concatWith(Mono.error(new RuntimeException("A RuntimeException occurred in the Item end-point. Please contact the system administrator.")));
+    }
+
+    /**
+     * using http://localhost:8080/v1/item/exception
+     *
+     * @return
+     */
+    @GetMapping(ITEM_ENDPOINT_V1 + "/exception")
+    public Flux<Item> exception() {
+        return itemReactiveRepository
+                .findAll()
+                .concatWith(Mono.error(new NumberFormatException("A NumberFormatException occurred in the Item end-point. Please contact the system administrator.")));
     }
 }
