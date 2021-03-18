@@ -40,7 +40,8 @@ public class LibraryEventsController {
         log.info("received request: {}", libraryEvent);
 
         // invoke the kafka producer and send message asynchronously
-        libraryEventProducer.sendLibraryEvent(libraryEvent);
+        // libraryEventProducer.sendLibraryEvent(libraryEvent);
+        libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(libraryEvent);
