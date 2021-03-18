@@ -7,7 +7,7 @@
 
 # Explore Spring Framework
 
-Exploring Spring framework version 2.4.3 with [projectreactor](https://projectreactor.io/).
+Exploring Spring framework version 2.4.3 with [projectreactor](https://projectreactor.io/) and JDK 11.
 
 ### Modules
 
