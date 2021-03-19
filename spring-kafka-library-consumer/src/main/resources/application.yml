@@ -1,0 +1,58 @@
+spring:
+  profiles:
+    active: dev
+server:
+  port: 8081
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  kafka:
+    template:
+      default-topic: library-events
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: library-events-listenes-group
+    admin:
+      properties:
+        bootstrap.servers: localhost:9092,localhost:9093,localhost:9094
+---
+spring:
+  config:
+    activate:
+      on-profile: devssl
+  kafka:
+    template:
+      default-topic: library-events
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: library-events-listenes-group
+      ssl:
+        trust-store-location: file:/Dilip/udemy/kafka-for-developers-using-spring-boot/ssl/client.truststore.jks
+        trust-store-password: password
+        key-store-location: file:/Dilip/udemy/kafka-for-developers-using-spring-boot/ssl/client.keystore.jks
+        key-store-password: password
+      properties:
+        acks: all
+        retries: 10
+        retry.backoff.ms: 1000
+        security:
+          protocol: SSL
+        ssl.endpoint.identification.algorithm:
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: library-events-listenes-group
