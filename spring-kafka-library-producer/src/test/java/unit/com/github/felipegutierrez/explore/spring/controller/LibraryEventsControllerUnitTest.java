@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_ENDPOINT;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -75,13 +76,12 @@ public class LibraryEventsControllerUnitTest {
         doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
 
         // when
+        String expectedErrorMessage = "book - must not be null";
         mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
                 .content(libraryEventJson)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-        // then
-
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().string(expectedErrorMessage));
     }
 
     @Test
@@ -98,12 +98,65 @@ public class LibraryEventsControllerUnitTest {
         doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
 
         // when
+        String expectedErrorMessage = "book.bookAuthor - must not be blank, book.bookId - must not be null, book.bookName - must not be blank";
         mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
                 .content(libraryEventJson)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().string(expectedErrorMessage));
+    }
 
-        // then
+    @Test
+    void postLibraryEventTestBookWithoutName() throws Exception {
+        // given a library event with no book
+        Book book = Book.builder()
+                .bookId(584)
+                .bookAuthor("")
+                .bookName("")
+                .build();
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(null)
+                .book(book)
+                .build();
+        String libraryEventJson = objectMapper.writeValueAsString(libraryEvent);
 
+        /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
+         *  method of the LibraryEventProducer. */
+        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+
+        // when
+        String expectedErrorMessage = "book.bookAuthor - must not be blank, book.bookName - must not be blank";
+        mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
+                .content(libraryEventJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().string(expectedErrorMessage));
+    }
+
+    @Test
+    void postLibraryEventTestBookWithoutId() throws Exception {
+        // given a library event with no book
+        Book book = Book.builder()
+                .bookId(null)
+                .bookAuthor("Oscar Wilde")
+                .bookName("The portrait of Dorian Gray")
+                .build();
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(null)
+                .book(book)
+                .build();
+        String libraryEventJson = objectMapper.writeValueAsString(libraryEvent);
+
+        /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
+         *  method of the LibraryEventProducer. */
+        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+
+        // when
+        String expectedErrorMessage = "book.bookId - must not be null";
+        mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
+                .content(libraryEventJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().string(expectedErrorMessage));
     }
 }
