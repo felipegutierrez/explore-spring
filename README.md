@@ -16,7 +16,7 @@ Exploring Spring framework version 2.4.3 with [projectreactor](https://projectre
 - [Spring reactive web server](spring-web-react)
 - [Spring reactive web client](spring-web-react-client)
 - [Spring with Kafka producer](spring-kafka-library-producer)
-- [Spring with Kafka consumer]()
+- [Spring with Kafka consumer](spring-kafka-library-consumer)
 
 ### Basic commands
 
