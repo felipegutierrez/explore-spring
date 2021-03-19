@@ -34,7 +34,6 @@ public class LibraryEventsControllerUnitTest {
     LibraryEventProducer libraryEventProducer;
 
     @Test
-        // @Timeout(value = 5000, unit = TimeUnit.MILLISECONDS)
     void postLibraryEventTest() throws Exception {
         // given a book
         Book book = Book.builder()
@@ -57,6 +56,52 @@ public class LibraryEventsControllerUnitTest {
                 .content(libraryEventJson)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
+
+        // then
+
+    }
+
+    @Test
+    void postLibraryEventTestWithNullBook() throws Exception {
+        // given a library event with no book
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(null)
+                .book(null)
+                .build();
+        String libraryEventJson = objectMapper.writeValueAsString(libraryEvent);
+
+        /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
+         *  method of the LibraryEventProducer. */
+        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+
+        // when
+        mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
+                .content(libraryEventJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        // then
+
+    }
+
+    @Test
+    void postLibraryEventTestWithFakeBook() throws Exception {
+        // given a library event with fake book
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(null)
+                .book(new Book())
+                .build();
+        String libraryEventJson = objectMapper.writeValueAsString(libraryEvent);
+
+        /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
+         *  method of the LibraryEventProducer. */
+        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+
+        // when
+        mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
+                .content(libraryEventJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
 
         // then
 
