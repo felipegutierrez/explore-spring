@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-19T15:16:25" hostname="cow-11" time="0.458">
+<testsuite name="com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-03-19T17:04:28" hostname="cow-11" time="0.445">
   <properties/>
-  <testcase name="contextLoads()" classname="com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests" time="0.458"/>
-  <system-out><![CDATA[16:16:17.605 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-16:16:17.662 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-16:16:17.799 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
-16:16:17.838 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests], using SpringBootContextLoader
-16:16:17.855 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: class path resource [com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplicationTests-context.xml] does not exist
-16:16:17.857 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: class path resource [com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplicationTestsContext.groovy] does not exist
-16:16:17.858 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-16:16:17.862 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: SpringKafkaLibraryConsumerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-16:16:17.991 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]
-16:16:18.206 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/home/felipe/workspace-idea/explore-spring/spring-kafka-library-consumer/build/classes/java/main/com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplication.class]
-16:16:18.208 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication for test class com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests
-16:16:18.516 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: using defaults.
-16:16:18.517 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-16:16:18.567 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [javax/servlet/ServletContext]
-16:16:18.594 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@6816bb92, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@3bcdd4, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@2e4cd02a, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@285bb6bb, org.springframework.test.context.support.DirtiesContextTestExecutionListener@754c4209, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2bc77419, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@63c22ccb, org.springframework.test.context.event.EventPublishingTestExecutionListener@1659a066, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@112f4ae, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@11e52f29, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6333edaa, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@38b23b3a, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@2e930f06, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@16b7e19a]
-16:16:18.603 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@5dc0d802 testClass = SpringKafkaLibraryConsumerApplicationTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@5ae36a9d testClass = SpringKafkaLibraryConsumerApplicationTests, locations = '{}', classes = '{class com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@7b275fab, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@2b4e1ae0, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@211db8a3, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@c42292b, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@3f4647cb, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@17d9b742], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[[empty]]], class annotated with @DirtiesContext [false] with mode [null].
-16:16:18.650 [Test worker] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@5dc0d802 testClass = SpringKafkaLibraryConsumerApplicationTests, testInstance = com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests@6547855b, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@5ae36a9d testClass = SpringKafkaLibraryConsumerApplicationTests, locations = '{}', classes = '{class com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@7b275fab, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@2b4e1ae0, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@211db8a3, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@c42292b, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@3f4647cb, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@17d9b742], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -> false]]].
-16:16:18.717 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
+  <testcase name="contextLoads()" classname="com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests" time="0.445"/>
+  <system-out><![CDATA[18:04:19.595 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+18:04:19.645 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+18:04:19.779 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+18:04:19.813 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests], using SpringBootContextLoader
+18:04:19.828 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: class path resource [com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplicationTests-context.xml] does not exist
+18:04:19.830 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: class path resource [com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplicationTestsContext.groovy] does not exist
+18:04:19.830 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+18:04:19.832 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: SpringKafkaLibraryConsumerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:04:19.960 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]
+18:04:20.166 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/home/felipe/workspace-idea/explore-spring/spring-kafka-library-consumer/build/classes/java/main/com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplication.class]
+18:04:20.168 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication for test class com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests
+18:04:20.478 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests]: using defaults.
+18:04:20.479 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+18:04:20.524 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@2d690eb2, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@4b5e935b, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@1fb9a700, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@536b4ca3, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@3612c4e2, org.springframework.test.context.support.DirtiesContextTestExecutionListener@9e94d30, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5bba6aaa, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@52bd2b2a, org.springframework.test.context.event.EventPublishingTestExecutionListener@7228d04b, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@31eb93f3, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@390c405e, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@2d3d82e, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@364dfab7, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@5b548386, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@13602]
+18:04:20.535 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@184b3b11 testClass = SpringKafkaLibraryConsumerApplicationTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@78c0b518 testClass = SpringKafkaLibraryConsumerApplicationTests, locations = '{}', classes = '{class com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@18607cce, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@25ad4ea0, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@66861279, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@44071c17, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@469f08f9, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@185f79cd], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+18:04:20.620 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -29,19 +27,100 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.4.4)
 
-2021-03-19 16:16:19.423  INFO 19082 --- [    Test worker] ringKafkaLibraryConsumerApplicationTests : Starting SpringKafkaLibraryConsumerApplicationTests using Java 11.0.10 on cow-11 with PID 19082 (started by felipe in /home/felipe/workspace-idea/explore-spring/spring-kafka-library-consumer)
-2021-03-19 16:16:19.429  INFO 19082 --- [    Test worker] ringKafkaLibraryConsumerApplicationTests : No active profile set, falling back to default profiles: default
-2021-03-19 16:16:20.534  INFO 19082 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-03-19 16:16:20.568  INFO 19082 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
-2021-03-19 16:16:21.925  INFO 19082 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2021-03-19 16:16:22.739  INFO 19082 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2021-03-19 16:16:22.958  INFO 19082 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-03-19 16:16:23.107  INFO 19082 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.29.Final
-2021-03-19 16:16:23.466  INFO 19082 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2021-03-19 16:16:23.909  INFO 19082 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2021-03-19 16:16:24.641  INFO 19082 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-03-19 16:16:24.665  INFO 19082 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-03-19 16:16:25.834  INFO 19082 --- [    Test worker] ringKafkaLibraryConsumerApplicationTests : Started SpringKafkaLibraryConsumerApplicationTests in 7.11 seconds (JVM running for 10.417)
+2021-03-19 18:04:21.587  INFO 4310 --- [    Test worker] ringKafkaLibraryConsumerApplicationTests : Starting SpringKafkaLibraryConsumerApplicationTests using Java 11.0.10 on cow-11 with PID 4310 (started by felipe in /home/felipe/workspace-idea/explore-spring/spring-kafka-library-consumer)
+2021-03-19 18:04:21.589  INFO 4310 --- [    Test worker] ringKafkaLibraryConsumerApplicationTests : The following profiles are active: dev
+2021-03-19 18:04:23.177  INFO 4310 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-03-19 18:04:23.200  INFO 4310 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 JPA repository interfaces.
+2021-03-19 18:04:24.327  INFO 4310 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-03-19 18:04:25.027  INFO 4310 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-03-19 18:04:25.165  INFO 4310 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-03-19 18:04:25.264  INFO 4310 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.29.Final
+2021-03-19 18:04:25.500  INFO 4310 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-03-19 18:04:25.839  INFO 4310 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2021-03-19 18:04:26.433  INFO 4310 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-03-19 18:04:26.456  INFO 4310 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-03-19 18:04:26.963  WARN 4310 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-03-19 18:04:27.357  INFO 4310 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-19 18:04:28.280  INFO 4310 --- [    Test worker] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-library-events-listenes-group-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = library-events-listenes-group
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.IntegerDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+2021-03-19 18:04:28.545  INFO 4310 --- [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 2.6.0
+2021-03-19 18:04:28.546  INFO 4310 --- [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 62abe01bee039651
+2021-03-19 18:04:28.547  INFO 4310 --- [    Test worker] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1616173468542
+2021-03-19 18:04:28.555  INFO 4310 --- [    Test worker] o.a.k.clients.consumer.KafkaConsumer     : [Consumer clientId=consumer-library-events-listenes-group-1, groupId=library-events-listenes-group] Subscribed to topic(s): library-events
+2021-03-19 18:04:28.570  INFO 4310 --- [    Test worker] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService
+2021-03-19 18:04:28.608  INFO 4310 --- [    Test worker] ringKafkaLibraryConsumerApplicationTests : Started SpringKafkaLibraryConsumerApplicationTests in 7.97 seconds (JVM running for 10.986)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,8 +1,8 @@
-com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplication.java
- com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication
 com/github/felipegutierrez/explore/spring/config/AutoCreateConfig.java
  com.github.felipegutierrez.explore.spring.config.AutoCreateConfig
 com/github/felipegutierrez/explore/spring/util/LibraryConstants.java
  com.github.felipegutierrez.explore.spring.util.LibraryConstants
+com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplication.java
+ com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication
 com/github/felipegutierrez/explore/spring/consumer/LibraryEventConsumer.java
  com.github.felipegutierrez.explore.spring.consumer.LibraryEventConsumer
