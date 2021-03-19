@@ -13,7 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_ENDPOINT;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,7 +51,7 @@ public class LibraryEventsControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
@@ -73,7 +74,7 @@ public class LibraryEventsControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book - must not be null";
@@ -95,7 +96,7 @@ public class LibraryEventsControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book.bookAuthor - must not be blank, book.bookId - must not be null, book.bookName - must not be blank";
@@ -122,7 +123,7 @@ public class LibraryEventsControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book.bookAuthor - must not be blank, book.bookName - must not be blank";
@@ -149,7 +150,7 @@ public class LibraryEventsControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        doNothing().when(libraryEventProducer).sendLibraryEventWithProducerRecord(libraryEvent);
+        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book.bookId - must not be null";

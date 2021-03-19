@@ -35,9 +35,10 @@ public class LibraryEventProducer {
      * asynchronously
      *
      * @param libraryEvent
+     * @return ListenableFuture<SendResult<Integer, String>> to facilitate unit tests
      * @throws JsonProcessingException
      */
-    public void sendLibraryEvent(LibraryEvent libraryEvent) throws JsonProcessingException {
+    public ListenableFuture<SendResult<Integer, String>> sendLibraryEvent(LibraryEvent libraryEvent) throws JsonProcessingException {
 
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);
@@ -54,15 +55,17 @@ public class LibraryEventProducer {
                 handleSuccess(key, value, result);
             }
         });
+        return listenableFuture;
     }
 
     /**
      * asynchronously
      *
      * @param libraryEvent
+     * @return ListenableFuture<SendResult<Integer, String>> to facilitate unit tests
      * @throws JsonProcessingException
      */
-    public void sendLibraryEventWithProducerRecord(LibraryEvent libraryEvent) throws JsonProcessingException {
+    public ListenableFuture<SendResult<Integer, String>> sendLibraryEventWithProducerRecord(LibraryEvent libraryEvent) throws JsonProcessingException {
 
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);
@@ -81,6 +84,7 @@ public class LibraryEventProducer {
                 handleSuccess(key, value, result);
             }
         });
+        return listenableFuture;
     }
 
     private ProducerRecord<Integer, String> buildProducerRecord(String topic, Integer key, String value) {
