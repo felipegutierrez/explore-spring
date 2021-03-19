@@ -1,0 +1,8 @@
+{
+  "libraryEventId": 456,
+  "book":{
+    "bookId": 254,
+    "bookName": "The picture of Dorian Gray",
+    "bookAuthor": "Oscar Wilde"
+  }
+}

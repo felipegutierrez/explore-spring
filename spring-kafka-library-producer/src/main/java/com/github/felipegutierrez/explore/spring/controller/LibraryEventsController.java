@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +40,7 @@ public class LibraryEventsController {
      */
     @PostMapping(LIBRARY_V1_ENDPOINT)
     public ResponseEntity<LibraryEvent> postLibraryEvent(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException {
-        log.info("received request: {}", libraryEvent);
+        log.info("received POST request: {}", libraryEvent);
 
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
@@ -47,8 +48,7 @@ public class LibraryEventsController {
         // libraryEventProducer.sendLibraryEvent(libraryEvent);
         libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(libraryEvent);
+        return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
 
     /**
@@ -63,7 +63,7 @@ public class LibraryEventsController {
      */
     @PostMapping(LIBRARY_V1_SYNC_ENDPOINT)
     public ResponseEntity<LibraryEvent> postLibraryEventSync(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException, InterruptedException, ExecutionException, TimeoutException {
-        log.info("received request: {}", libraryEvent);
+        log.info("received POST sync request: {}", libraryEvent);
 
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
@@ -71,7 +71,35 @@ public class LibraryEventsController {
         SendResult<Integer, String> sendResult = libraryEventProducer.sendLibraryEventBlocking(libraryEvent);
         log.info("message sent: {}", sendResult);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(libraryEvent);
+        return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
+    }
+
+    /**
+     * test on CLI using:
+     * "http POST http://localhost:8080/v1/libraryevent < spring-kafka-library-producer/src/main/resources/static/libraryEvent-00.json"
+     * "http PUT  http://localhost:8080/v1/libraryevent < spring-kafka-library-producer/src/main/resources/static/libraryEvent-01.json"
+     * "http PUT  http://localhost:8080/v1/libraryevent < spring-kafka-library-producer/src/main/resources/static/libraryEvent-02.json"
+     *
+     * <p>
+     * consume on the Kafka broker using:
+     * "./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic library-events --from-beginning --property "print.key=true""
+     *
+     * @param libraryEvent
+     * @return
+     * @throws JsonProcessingException
+     */
+    @PutMapping(LIBRARY_V1_ENDPOINT)
+    public ResponseEntity<?> putLibraryEvent(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException {
+        log.info("received PUT request: {}", libraryEvent);
+
+        if (libraryEvent.getLibraryEventId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("LibraryEvent ID is null");
+        }
+        libraryEvent.setLibraryEventType(LibraryEventType.UPDATE);
+
+        // invoke the kafka producer and send message asynchronously
+        libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+
+        return ResponseEntity.status(HttpStatus.OK).body(libraryEvent);
     }
 }
