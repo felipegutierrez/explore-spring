@@ -16,6 +16,7 @@ import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LI
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,9 +59,6 @@ public class LibraryEventControllerUnitTest {
                 .content(libraryEventJson)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
-
-        // then
-
     }
 
     @Test
@@ -159,5 +157,55 @@ public class LibraryEventControllerUnitTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().string(expectedErrorMessage));
+    }
+
+    @Test
+    void putLibraryEventTest() throws Exception {
+        // given a book
+        Book book = Book.builder()
+                .bookId(584)
+                .bookAuthor("Felipe")
+                .bookName("Why is snowing more in the winter of 2021 in Berlin?")
+                .build();
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(123)
+                .book(book)
+                .build();
+        String libraryEventJson = objectMapper.writeValueAsString(libraryEvent);
+
+        /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
+         *  method of the LibraryEventProducer. */
+        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+
+        // when
+        mockMvc.perform(put(LIBRARY_V1_ENDPOINT)
+                .content(libraryEventJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void putLibraryEventTest_withNullLibraryEventId() throws Exception {
+        // given a book
+        Book book = Book.builder()
+                .bookId(584)
+                .bookAuthor("Felipe")
+                .bookName("Why is snowing more in the winter of 2021 in Berlin?")
+                .build();
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(null)
+                .book(book)
+                .build();
+        String libraryEventJson = objectMapper.writeValueAsString(libraryEvent);
+
+        /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
+         *  method of the LibraryEventProducer. */
+        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+
+        // when
+        mockMvc.perform(put(LIBRARY_V1_ENDPOINT)
+                .content(libraryEventJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 }
