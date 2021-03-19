@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(LibraryEventsController.class)
 @AutoConfigureMockMvc
-public class LibraryEventsControllerUnitTest {
+public class LibraryEventControllerUnitTest {
 
     @Autowired
     MockMvc mockMvc;

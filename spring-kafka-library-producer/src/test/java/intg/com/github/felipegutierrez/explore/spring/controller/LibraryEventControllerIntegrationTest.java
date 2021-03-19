@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         "spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
         "spring.kafka.admin.properties.bootstrap.servers=${spring.embedded.kafka.brokers}"
 })
-public class LibraryEventsControllerIntegrationTest {
+public class LibraryEventControllerIntegrationTest {
 
     @Autowired
     TestRestTemplate testRestTemplate;
