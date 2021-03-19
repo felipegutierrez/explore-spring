@@ -18,8 +18,7 @@ import javax.validation.Valid;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_ENDPOINT;
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_SYNC_ENDPOINT;
+import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.*;
 
 @RestController
 @Slf4j
@@ -93,7 +92,7 @@ public class LibraryEventsController {
         log.info("received PUT request: {}", libraryEvent);
 
         if (libraryEvent.getLibraryEventId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("LibraryEvent ID is null");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LIBRARY_ERROR_ID_NULL);
         }
         libraryEvent.setLibraryEventType(LibraryEventType.UPDATE);
 

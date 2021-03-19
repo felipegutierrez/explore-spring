@@ -24,8 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_ENDPOINT;
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
+import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -84,5 +83,62 @@ public class LibraryEventControllerIntegrationTest {
         String expectedRecord = "{\"libraryEventId\":null,\"libraryEventType\":\"NEW\",\"book\":{\"bookId\":584,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
         String value = consumerRecord.value();
         assertEquals(expectedRecord, value);
+    }
+
+    @Test
+    @Timeout(value = 5000, unit = TimeUnit.MILLISECONDS)
+    void putLibraryEventTest() {
+        // given a book
+        Book book = Book.builder()
+                .bookId(584)
+                .bookAuthor("Felipe")
+                .bookName("Why is snowing more in the winter of 2021 in Berlin?")
+                .build();
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(123)
+                .book(book)
+                .build();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("content-type", MediaType.APPLICATION_JSON.toString());
+        HttpEntity<LibraryEvent> request = new HttpEntity<>(libraryEvent, httpHeaders);
+
+        // when a POST is sent to the @RestController endpoint we should receive a ResponseEntity
+        ResponseEntity<LibraryEvent> responseEntity = testRestTemplate
+                .exchange(LIBRARY_V1_ENDPOINT, HttpMethod.PUT, request, LibraryEvent.class);
+
+        // then assert the response status
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        ConsumerRecord<Integer, String> consumerRecord = KafkaTestUtils.getSingleRecord(consumer, LIBRARY_V1_TOPIC);
+        String expectedRecord = "{\"libraryEventId\":123,\"libraryEventType\":\"UPDATE\",\"book\":{\"bookId\":584,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
+        String value = consumerRecord.value();
+        assertEquals(expectedRecord, value);
+    }
+
+    @Test
+    @Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
+    void putLibraryEventTest_BadRequest() {
+        // given a book
+        Book book = Book.builder()
+                .bookId(584)
+                .bookAuthor("Felipe")
+                .bookName("Why is snowing more in the winter of 2021 in Berlin?")
+                .build();
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                .libraryEventId(null)
+                .book(book)
+                .build();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("content-type", MediaType.APPLICATION_JSON.toString());
+        HttpEntity<LibraryEvent> request = new HttpEntity<>(libraryEvent, httpHeaders);
+
+        // when a POST is sent to the @RestController endpoint we should receive a ResponseEntity
+        ResponseEntity<String> responseEntity = testRestTemplate
+                .exchange(LIBRARY_V1_ENDPOINT, HttpMethod.PUT, request, String.class);
+
+        // then assert the response status
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        String body = responseEntity.getBody();
+        assertEquals(LIBRARY_ERROR_ID_NULL, body);
     }
 }
