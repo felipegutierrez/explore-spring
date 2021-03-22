@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
 
 /**
- * If @Component is disable this bean is not going to be recognized as a @KafkaListener to the topic
+ * If @Component is disable this bean is not going to be recognized as a @KafkaListener to the topic.
+ *
+ * This is using the [[AutoCreateConfig]] class with MANUAL OFFSET
  */
 // @Component
 @Slf4j

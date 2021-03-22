@@ -14,13 +14,20 @@ import org.springframework.kafka.listener.ContainerProperties;
 @Profile("dev")
 public class AutoCreateConfig {
 
+    private Integer numberOfPartitions = 3;
+
     @Bean
     ConcurrentKafkaListenerContainerFactory<?, ?> kafkaListenerContainerFactory(
             ConcurrentKafkaListenerContainerFactoryConfigurer configurer,
             ConsumerFactory<Object, Object> kafkaConsumerFactory) {
         ConcurrentKafkaListenerContainerFactory<Object, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         configurer.configure(factory, kafkaConsumerFactory);
-        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
+
+        /** Use MANUEL together with [[LibraryEventConsumerManualOffset]] to change the behavior of committing messages. */
+        // factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
+
+        /** use concurrency set to the number of partitions in case the application is not running on top of Kubernetes */
+        factory.setConcurrency(numberOfPartitions);
         return factory;
     }
 }
