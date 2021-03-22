@@ -4,8 +4,8 @@ com/github/felipegutierrez/explore/spring/util/LibraryConstants.java
  com.github.felipegutierrez.explore.spring.util.LibraryConstants
 com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplication.java
  com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplication
-com/github/felipegutierrez/explore/spring/config/AutoCreateConfig.java
- com.github.felipegutierrez.explore.spring.config.AutoCreateConfig
+com/github/felipegutierrez/explore/spring/consumer/LibraryEventConsumer.java
+ com.github.felipegutierrez.explore.spring.consumer.LibraryEventConsumer
 com/github/felipegutierrez/explore/spring/entity/Book.java
  com.github.felipegutierrez.explore.spring.entity.Book
  com.github.felipegutierrez.explore.spring.entity.Book$BookBuilder
@@ -19,5 +19,5 @@ com/github/felipegutierrez/explore/spring/jpa/LibraryEventRepository.java
 com/github/felipegutierrez/explore/spring/service/LibraryEventService.java
  com.github.felipegutierrez.explore.spring.service.LibraryEventService
  com.github.felipegutierrez.explore.spring.service.LibraryEventService$1
-com/github/felipegutierrez/explore/spring/consumer/LibraryEventConsumer.java
- com.github.felipegutierrez.explore.spring.consumer.LibraryEventConsumer
+com/github/felipegutierrez/explore/spring/config/AutoCreateConfig.java
+ com.github.felipegutierrez.explore.spring.config.AutoCreateConfig
