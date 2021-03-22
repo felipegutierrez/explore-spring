@@ -1,6 +1,6 @@
 HELP.md
 .gradle
-build/
+build/**
 build/jaco**
 build/report**
 build/test**
