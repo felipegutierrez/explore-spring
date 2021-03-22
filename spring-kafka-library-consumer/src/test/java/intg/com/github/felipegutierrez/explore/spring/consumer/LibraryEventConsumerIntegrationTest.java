@@ -1,7 +1,10 @@
 package com.github.felipegutierrez.explore.spring.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.felipegutierrez.explore.spring.entity.Book;
 import com.github.felipegutierrez.explore.spring.entity.LibraryEvent;
+import com.github.felipegutierrez.explore.spring.entity.LibraryEventType;
 import com.github.felipegutierrez.explore.spring.jpa.LibraryEventRepository;
 import com.github.felipegutierrez.explore.spring.service.LibraryEventService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -50,6 +53,9 @@ public class LibraryEventConsumerIntegrationTest {
     @Autowired
     LibraryEventRepository libraryEventRepository;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @SpyBean
     LibraryEventConsumer libraryEventConsumerSpy;
 
@@ -70,6 +76,7 @@ public class LibraryEventConsumerIntegrationTest {
 
     @Test
     void publishNewLibraryEvent() throws ExecutionException, InterruptedException, JsonProcessingException {
+        // given
         String json = "{\"libraryEventId\":null,\"libraryEventType\":\"NEW\",\"book\":{\"bookId\":584,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
 
         kafkaTemplate.sendDefault(json).get();
@@ -88,5 +95,38 @@ public class LibraryEventConsumerIntegrationTest {
             assert libraryEvent.getLibraryEventId() != null;
             assertEquals(584, libraryEvent.getBook().getBookId());
         });
+    }
+
+    @Test
+    void publishUpdateLibraryEvent() throws ExecutionException, InterruptedException, JsonProcessingException {
+        // given
+        String json = "{\"libraryEventId\":null,\"libraryEventType\":\"NEW\",\"book\":{\"bookId\":584,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
+
+        LibraryEvent libraryEvent = objectMapper.readValue(json, LibraryEvent.class);
+        libraryEvent.getBook().setLibraryEvent(libraryEvent);
+        libraryEventRepository.save(libraryEvent);
+
+        String newName = "Why is snowing a lot in the winter of 2021 in Berlin?";
+        String newAuthor = "Felipe Oliveira Gutierrez";
+        Book updatedBook = Book.builder()
+                .bookId(584)
+                .bookName(newName)
+                .bookAuthor(newAuthor)
+                .build();
+        libraryEvent.setLibraryEventType(LibraryEventType.UPDATE);
+        libraryEvent.setBook(updatedBook);
+        String updatedJson = objectMapper.writeValueAsString(libraryEvent);
+        kafkaTemplate.sendDefault(libraryEvent.getLibraryEventId(), updatedJson).get();
+
+        // when
+        CountDownLatch latch = new CountDownLatch(1);
+        latch.await(3, TimeUnit.SECONDS);
+
+        // then
+        verify(libraryEventConsumerSpy, times(1)).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(1)).processLibraryEvent(isA(ConsumerRecord.class));
+        LibraryEvent persistedLibraryEvent = libraryEventRepository.findById(libraryEvent.getLibraryEventId()).get();
+        assertEquals(newName, libraryEvent.getBook().getBookName());
+        assertEquals(newAuthor, libraryEvent.getBook().getBookAuthor());
     }
 }
