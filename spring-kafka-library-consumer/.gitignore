@@ -4,6 +4,7 @@ build/
 build/jaco**
 build/report**
 build/test**
+build/tmp**
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

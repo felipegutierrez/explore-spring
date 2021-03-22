@@ -1,4 +1,0 @@
-com/github/felipegutierrez/explore/spring/SpringKafkaLibraryConsumerApplicationTests.java
- com.github.felipegutierrez.explore.spring.SpringKafkaLibraryConsumerApplicationTests
-com/github/felipegutierrez/explore/spring/consumer/LibraryEventConsumerIntegrationTest.java
- com.github.felipegutierrez.explore.spring.consumer.LibraryEventConsumerIntegrationTest
