@@ -24,6 +24,9 @@ public class SpringKafkaLibraryConsumerApplication {
 		System.out.println("http POST http://localhost:8080/v1/libraryevent < spring-kafka-library-producer/src/main/resources/static/libraryEvent-00.json");
 		System.out.println("http PUT  http://localhost:8080/v1/libraryevent < spring-kafka-library-producer/src/main/resources/static/libraryEvent-01.json");
 		System.out.println("http PUT  http://localhost:8080/v1/libraryevent < spring-kafka-library-producer/src/main/resources/static/libraryEvent-02.json");
+		System.out.println();
+		System.out.println("H2 database client: http://localhost:8081/h2-console");
+		System.out.println("JDBC URL: jdbc:h2:mem:testdb");
 	}
 
 }
