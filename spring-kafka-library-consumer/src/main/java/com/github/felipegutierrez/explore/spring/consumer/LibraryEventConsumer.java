@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
 
+/**
+ * If @Component is disable this bean is not going to be recognized as a @KafkaListener to the topic
+ */
 @Component
 @Slf4j
 public class LibraryEventConsumer {
