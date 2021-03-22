@@ -32,7 +32,8 @@ import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LI
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @EmbeddedKafka(topics = {LIBRARY_V1_TOPIC}, partitions = 3)
@@ -124,8 +125,8 @@ public class LibraryEventConsumerIntegrationTest {
         latch.await(3, TimeUnit.SECONDS);
 
         // then
-        verify(libraryEventConsumerSpy, times(1)).onMessage(isA(ConsumerRecord.class));
-        verify(libraryEventServiceSpy, times(1)).processLibraryEvent(isA(ConsumerRecord.class));
+        verify(libraryEventConsumerSpy, times(3)).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(3)).processLibraryEvent(isA(ConsumerRecord.class));
         LibraryEvent persistedLibraryEvent = libraryEventRepository.findById(libraryEvent.getLibraryEventId()).get();
         assertEquals(newName, libraryEvent.getBook().getBookName());
         assertEquals(newAuthor, libraryEvent.getBook().getBookAuthor());
@@ -145,8 +146,8 @@ public class LibraryEventConsumerIntegrationTest {
         latch.await(3, TimeUnit.SECONDS);
 
         // then
-        verify(libraryEventConsumerSpy, atLeastOnce()).onMessage(isA(ConsumerRecord.class));
-        verify(libraryEventServiceSpy, atLeastOnce()).processLibraryEvent(isA(ConsumerRecord.class));
+        verify(libraryEventConsumerSpy, times(1)).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(1)).processLibraryEvent(isA(ConsumerRecord.class));
 
         Optional<LibraryEvent> libraryEventOptional = libraryEventRepository.findById(libraryEventId);
         assertFalse(libraryEventOptional.isPresent());
@@ -165,7 +166,7 @@ public class LibraryEventConsumerIntegrationTest {
         latch.await(3, TimeUnit.SECONDS);
 
         // then
-        verify(libraryEventConsumerSpy, atLeastOnce()).onMessage(isA(ConsumerRecord.class));
-        verify(libraryEventServiceSpy, atLeastOnce()).processLibraryEvent(isA(ConsumerRecord.class));
+        verify(libraryEventConsumerSpy, times(3)).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(3)).processLibraryEvent(isA(ConsumerRecord.class));
     }
 }
