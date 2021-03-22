@@ -171,7 +171,7 @@ public class LibraryEventConsumerIntegrationTest {
     }
 
     @Test
-    void publishUpdateRetryLibraryEvent() throws ExecutionException, InterruptedException, JsonProcessingException {
+    void publishUpdateRetryRecoverableLibraryEvent() throws ExecutionException, InterruptedException, JsonProcessingException {
         // given
         // The library ID 000 is used to test network failures with retry policy
         Integer libraryEventId = 000;
@@ -183,7 +183,8 @@ public class LibraryEventConsumerIntegrationTest {
         latch.await(3, TimeUnit.SECONDS);
 
         // then
-        verify(libraryEventConsumerSpy, times(3)).onMessage(isA(ConsumerRecord.class));
-        verify(libraryEventServiceSpy, times(3)).processLibraryEvent(isA(ConsumerRecord.class));
+        verify(libraryEventConsumerSpy, times(4)).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(4)).processLibraryEvent(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(1)).handleRecovery(isA(ConsumerRecord.class));
     }
 }

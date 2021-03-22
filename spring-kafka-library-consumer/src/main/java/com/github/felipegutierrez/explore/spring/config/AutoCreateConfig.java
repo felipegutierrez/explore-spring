@@ -1,6 +1,9 @@
 package com.github.felipegutierrez.explore.spring.config;
 
+import com.github.felipegutierrez.explore.spring.service.LibraryEventService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.ConcurrentKafkaListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +16,7 @@ import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +25,9 @@ import java.util.Map;
 @Profile("dev")
 @Slf4j
 public class AutoCreateConfig {
+
+    @Autowired
+    LibraryEventService libraryEventService;
 
     private final Integer numberOfPartitions = 3;
 
@@ -42,6 +49,24 @@ public class AutoCreateConfig {
         }));
 
         factory.setRetryTemplate(retryTemplate());
+
+        factory.setRecoveryCallback((context -> {
+            if (context.getLastThrowable().getCause() instanceof RecoverableDataAccessException) {
+                // invoke the recovery logic
+                log.info("Recoverable logic");
+                Arrays.asList(context.attributeNames())
+                        .forEach(attributeName -> {
+                            log.info("Attribute name is: {}", attributeName);
+                            log.info("Attribute value is: {}", context.getAttribute(attributeName));
+                        });
+                ConsumerRecord<Integer, String> consumerRecord = (ConsumerRecord<Integer, String>) context.getAttribute("record");
+                libraryEventService.handleRecovery(consumerRecord);
+            } else {
+                log.info("Non recoverable logic");
+                throw new RuntimeException(context.getLastThrowable().getMessage());
+            }
+            return null;
+        }));
         return factory;
     }
 
