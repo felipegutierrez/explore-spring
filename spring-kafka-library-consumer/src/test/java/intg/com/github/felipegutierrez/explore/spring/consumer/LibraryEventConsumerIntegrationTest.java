@@ -125,8 +125,8 @@ public class LibraryEventConsumerIntegrationTest {
         latch.await(3, TimeUnit.SECONDS);
 
         // then
-        verify(libraryEventConsumerSpy, times(3)).onMessage(isA(ConsumerRecord.class));
-        verify(libraryEventServiceSpy, times(3)).processLibraryEvent(isA(ConsumerRecord.class));
+        verify(libraryEventConsumerSpy, times(1)).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(1)).processLibraryEvent(isA(ConsumerRecord.class));
         LibraryEvent persistedLibraryEvent = libraryEventRepository.findById(libraryEvent.getLibraryEventId()).get();
         assertEquals(newName, libraryEvent.getBook().getBookName());
         assertEquals(newAuthor, libraryEvent.getBook().getBookAuthor());
@@ -160,6 +160,23 @@ public class LibraryEventConsumerIntegrationTest {
         String updatedJson = "{\"libraryEventId\":null,\"libraryEventType\":\"UPDATE\",\"book\":{\"bookId\":147,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
 
         kafkaTemplate.sendDefault(null, updatedJson).get();
+
+        // when
+        CountDownLatch latch = new CountDownLatch(1);
+        latch.await(3, TimeUnit.SECONDS);
+
+        // then
+        verify(libraryEventConsumerSpy, times(1)).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, times(1)).processLibraryEvent(isA(ConsumerRecord.class));
+    }
+
+    @Test
+    void publishUpdateRetryLibraryEvent() throws ExecutionException, InterruptedException, JsonProcessingException {
+        // given
+        // The library ID 000 is used to test network failures with retry policy
+        Integer libraryEventId = 000;
+        String updatedJson = "{\"libraryEventId\":" + libraryEventId + ",\"libraryEventType\":\"UPDATE\",\"book\":{\"bookId\":147,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
+        kafkaTemplate.sendDefault(libraryEventId, updatedJson).get();
 
         // when
         CountDownLatch latch = new CountDownLatch(1);

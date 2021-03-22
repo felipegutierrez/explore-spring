@@ -7,6 +7,7 @@ import com.github.felipegutierrez.explore.spring.jpa.LibraryEventRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.RecoverableDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -42,6 +43,10 @@ public class LibraryEventService {
     }
 
     private void validate(LibraryEvent libraryEvent) {
+        // simulating a network failure to test exceptions that allow retries
+        if (libraryEvent.getLibraryEventId() != null && libraryEvent.getLibraryEventId() == 000) {
+            throw new RecoverableDataAccessException("Temporary Network failure");
+        }
         if (libraryEvent.getLibraryEventId() == null) {
             throw new IllegalArgumentException("Library Event ID is missing");
         }
