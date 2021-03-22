@@ -19,6 +19,10 @@ spring:
     admin:
       properties:
         bootstrap.servers: localhost:9092,localhost:9093,localhost:9094
+    producer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
