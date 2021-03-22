@@ -23,15 +23,16 @@ import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @EmbeddedKafka(topics = {LIBRARY_V1_TOPIC}, partitions = 3)
@@ -128,5 +129,43 @@ public class LibraryEventConsumerIntegrationTest {
         LibraryEvent persistedLibraryEvent = libraryEventRepository.findById(libraryEvent.getLibraryEventId()).get();
         assertEquals(newName, libraryEvent.getBook().getBookName());
         assertEquals(newAuthor, libraryEvent.getBook().getBookAuthor());
+    }
+
+    @Test
+    void publishUpdateRandomLibraryEvent() throws ExecutionException, InterruptedException, JsonProcessingException {
+        // given
+        // this book does not exist on the H2 in-memory database
+        Integer libraryEventId = 278;
+        String updatedJson = "{\"libraryEventId\":" + libraryEventId + ",\"libraryEventType\":\"UPDATE\",\"book\":{\"bookId\":147,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
+
+        kafkaTemplate.sendDefault(libraryEventId, updatedJson).get();
+
+        // when
+        CountDownLatch latch = new CountDownLatch(1);
+        latch.await(3, TimeUnit.SECONDS);
+
+        // then
+        verify(libraryEventConsumerSpy, atLeastOnce()).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, atLeastOnce()).processLibraryEvent(isA(ConsumerRecord.class));
+
+        Optional<LibraryEvent> libraryEventOptional = libraryEventRepository.findById(libraryEventId);
+        assertFalse(libraryEventOptional.isPresent());
+    }
+
+    @Test
+    void publishUpdateNullLibraryEvent() throws ExecutionException, InterruptedException, JsonProcessingException {
+        // given
+        // this book does not exist on the H2 in-memory database
+        String updatedJson = "{\"libraryEventId\":null,\"libraryEventType\":\"UPDATE\",\"book\":{\"bookId\":147,\"bookName\":\"Why is snowing more in the winter of 2021 in Berlin?\",\"bookAuthor\":\"Felipe\"}}";
+
+        kafkaTemplate.sendDefault(null, updatedJson).get();
+
+        // when
+        CountDownLatch latch = new CountDownLatch(1);
+        latch.await(3, TimeUnit.SECONDS);
+
+        // then
+        verify(libraryEventConsumerSpy, atLeastOnce()).onMessage(isA(ConsumerRecord.class));
+        verify(libraryEventServiceSpy, atLeastOnce()).processLibraryEvent(isA(ConsumerRecord.class));
     }
 }
