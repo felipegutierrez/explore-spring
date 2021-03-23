@@ -2,6 +2,10 @@ spring:
   profiles:
     active: dev
 ---
+topic:
+  name: library-events
+  partitions-num: 1
+  replication-factor: 1
 spring:
   config:
     activate:
@@ -13,6 +17,9 @@ spring:
       bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      # schema.registry.url: http://127.0.0.1:8081
+      # bootstrap-servers: localhost:9092
       properties:
         acks: all
         retries: 10
@@ -20,6 +27,7 @@ spring:
     admin:
       properties:
         bootstrap.servers: localhost:9092,localhost:9093,localhost:9094
+        # bootstrap.servers: localhost:9092
 ---
 spring:
   config:
@@ -33,9 +41,9 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       ssl:
-        trust-store-location: file:/Dilip/udemy/kafka-for-developers-using-spring-boot/ssl/client.truststore.jks
+        trust-store-location: file:/home/felipe/workspace-idea/explore-spring/spring-kafka-library-producer/ssl/client.truststore.jks
         trust-store-password: password
-        key-store-location: file:/Dilip/udemy/kafka-for-developers-using-spring-boot/ssl/client.keystore.jks
+        key-store-location: file:/home/felipe/workspace-idea/explore-spring/spring-kafka-library-producer/ssl/client.keystore.jks
         key-store-password: password
       properties:
         acks: all
