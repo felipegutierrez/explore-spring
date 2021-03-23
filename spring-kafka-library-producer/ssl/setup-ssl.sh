@@ -19,7 +19,8 @@ keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert
 keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed
 
 # 6. edit the kafka server config/server.property
-ssl.keystore.location=<location>/server.keystore.jks
+listeners=PLAINTEXT://localhost:9092, SSL://localhost:9095
+ssl.keystore.location=/home/felipe/workspace-idea/explore-spring/spring-kafka-library-producer/ssl/server.keystore.jks
 ssl.keystore.password=password
 ssl.key.password=password
 ssl.endpoint.identification.algorithm=
@@ -27,5 +28,15 @@ ssl.endpoint.identification.algorithm=
 
 # 7. Generate the TrustStore
 keytool -keystore client.truststore.jks -alias CARoot -import -file ca-cert
+
+
+# 8. create the file "config/client-ssl.properties" with the content
+security.protocol=SSL
+ssl.truststore.location=/home/felipe/workspace-idea/explore-spring/spring-kafka-library-producer/ssl/client.truststore.jks
+ssl.truststore.password=password
+ssl.truststore.type=JKS
+
+# ./bin/kafka-console-producer.sh --broker-list localhost:9095,localhost:9096,localhost:9097 --topic test-topic --producer.config config/client-ssl.properties
+
 
 
