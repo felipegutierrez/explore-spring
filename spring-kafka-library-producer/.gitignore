@@ -12,6 +12,7 @@ ssl/cert-file
 ssl/cert-signed
 ssl/client.truststore.jks
 ssl/server.keystore.jks 
+ssl/server.truststore.jks
 
 ### STS ###
 .apt_generated
