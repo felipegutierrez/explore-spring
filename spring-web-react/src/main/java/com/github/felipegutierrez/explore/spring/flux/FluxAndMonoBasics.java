@@ -5,7 +5,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class FluxAndMonoBasics {
@@ -24,6 +26,14 @@ public class FluxAndMonoBasics {
         stringFlux.subscribe(value -> result.add(value));
 
         return result;
+    }
+
+    public Collection<String> createBasicFluxToMap(String data) {
+        return Flux.just(data)
+                .collectMap(value -> { return value; },
+                            value -> { return value; })
+                .block()
+                .values();
     }
 
     public List<String> createConcatenateFlux(String[] data01, String[] data02) {
@@ -86,6 +96,8 @@ public class FluxAndMonoBasics {
                 .log();
         return integerMono;
     }
+
+
 
 //    public <OUT> Mono<OUT> createMonoConverterString(String data) {
 //        // Class<OUT> clazz = new Class<OUT>();
