@@ -7,4 +7,4 @@ include(":spring-web-react")
 include(":spring-web-react-client")
 include(":spring-kafka-library-producer")
 include(":spring-kafka-library-consumer")
-
+include(":spring-kafka-stream")
