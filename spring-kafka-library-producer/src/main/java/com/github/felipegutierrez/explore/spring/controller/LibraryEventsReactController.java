@@ -8,12 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_FUNC_V1_ENDPOINT;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
+
+import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.*;
 
 /**
  * Testing based on the project:
@@ -28,15 +32,26 @@ public class LibraryEventsReactController {
     @Autowired
     LibraryEventProducer libraryEventProducer;
 
-    @PostMapping(value = LIBRARY_FUNC_V1_ENDPOINT)
-    public Mono<ResponseEntity<LibraryEvent>> postLibraryEvent(@RequestBody @Valid LibraryEvent libraryEvent) {
+    /**
+     * test on CLI using:
+     * "http POST http://localhost:8080/v1/react/libraryevent < spring-kafka-library-producer/src/main/resources/static/libraryEvent-00.json"
+     * <p>
+     * consume on the Kafka broker using:
+     * "./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic library-events --from-beginning --property "print.key=true""
+     *
+     * @param libraryEvent
+     * @return
+     */
+    @PostMapping(value = LIBRARY_REACT_V1_ENDPOINT)
+    public Mono<ResponseEntity<LibraryEvent>> postLibraryEvent(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException {
         log.info("received POST reactive request: {}", libraryEvent);
 
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
+        libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+
         return Mono.just(libraryEvent)
                 .map(event -> new ResponseEntity<>(event, HttpStatus.CREATED))
-                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND))
                 .log();
     }
 }
