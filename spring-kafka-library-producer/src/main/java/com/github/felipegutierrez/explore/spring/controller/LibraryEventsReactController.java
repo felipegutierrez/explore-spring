@@ -50,8 +50,7 @@ public class LibraryEventsReactController {
 
         libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
 
-        return Mono.just(libraryEvent)
-                .map(event -> new ResponseEntity<>(event, HttpStatus.CREATED))
+        return Mono.just(new ResponseEntity<>(libraryEvent, HttpStatus.CREATED))
                 .log();
     }
 
