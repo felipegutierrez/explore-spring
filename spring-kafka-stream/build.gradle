@@ -22,13 +22,14 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2020.0.2")
+	set('springCloudVersion', "Hoxton.SR10") // 2020.0.2 | Hoxton.SR10
 }
 
 dependencies {
 	implementation 'org.apache.kafka:kafka-streams'
 	implementation 'org.springframework.cloud:spring-cloud-stream'
 	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka-streams'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
