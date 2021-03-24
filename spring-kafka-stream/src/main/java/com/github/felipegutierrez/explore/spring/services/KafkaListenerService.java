@@ -7,6 +7,15 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Service;
 
+/**
+ * create the topic
+ * kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic users
+ *
+ * producer:
+ * kafka-console-producer --topic users --broker-list localhost:9092
+ * > {"name": "Felipe", "age": 38, "gender": "male"}
+ *
+ */
 @Log4j2
 @Service
 @EnableBinding(KafkaListenerBinding.class)
