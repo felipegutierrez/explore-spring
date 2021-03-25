@@ -39,7 +39,9 @@ import static org.mockito.Mockito.verify;
 @EmbeddedKafka(topics = {LIBRARY_V1_TOPIC}, partitions = 3)
 @TestPropertySource(properties = {
         "spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
-        "spring.kafka.consumer.bootstrap-servers=${spring.embedded.kafka.brokers}"
+        "spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer",
+        "spring.kafka.consumer.bootstrap-servers=${spring.embedded.kafka.brokers}",
+        "spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer"
 })
 public class LibraryEventConsumerIntegrationTest {
 
