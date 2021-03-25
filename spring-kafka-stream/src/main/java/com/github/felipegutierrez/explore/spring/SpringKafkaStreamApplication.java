@@ -8,6 +8,8 @@ public class SpringKafkaStreamApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringKafkaStreamApplication.class, args);
+
+		System.out.println("confluent local services start");
 	}
 
 }

@@ -4,7 +4,7 @@
 # export PATH=$PATH:$CONFLUENT_HOME/bin
 
 # Starting the confluent platform
-# $ confluent local start
+# $ confluent local services start
 # http://localhost:9021/
 
 # General commands:
