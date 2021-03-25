@@ -6,6 +6,14 @@ spring:
   config:
     activate:
       on-profile: dev
+  kafka:
+    producer:
+      client-id: json-pos-simulator
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
   cloud:
     stream:
       bindings:
@@ -20,4 +28,9 @@ spring:
               default:
                 key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
                 value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+application:
+  configs:
+    users.topic.name: users
+    invoice.count: 60
+    invoice.topic.name: pos-topic
 ---
