@@ -2,11 +2,14 @@ package com.github.felipegutierrez.explore.spring.flux;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.GroupedFlux;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 import static reactor.core.scheduler.Schedulers.parallel;
 
@@ -77,5 +80,44 @@ public class FluxAndMonoTransformations {
         return Flux
                 .zip(flux1, flux2, (tuple1, tuple2) -> tuple1.concat(tuple2))
                 .log();
+    }
+
+    public Flux<GroupedFlux<Integer, Data>> createFluxUsingGroupBy(List<String> dataList, int numberOfPartitions, int maxCount) {
+        return Flux
+                .fromStream(IntStream.range(0, maxCount)
+                        .mapToObj(i -> {
+                            int randomPosition = ThreadLocalRandom.current().nextInt(0, dataList.size());
+                            int partition = i % numberOfPartitions;
+                            return new Data(i, dataList.get(randomPosition), partition);
+                        })
+                )
+                .delayElements(Duration.ofMillis(10))
+                .log()
+                .groupBy(Data::getPartition)
+                ;
+    }
+
+    public Flux<GroupedFlux<Integer, Data>> createFluxUsingHashGroupBy(List<String> dataList, int numberOfPartitions, int parallelism, int maxCount) {
+        return Flux
+                .fromStream(IntStream.range(0, maxCount)
+                        .mapToObj(i -> {
+                            int randomPosition = ThreadLocalRandom.current().nextInt(0, dataList.size());
+                            String value = dataList.get(randomPosition);
+                            int partition = (getDifferentHashCode(value) * parallelism) % numberOfPartitions;
+                            return new Data(i, value, partition);
+                        })
+                )
+                .delayElements(Duration.ofMillis(10))
+                .log()
+                .groupBy(Data::getPartition)
+                ;
+    }
+
+    public int getDifferentHashCode(String value) {
+        int hash = 7;
+        for (int i = 0; i < value.length(); i++) {
+            hash = hash * 31 + value.charAt(i);
+        }
+        return hash;
     }
 }

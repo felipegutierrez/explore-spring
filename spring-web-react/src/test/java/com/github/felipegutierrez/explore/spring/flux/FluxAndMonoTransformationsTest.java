@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.spring.flux;
 
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.GroupedFlux;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
@@ -95,6 +96,27 @@ public class FluxAndMonoTransformationsTest {
         StepVerifier.create(zipFlux)
                 .expectSubscription()
                 .expectNextSequence(expect)
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingGroupBy() {
+        int numberOfPartitions = 3;
+        int maxCount = 100;
+        Flux<GroupedFlux<Integer, Data>> dataGroupedFlux = fluxAndMonoTransformations.createFluxUsingGroupBy(expect, numberOfPartitions, maxCount);
+        StepVerifier.create(dataGroupedFlux)
+                .expectNextCount(numberOfPartitions)
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingHashGroupBy() {
+        int numberOfPartitions = 3;
+        int parallelism = 2;
+        int maxCount = 100;
+        Flux<GroupedFlux<Integer, Data>> dataGroupedFlux = fluxAndMonoTransformations.createFluxUsingHashGroupBy(expect, numberOfPartitions, parallelism, maxCount);
+        StepVerifier.create(dataGroupedFlux)
+                .expectNextCount(numberOfPartitions)
                 .verifyComplete();
     }
 }
