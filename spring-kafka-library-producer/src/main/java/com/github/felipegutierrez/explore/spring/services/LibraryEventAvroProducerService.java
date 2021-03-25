@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.spring.producer;
+package com.github.felipegutierrez.explore.spring.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEvent;
@@ -19,7 +19,7 @@ import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LI
 
 @Component
 @Slf4j
-public class LibraryEventAvroProducer {
+public class LibraryEventAvroProducerService {
 
     @Autowired
     KafkaTemplate<Integer, LibraryEvent> kafkaTemplate;

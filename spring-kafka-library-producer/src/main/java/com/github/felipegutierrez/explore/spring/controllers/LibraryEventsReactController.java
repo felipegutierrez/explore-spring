@@ -1,9 +1,9 @@
-package com.github.felipegutierrez.explore.spring.controller;
+package com.github.felipegutierrez.explore.spring.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEvent;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEventType;
-import com.github.felipegutierrez.explore.spring.producer.LibraryEventProducer;
+import com.github.felipegutierrez.explore.spring.services.LibraryEventProducerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LI
 public class LibraryEventsReactController {
 
     @Autowired
-    LibraryEventProducer libraryEventProducer;
+    LibraryEventProducerService libraryEventProducerService;
 
     /**
      * test on CLI using:
@@ -48,7 +48,7 @@ public class LibraryEventsReactController {
 
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
-        libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+        libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
 
         return Mono.just(new ResponseEntity<>(libraryEvent, HttpStatus.CREATED))
                 .log();
@@ -80,7 +80,7 @@ public class LibraryEventsReactController {
         libraryEvent.setLibraryEventType(LibraryEventType.UPDATE);
 
         // invoke the kafka producer and send message asynchronously
-        libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+        libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
 
         return Mono.just(libraryEvent)
                 .map(event -> new ResponseEntity(event, HttpStatus.OK))

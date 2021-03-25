@@ -1,15 +1,13 @@
-package com.github.felipegutierrez.explore.spring.controller;
+package com.github.felipegutierrez.explore.spring.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEvent;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEventType;
-import com.github.felipegutierrez.explore.spring.producer.LibraryEventAvroProducer;
-import com.github.felipegutierrez.explore.spring.producer.LibraryEventProducer;
+import com.github.felipegutierrez.explore.spring.services.LibraryEventAvroProducerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +24,7 @@ import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.*;
 public class LibraryEventAvroController {
 
     @Autowired
-    LibraryEventAvroProducer libraryEventAvroProducer;
+    LibraryEventAvroProducerService libraryEventAvroProducerService;
 
     /**
      * test on CLI using:
@@ -45,7 +43,7 @@ public class LibraryEventAvroController {
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
         // invoke the kafka producer and send message asynchronously
-        libraryEventAvroProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+        libraryEventAvroProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }

@@ -1,9 +1,10 @@
 package com.github.felipegutierrez.explore.spring.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.felipegutierrez.explore.spring.controllers.LibraryEventsController;
 import com.github.felipegutierrez.explore.spring.domain.Book;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEvent;
-import com.github.felipegutierrez.explore.spring.producer.LibraryEventProducer;
+import com.github.felipegutierrez.explore.spring.services.LibraryEventProducerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,7 +35,7 @@ public class LibraryEventControllerUnitTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @MockBean
-    LibraryEventProducer libraryEventProducer;
+    LibraryEventProducerService libraryEventProducerService;
 
     @Test
     void postLibraryEventTest() throws Exception {
@@ -52,7 +53,7 @@ public class LibraryEventControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         mockMvc.perform(post(LIBRARY_V1_ENDPOINT)
@@ -72,7 +73,7 @@ public class LibraryEventControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book - must not be null";
@@ -94,7 +95,7 @@ public class LibraryEventControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book.bookAuthor - must not be blank, book.bookId - must not be null, book.bookName - must not be blank";
@@ -121,7 +122,7 @@ public class LibraryEventControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book.bookAuthor - must not be blank, book.bookName - must not be blank";
@@ -148,7 +149,7 @@ public class LibraryEventControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         String expectedErrorMessage = "book.bookId - must not be null";
@@ -175,7 +176,7 @@ public class LibraryEventControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         mockMvc.perform(put(LIBRARY_V1_ENDPOINT)
@@ -200,7 +201,7 @@ public class LibraryEventControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         // when
         mockMvc.perform(put(LIBRARY_V1_ENDPOINT)

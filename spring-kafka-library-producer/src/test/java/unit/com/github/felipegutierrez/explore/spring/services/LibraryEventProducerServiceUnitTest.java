@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.spring.producer;
+package com.github.felipegutierrez.explore.spring.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +27,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class LibraryEventProducerUnitTest {
+public class LibraryEventProducerServiceUnitTest {
 
     @Mock
     KafkaTemplate<Integer, String> kafkaTemplate;
@@ -36,7 +36,7 @@ public class LibraryEventProducerUnitTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @InjectMocks
-    LibraryEventProducer libraryEventProducer;
+    LibraryEventProducerService libraryEventProducerService;
 
     @Test
     void sendLibraryEvent_failure() {
@@ -56,7 +56,7 @@ public class LibraryEventProducerUnitTest {
         settableListenableFuture.setException(new RuntimeException("simulating an exception when calling Kafka broker"));
         when(kafkaTemplate.sendDefault(isA(Integer.class), isA(String.class))).thenReturn(settableListenableFuture);
 
-        assertThrows(Exception.class, () -> libraryEventProducer.sendLibraryEvent(libraryEvent).get());
+        assertThrows(Exception.class, () -> libraryEventProducerService.sendLibraryEvent(libraryEvent).get());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class LibraryEventProducerUnitTest {
         settableListenableFuture.setException(new RuntimeException("simulating an exception when calling Kafka broker"));
         when(kafkaTemplate.send(isA(ProducerRecord.class))).thenReturn(settableListenableFuture);
 
-        assertThrows(Exception.class, () -> libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent).get());
+        assertThrows(Exception.class, () -> libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent).get());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class LibraryEventProducerUnitTest {
         settableListenableFuture.set(sendResult);
         // when(kafkaTemplate.sendDefault(isA(Integer.class), isA(String.class))).thenReturn(settableListenableFuture);
         when(kafkaTemplate.sendDefault(any(), isA(String.class))).thenReturn(settableListenableFuture);
-        ListenableFuture<SendResult<Integer, String>> listenableFuture = libraryEventProducer.sendLibraryEvent(libraryEvent);
+        ListenableFuture<SendResult<Integer, String>> listenableFuture = libraryEventProducerService.sendLibraryEvent(libraryEvent);
 
         // then
         SendResult<Integer, String> sendResultActual = listenableFuture.get();
@@ -135,7 +135,7 @@ public class LibraryEventProducerUnitTest {
         SettableListenableFuture settableListenableFuture = new SettableListenableFuture();
         settableListenableFuture.set(sendResult);
         when(kafkaTemplate.send(isA(ProducerRecord.class))).thenReturn(settableListenableFuture);
-        ListenableFuture<SendResult<Integer, String>> listenableFuture = libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+        ListenableFuture<SendResult<Integer, String>> listenableFuture = libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
 
         // then
         SendResult<Integer, String> sendResultActual = listenableFuture.get();

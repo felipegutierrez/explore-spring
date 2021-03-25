@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.spring.producer;
+package com.github.felipegutierrez.explore.spring.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +10,7 @@ import org.apache.kafka.common.header.internals.RecordHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
@@ -21,9 +21,9 @@ import java.util.concurrent.TimeoutException;
 
 import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
 
-@Component
+@Service
 @Slf4j
-public class LibraryEventProducer {
+public class LibraryEventProducerService {
 
     @Autowired
     KafkaTemplate<Integer, String> kafkaTemplate;
@@ -35,7 +35,7 @@ public class LibraryEventProducer {
      * asynchronously
      *
      * @param libraryEvent
-     * @return ListenableFuture<SendResult<Integer, String>> to facilitate unit tests
+     * @return ListenableFuture<SendResult < Integer, String>> to facilitate unit tests
      * @throws JsonProcessingException
      */
     public ListenableFuture<SendResult<Integer, String>> sendLibraryEvent(LibraryEvent libraryEvent) throws JsonProcessingException {
@@ -62,7 +62,7 @@ public class LibraryEventProducer {
      * asynchronously
      *
      * @param libraryEvent
-     * @return ListenableFuture<SendResult<Integer, String>> to facilitate unit tests
+     * @return ListenableFuture<SendResult < Integer, String>> to facilitate unit tests
      * @throws JsonProcessingException
      */
     public ListenableFuture<SendResult<Integer, String>> sendLibraryEventWithProducerRecord(LibraryEvent libraryEvent) throws JsonProcessingException {

@@ -2,9 +2,10 @@ package com.github.felipegutierrez.explore.spring.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.felipegutierrez.explore.spring.controllers.LibraryEventsReactController;
 import com.github.felipegutierrez.explore.spring.domain.Book;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEvent;
-import com.github.felipegutierrez.explore.spring.producer.LibraryEventProducer;
+import com.github.felipegutierrez.explore.spring.services.LibraryEventProducerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -36,7 +37,7 @@ public class LibraryEventsReactControllerUnitTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @MockBean
-    LibraryEventProducer libraryEventProducer;
+    LibraryEventProducerService libraryEventProducerService;
 
     @Test
     void postLibraryEventTest() throws Exception {
@@ -54,7 +55,7 @@ public class LibraryEventsReactControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         webTestClient.post().uri(LIBRARY_REACT_V1_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -90,7 +91,7 @@ public class LibraryEventsReactControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         webTestClient.put().uri(LIBRARY_REACT_V1_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -115,7 +116,7 @@ public class LibraryEventsReactControllerUnitTest {
 
         /** This is a unit test so we mock the behavior of the sendLibraryEventWithProducerRecord()
          *  method of the LibraryEventProducer. */
-        when(libraryEventProducer.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
+        when(libraryEventProducerService.sendLibraryEventWithProducerRecord(isA(LibraryEvent.class))).thenReturn(null);
 
         webTestClient.put().uri(LIBRARY_REACT_V1_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)

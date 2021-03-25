@@ -1,9 +1,9 @@
-package com.github.felipegutierrez.explore.spring.controller;
+package com.github.felipegutierrez.explore.spring.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEvent;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEventType;
-import com.github.felipegutierrez.explore.spring.producer.LibraryEventProducer;
+import com.github.felipegutierrez.explore.spring.services.LibraryEventProducerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.*;
 public class LibraryEventsController {
 
     @Autowired
-    LibraryEventProducer libraryEventProducer;
+    LibraryEventProducerService libraryEventProducerService;
 
     /**
      * test on CLI using:
@@ -45,7 +45,7 @@ public class LibraryEventsController {
 
         // invoke the kafka producer and send message asynchronously
         // libraryEventProducer.sendLibraryEvent(libraryEvent);
-        libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+        libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
@@ -67,7 +67,7 @@ public class LibraryEventsController {
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
         // invoke the kafka producer and send message synchronously
-        SendResult<Integer, String> sendResult = libraryEventProducer.sendLibraryEventBlocking(libraryEvent);
+        SendResult<Integer, String> sendResult = libraryEventProducerService.sendLibraryEventBlocking(libraryEvent);
         log.info("message sent: {}", sendResult);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
@@ -97,7 +97,7 @@ public class LibraryEventsController {
         libraryEvent.setLibraryEventType(LibraryEventType.UPDATE);
 
         // invoke the kafka producer and send message asynchronously
-        libraryEventProducer.sendLibraryEventWithProducerRecord(libraryEvent);
+        libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
 
         return ResponseEntity.status(HttpStatus.OK).body(libraryEvent);
     }

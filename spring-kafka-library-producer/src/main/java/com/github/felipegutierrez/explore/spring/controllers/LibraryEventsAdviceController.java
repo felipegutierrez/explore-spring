@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.spring.controller;
+package com.github.felipegutierrez.explore.spring.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
-public class LibraryEventsControllerAdvice {
+public class LibraryEventsAdviceController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleRequestBody(MethodArgumentNotValidException ex) {
