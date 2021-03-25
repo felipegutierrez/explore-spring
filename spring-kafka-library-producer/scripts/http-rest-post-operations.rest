@@ -1,0 +1,24 @@
+### a valid POST create request
+POST http://localhost:8080/v1/libraryevent
+Content-Type: application/json
+
+{"libraryEventId": null,"book":{"bookId": 123,"bookName": "Kafka using Spring Boot","bookAuthor": "Dilip"}}
+
+### an invalid POST request with libraryEventId
+POST http://localhost:8080/v1/libraryevent
+Content-Type: application/json
+
+{"libraryEventId": 423,"book":{"bookId": 123,"bookName": "Kafka using Spring Boot","bookAuthor": "Dilip"}}
+
+### a valid synchronous POST create request
+POST http://localhost:8080/v1/sync/libraryevent
+Content-Type: application/json
+
+{"libraryEventId": null,"book":{"bookId": 123,"bookName": "Kafka using Spring Boot","bookAuthor": "Dilip"}}
+
+### an invalid synchronous POST request with libraryEventId
+POST http://localhost:8080/v1/sync/libraryevent
+Content-Type: application/json
+
+{"libraryEventId": 234,"book":{"bookId": 123,"bookName": "Kafka using Spring Boot","bookAuthor": "Dilip"}}
+

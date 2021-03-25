@@ -1,0 +1,11 @@
+### a valid update request
+PUT http://localhost:8080/v1/libraryevent
+Content-Type: application/json
+
+{"libraryEventId": 456, "book":{"bookId": 254, "bookName": "The picture of Dorian Gray", "bookAuthor": "Oscar Wilde"}}
+
+### an invalid update request with "libraryEventId": null
+PUT http://localhost:8080/v1/libraryevent
+Content-Type: application/json
+
+{"libraryEventId": null,"book":{"bookId": 789,"bookName": "Why is snowing more in the winter of 2021 in Berlin?","bookAuthor": "Felipe"}}

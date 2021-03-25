@@ -38,9 +38,12 @@ public class LibraryEventsController {
      * @return
      */
     @PostMapping(LIBRARY_V1_ENDPOINT)
-    public ResponseEntity<LibraryEvent> postLibraryEvent(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException {
+    public ResponseEntity<?> postLibraryEvent(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException {
         log.info("received POST request: {}", libraryEvent);
 
+        if (libraryEvent.getLibraryEventId() != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LIBRARY_ERROR_CREATE_ID_NOT_NULL);
+        }
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
         // invoke the kafka producer and send message asynchronously
@@ -61,9 +64,12 @@ public class LibraryEventsController {
      * @return
      */
     @PostMapping(LIBRARY_V1_SYNC_ENDPOINT)
-    public ResponseEntity<LibraryEvent> postLibraryEventSync(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException, InterruptedException, ExecutionException, TimeoutException {
+    public ResponseEntity<?> postLibraryEventSync(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException, InterruptedException, ExecutionException, TimeoutException {
         log.info("received POST sync request: {}", libraryEvent);
 
+        if (libraryEvent.getLibraryEventId() != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(LIBRARY_ERROR_CREATE_ID_NOT_NULL);
+        }
         libraryEvent.setLibraryEventType(LibraryEventType.NEW);
 
         // invoke the kafka producer and send message synchronously

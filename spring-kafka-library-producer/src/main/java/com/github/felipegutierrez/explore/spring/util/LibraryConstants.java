@@ -13,4 +13,5 @@ public class LibraryConstants {
     public static final String LIBRARY_FUNC_V1_ENDPOINT = "/v1/func/libraryevent";
 
     public static final String LIBRARY_ERROR_ID_NULL = "LibraryEvent ID is null";
+    public static final String LIBRARY_ERROR_CREATE_ID_NOT_NULL = "LibraryEvent ID must be null for this operation";
 }
