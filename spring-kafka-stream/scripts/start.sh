@@ -14,6 +14,7 @@
 # > {"name": "Felipe", "age": 38, "gender": "male"}
 # > {"name": "Simone", "age": 40, "gender": "female"}
 # $ kafka-console-consumer --topic test-topic --bootstrap-server localhost:9092 --from-beginning
+# $ kafka-console-consumer --topic pos-topic --bootstrap-server localhost:9092 --from-beginning
 
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop
