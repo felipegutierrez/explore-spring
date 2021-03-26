@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.spring.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.felipegutierrez.explore.spring.model.LineItem;
+import com.github.felipegutierrez.explore.spring.model.LineItemAvro;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -13,6 +14,7 @@ class ProductGenerator {
     private final Random random;
     private final Random qty;
     private final LineItem[] products;
+    private final LineItemAvro[] productsAvro;
 
     public ProductGenerator() {
         URL resource = getClass().getClassLoader().getResource("data/products.json");
@@ -21,6 +23,7 @@ class ProductGenerator {
         qty = new Random();
         try {
             products = mapper.readValue(new File(resource.toURI()), LineItem[].class);
+            productsAvro = mapper.readValue(new File(resource.toURI()), LineItemAvro[].class);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -36,6 +39,13 @@ class ProductGenerator {
 
     public LineItem getNextProduct() {
         LineItem lineItem = products[getIndex()];
+        lineItem.setItemQty(getQuantity());
+        lineItem.setTotalValue(lineItem.getItemPrice() * lineItem.getItemQty());
+        return lineItem;
+    }
+
+    public LineItemAvro getNextProductAvro() {
+        LineItemAvro lineItem = productsAvro[getIndex()];
         lineItem.setItemQty(getQuantity());
         lineItem.setTotalValue(lineItem.getItemPrice() * lineItem.getItemQty());
         return lineItem;

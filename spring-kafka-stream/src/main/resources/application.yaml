@@ -32,5 +32,6 @@ application:
   configs:
     users.topic.name: users
     invoice.count: 60
-    invoice.topic.name: pos-topic
+    invoice.topic.json.name: pos-topic
+    invoice.topic.avro.name: pos-avro-topic
 ---

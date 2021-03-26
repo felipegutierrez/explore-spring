@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.spring.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.felipegutierrez.explore.spring.model.DeliveryAddress;
+import com.github.felipegutierrez.explore.spring.model.DeliveryAddressAvro;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -13,6 +14,7 @@ class AddressGenerator {
 
     private final Random random;
     private final DeliveryAddress[] addresses;
+    private final DeliveryAddressAvro[] addressesAvro;
 
     public AddressGenerator() {
         URL resource = getClass().getClassLoader().getResource("data/address.json");
@@ -21,6 +23,7 @@ class AddressGenerator {
         mapper = new ObjectMapper();
         try {
             addresses = mapper.readValue(new File(resource.toURI()), DeliveryAddress[].class);
+            addressesAvro = mapper.readValue(new File(resource.toURI()), DeliveryAddressAvro[].class);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -32,5 +35,9 @@ class AddressGenerator {
 
     public DeliveryAddress getNextAddress() {
         return addresses[getIndex()];
+    }
+
+    public DeliveryAddressAvro getNextAddressAvro() {
+        return addressesAvro[getIndex()];
     }
 }

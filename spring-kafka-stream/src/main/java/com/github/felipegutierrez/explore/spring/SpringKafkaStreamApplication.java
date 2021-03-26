@@ -20,8 +20,10 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     private InvoiceGenerator invoiceGenerator;
     @Value("${application.configs.invoice.count}")
     private int INVOICE_COUNT;
-    @Value("${application.configs.invoice.topic.name}")
-    private String INVOICE_TOPIC_NAME;
+    @Value("${application.configs.invoice.topic.json.name}")
+    private String INVOICE_JSON_TOPIC_NAME;
+    @Value("${application.configs.invoice.topic.avro.name}")
+    private String INVOICE_AVRO_TOPIC_NAME;
     @Value("${application.configs.users.topic.name}")
     private String USERS_TOPIC_NAME;
 
@@ -32,17 +34,32 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         disclaimers();
-        for (int i = 0; i < INVOICE_COUNT; i++) {
-            posInvoiceKafkaProducerService.sendMessage(invoiceGenerator.getNextInvoice());
-            Thread.sleep(1000);
+        if (args.containsOption("json")) {
+            for (int i = 0; i < INVOICE_COUNT; i++) {
+                posInvoiceKafkaProducerService.sendMessage(invoiceGenerator.getNextInvoiceJson());
+                Thread.sleep(1000);
+            }
+        }
+        if (args.containsOption("avro")) {
+            for (int i = 0; i < INVOICE_COUNT; i++) {
+                posInvoiceKafkaProducerService.sendMessage(invoiceGenerator.getNextInvoiceAvro());
+                Thread.sleep(1000);
+            }
         }
     }
 
     @Bean
-    NewTopic createInvoiceTopic() {
+    NewTopic createInvoiceJsonTopic() {
         Integer partitions = 1;
         short replicationFactor = 1;
-        return new NewTopic(INVOICE_TOPIC_NAME, partitions, replicationFactor);
+        return new NewTopic(INVOICE_JSON_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createInvoiceAvroTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(INVOICE_AVRO_TOPIC_NAME, partitions, replicationFactor);
     }
 
     @Bean
@@ -55,5 +72,8 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     private void disclaimers() {
         System.out.println("confluent local services start");
         System.out.println("http://localhost:9021/");
+        System.out.println("kafka-console-consumer --topic pos-topic --bootstrap-server localhost:9092 --from-beginning");
+        System.out.println("kafka-avro-console-consumer --topic pos-avro-topic --bootstrap-server localhost:9092 --property schema.registry.url=http://localhost:8081 --from-beginning");
+        System.out.println("");
     }
 }

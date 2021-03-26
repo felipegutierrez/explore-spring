@@ -1,0 +1,12 @@
+{
+  "namespace": "com.github.felipegutierrez.explore.spring.model",
+  "type": "record",
+  "name": "LineItemAvro",
+  "fields": [
+    {"name": "ItemCode","type": ["null","string"]},
+    {"name": "ItemDescription","type": ["null","string"]},
+    {"name": "ItemPrice","type": ["null","double"]},
+    {"name": "ItemQty","type": ["null","int"]},
+    {"name": "TotalValue","type": ["null","double"]}
+  ]
+}
