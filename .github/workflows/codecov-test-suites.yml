@@ -15,8 +15,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      # - run: mvn verify -P coverage # Run test
       - run: gradle build jacocoTestReport
+      - run: bash <(curl -s https://codecov.io/bash) # Upload to Codecov
       - uses: codecov/codecov-action@v1
         with:
           file: ./**/target/site/jacoco/jacoco.xml
