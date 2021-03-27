@@ -1,7 +1,7 @@
 {
   "namespace": "com.github.felipegutierrez.explore.spring.model",
   "type": "record",
-  "name": "HadoopRecord",
+  "name": "HadoopRecordAvro",
   "fields": [
     {"name": "InvoiceNumber", "type": ["null", "string"]},
     {"name": "CreatedTime",  "type":["null", "long"]},
