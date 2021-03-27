@@ -17,21 +17,33 @@ spring:
   cloud:
     stream:
       bindings:
-        input-channel-1:
-          destination: users
+        notification-input-channel:
+          destination: pos-topic
+        notification-output-avro-channel:
+          destination: loyalty-avro-topic
+        hadoop-input-channel:
+          destination: pos-topic
+        hadoop-output-avro-channel:
+          destination: hadoop-sink-avro-topic
       kafka:
         streams:
           binder:
-            application-id: hellostreams
             brokers: localhost:9092
             configuration:
-              default:
-                key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              schema.registry.url: http://localhost:8081
+          bindings:
+            notification-output-avro-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            hadoop-output-avro-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
 application:
   configs:
     users.topic.name: users
     invoice.count: 60
     invoice.topic.json.name: pos-topic
     invoice.topic.avro.name: pos-avro-topic
+    loyalty.topic.avro.name: loyalty-avro-topic
+    hadoop.topic.avro.name: hadoop-sink-avro-topic
 ---
