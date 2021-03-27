@@ -1,0 +1,11 @@
+{
+  "namespace": "com.github.felipegutierrez.explore.spring.model",
+  "type": "record",
+  "name": "NotificationAvro",
+  "fields": [
+    {"name": "InvoiceNumber", "type": ["null", "string"]},
+    {"name": "CustomerCardNo",  "type":["null", "string"]},
+    {"name": "TotalAmount",  "type": ["null", "double"]},
+    {"name": "EarnedLoyaltyPoints",  "type": ["null", "double"]}
+  ]
+}
