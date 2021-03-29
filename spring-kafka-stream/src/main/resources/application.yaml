@@ -33,12 +33,18 @@ spring:
           destination: pos-avro-topic
         hadoop-output-json-channel:
           destination: hadoop-sink-topic
+        pos-input-avro-exactly-once-channel:
+          destination: pos-avro-topic
       kafka:
         streams:
           binder:
             brokers: localhost:9092
             configuration:
               schema.registry.url: http://localhost:8081
+              processing.guarantee: exactly_once
+              default:
+                key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
           bindings:
             notification-output-avro-channel:
               producer:
@@ -58,6 +64,9 @@ spring:
             hadoop-output-json-channel:
               producer:
                 valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
+            pos-input-avro-exactly-once-channel:
+              consumer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
 application:
   configs:
     users.topic.name: users
@@ -68,4 +77,6 @@ application:
     loyalty.topic.json.name: loyalty-topic
     hadoop.topic.avro.name: hadoop-sink-avro-topic
     hadoop.topic.json.name: hadoop-sink-topic
+    hadoop.topic.avro.ex.name: hadoop-sink-avro-ex-topic
+    loyalty.topic.avro.ex.name: loyalty-avro-ex-topic
 ---

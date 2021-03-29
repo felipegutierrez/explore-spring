@@ -34,6 +34,10 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     private String HADOOP_AVRO_TOPIC_NAME;
     @Value("${application.configs.hadoop.topic.json.name}")
     private String HADOOP_JSON_TOPIC_NAME;
+    @Value("${application.configs.loyalty.topic.avro.ex.name}")
+    private String LOYALTY_AVRO_EXACTLY_ONCE_TOPIC_NAME;
+    @Value("${application.configs.hadoop.topic.avro.ex.name}")
+    private String HADOOP_AVRO_EXACTLY_ONCE_TOPIC_NAME;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaStreamApplication.class, args);
@@ -85,6 +89,13 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     }
 
     @Bean
+    NewTopic createLoyaltyAvroExactlyOnceTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(LOYALTY_AVRO_EXACTLY_ONCE_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
     NewTopic createLoyaltyJsonTopic() {
         Integer partitions = 1;
         short replicationFactor = 1;
@@ -96,6 +107,13 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(HADOOP_AVRO_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createHadoopAvroExactlyOnceTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(HADOOP_AVRO_EXACTLY_ONCE_TOPIC_NAME, partitions, replicationFactor);
     }
 
     @Bean

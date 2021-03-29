@@ -30,6 +30,16 @@ public class RecordBuilder {
         return notification;
     }
 
+    public NotificationAvro getNotificationAvro(PosInvoiceAvro posInvoice) {
+        NotificationAvro notificationAvro = NotificationAvro.newBuilder()
+                .setInvoiceNumber(posInvoice.getInvoiceNumber())
+                .setCustomerCardNo(posInvoice.getCustomerCardNo())
+                .setTotalAmount(posInvoice.getTotalAmount())
+                .setEarnedLoyaltyPoints(posInvoice.getTotalAmount() * 0.02)
+                .build();
+        return notificationAvro;
+    }
+
     public PosInvoice getMaskedInvoiceJson(PosInvoice posInvoice) {
         posInvoice.setCustomerCardNo(null);
         if (posInvoice.getDeliveryType().equalsIgnoreCase(HOME_DELIVERY)) {
@@ -99,5 +109,32 @@ public class RecordBuilder {
             hadoopRecordList.add(hadoopRecord);
         }
         return hadoopRecordList;
+    }
+
+    public List<HadoopRecordAvro> getHadoopRecordsAvro(PosInvoiceAvro posInvoice) {
+        List<HadoopRecordAvro> hadoopRecordAvroList = new ArrayList<HadoopRecordAvro>();
+        for (LineItemAvro lineItemAvro : posInvoice.getInvoiceLineItems()) {
+            HadoopRecordAvro hadoopRecordAvro = HadoopRecordAvro.newBuilder()
+                    .setInvoiceNumber(posInvoice.getInvoiceNumber())
+                    .setCreatedTime(posInvoice.getCreatedTime())
+                    .setStoreID(posInvoice.getStoreID())
+                    .setPosID(posInvoice.getPosID())
+                    .setCustomerType(posInvoice.getCustomerType())
+                    .setPaymentMethod(posInvoice.getPaymentMethod())
+                    .setDeliveryType(posInvoice.getDeliveryType())
+                    .setItemCode(lineItemAvro.getItemCode())
+                    .setItemDescription(lineItemAvro.getItemDescription())
+                    .setItemPrice(lineItemAvro.getItemPrice())
+                    .setItemQty(lineItemAvro.getItemQty())
+                    .setTotalValue(lineItemAvro.getTotalValue())
+                    .build();
+            if (posInvoice.getDeliveryType().equalsIgnoreCase(HOME_DELIVERY)) {
+                hadoopRecordAvro.setCity(posInvoice.getDeliveryAddress().getCity());
+                hadoopRecordAvro.setState(posInvoice.getDeliveryAddress().getState());
+                hadoopRecordAvro.setPinCode(posInvoice.getDeliveryAddress().getPinCode());
+            }
+            hadoopRecordAvroList.add(hadoopRecordAvro);
+        }
+        return hadoopRecordAvroList;
     }
 }
