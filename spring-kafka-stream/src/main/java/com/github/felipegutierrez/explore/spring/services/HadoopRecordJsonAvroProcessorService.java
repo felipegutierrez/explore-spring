@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class HadoopRecordJsonAvroProcessorService {
 
     @Autowired
-    RecordJsonToAvroBuilder recordJsonToAvroBuilder;
+    RecordBuilder recordBuilder;
 
     /**
      * receives a stream of PosInvoice in Json format from the "hadoop-input-channel" channel
@@ -27,8 +27,8 @@ public class HadoopRecordJsonAvroProcessorService {
     @SendTo("hadoop-output-avro-channel")
     public KStream<String, HadoopRecordAvro> process(KStream<String, PosInvoice> input) {
         KStream<String, HadoopRecordAvro> hadoopRecordAvroKStream = input
-                .mapValues(v -> recordJsonToAvroBuilder.getMaskedInvoice(v))
-                .flatMapValues(v -> recordJsonToAvroBuilder.getHadoopRecords(v));
+                .mapValues(v -> recordBuilder.getMaskedInvoiceJson(v))
+                .flatMapValues(v -> recordBuilder.getHadoopRecordsAvro(v));
 
         hadoopRecordAvroKStream.foreach((k, v) -> log.info(String.format("Hadoop record avro - key: %s, value: %s", k, v)));
         return hadoopRecordAvroKStream;

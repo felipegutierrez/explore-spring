@@ -19,7 +19,7 @@ import static com.github.felipegutierrez.explore.spring.utils.PosInvoiceConstant
 public class NotificationJsonAvroProcessorService {
 
     @Autowired
-    RecordJsonToAvroBuilder recordJsonToAvroBuilder;
+    RecordBuilder recordBuilder;
 
     /**
      * receives a stream of PosInvoice in Json format from the "notification-input-channel" channel
@@ -33,7 +33,7 @@ public class NotificationJsonAvroProcessorService {
     public KStream<String, NotificationAvro> process(KStream<String, PosInvoice> input) {
         KStream<String, NotificationAvro> notificationAvroKStream = input
                 .filter((k, v) -> v.getCustomerType().equalsIgnoreCase(PRIME))
-                .mapValues(v -> recordJsonToAvroBuilder.getNotificationAvro(v));
+                .mapValues(v -> recordBuilder.getNotificationAvro(v));
         notificationAvroKStream.foreach((k, v) -> log.info(String.format("Notification avro - key: %s, value: %s", k, v)));
         return notificationAvroKStream;
     }

@@ -16,11 +16,14 @@
 # $ kafka-console-consumer --topic test-topic --bootstrap-server localhost:9092 --from-beginning
 # $ kafka-console-consumer --topic pos-topic --bootstrap-server localhost:9092 --from-beginning
 
+# using parameter --json to consume messages serialized in JSON to AVRO
 # kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic loyalty-avro-topic --from-beginning --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property print.key=true --property key.separator=":"
 # kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic hadoop-sink-avro-topic --from-beginning --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property print.key=true --property key.separator=":"
-#
+
+# using parameter --avro to consume messages serialized in AVRO to JSON
+# kafka-json-schema-console-consumer --bootstrap-server localhost:9092 --topic loyalty-topic --from-beginning --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property print.key=true --property key.separator=":"
+# kafka-json-schema-console-consumer --bootstrap-server localhost:9092 --topic hadoop-sink-topic --from-beginning --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property print.key=true --property key.separator=":"
 
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop
 # $ confluent local destroy
-
