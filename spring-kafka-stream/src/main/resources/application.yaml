@@ -35,6 +35,12 @@ spring:
           destination: hadoop-sink-topic
         pos-input-avro-exactly-once-channel:
           destination: pos-avro-topic
+        xml-input-channel:
+          destination: xml-order-topic
+        india-orders-channel:
+          destination: india-orders-topic
+        abroad-orders-channel:
+          destination: abroad-orders-topic
       kafka:
         streams:
           binder:
@@ -64,6 +70,12 @@ spring:
             pos-input-avro-exactly-once-channel:
               consumer:
                 valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            india-orders-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
+            abroad-orders-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
 application:
   configs:
     users.topic.name: users
@@ -76,4 +88,8 @@ application:
     hadoop.topic.json.name: hadoop-sink-topic
     hadoop.topic.avro.ex.name: hadoop-sink-avro-ex-topic
     loyalty.topic.avro.ex.name: loyalty-avro-ex-topic
+    order.xml.input.topic.name: xml-order-topic
+    order.india.output.topic.name: india-orders-topic
+    order.abroad.output.topic.name: abroad-orders-topic
+    order.error.topic.name: order-error-topic
 ---

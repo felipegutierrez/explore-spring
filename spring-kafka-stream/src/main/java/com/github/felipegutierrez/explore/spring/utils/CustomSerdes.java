@@ -2,7 +2,9 @@ package com.github.felipegutierrez.explore.spring.utils;
 
 import com.github.felipegutierrez.explore.spring.model.HadoopRecordAvro;
 import com.github.felipegutierrez.explore.spring.model.NotificationAvro;
+import com.github.felipegutierrez.explore.spring.model.OrderEnvelop;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
+import io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,11 @@ public class CustomSerdes extends Serdes {
         final Serde<NotificationAvro> notificationAvroSerde = new SpecificAvroSerde<>();
         notificationAvroSerde.configure(serdeConfig, false);
         return notificationAvroSerde;
+    }
+
+    public static Serde<OrderEnvelop> OrderEnvelop() {
+        final Serde<OrderEnvelop> specificJsonSerde = new KafkaJsonSchemaSerde<>();
+        specificJsonSerde.configure(serdeConfig, false);
+        return specificJsonSerde;
     }
 }

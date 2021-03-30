@@ -18,14 +18,17 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     private PosInvoiceKafkaProducerService posInvoiceKafkaProducerService;
     @Autowired
     private InvoiceGenerator invoiceGenerator;
+
+    @Value("${application.configs.users.topic.name}")
+    private String USERS_TOPIC_NAME;
+
     @Value("${application.configs.invoice.count}")
     private int INVOICE_COUNT;
     @Value("${application.configs.invoice.topic.json.name}")
     private String INVOICE_JSON_TOPIC_NAME;
     @Value("${application.configs.invoice.topic.avro.name}")
     private String INVOICE_AVRO_TOPIC_NAME;
-    @Value("${application.configs.users.topic.name}")
-    private String USERS_TOPIC_NAME;
+
     @Value("${application.configs.loyalty.topic.avro.name}")
     private String LOYALTY_AVRO_TOPIC_NAME;
     @Value("${application.configs.loyalty.topic.json.name}")
@@ -38,6 +41,15 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     private String LOYALTY_AVRO_EXACTLY_ONCE_TOPIC_NAME;
     @Value("${application.configs.hadoop.topic.avro.ex.name}")
     private String HADOOP_AVRO_EXACTLY_ONCE_TOPIC_NAME;
+
+    @Value("${application.configs.order.xml.input.topic.name}")
+    private String ORDER_XML_INPUT_TOPIC_NAME;
+    @Value("${application.configs.order.india.output.topic.name}")
+    private String ORDER_INDIA_OUTPUT_TOPIC_NAME;
+    @Value("${application.configs.order.abroad.output.topic.name}")
+    private String ORDER_ABROAD_OUTPUT_TOPIC_NAME;
+    @Value("${application.configs.order.error.topic.name}")
+    private String ORDER_ERROR_TOPIC_NAME;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaStreamApplication.class, args);
@@ -124,6 +136,34 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(HADOOP_JSON_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createOrderXmlInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(ORDER_XML_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createOrderIndiaOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(ORDER_INDIA_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createOrderAbroadOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(ORDER_ABROAD_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createOrderErrorTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(ORDER_ERROR_TOPIC_NAME, partitions, replicationFactor);
     }
 
     private void disclaimers() {
