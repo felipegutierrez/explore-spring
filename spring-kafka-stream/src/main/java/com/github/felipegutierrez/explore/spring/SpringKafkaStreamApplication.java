@@ -51,6 +51,9 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     @Value("${application.configs.order.error.topic.name}")
     private String ORDER_ERROR_TOPIC_NAME;
 
+    @Value("${application.configs.stock.tick.topic.name}")
+    private String STOCK_TICK_TOPIC_NAME;
+
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaStreamApplication.class, args);
     }
@@ -164,6 +167,13 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(ORDER_ERROR_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createStockTickTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(STOCK_TICK_TOPIC_NAME, partitions, replicationFactor);
     }
 
     private void disclaimers() {

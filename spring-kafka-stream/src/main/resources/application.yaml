@@ -41,6 +41,8 @@ spring:
           destination: india-orders-topic
         abroad-orders-channel:
           destination: abroad-orders-topic
+        stock-input-channel:
+          destination: stock-tick-topic
       kafka:
         streams:
           binder:
@@ -48,6 +50,8 @@ spring:
             configuration:
               schema.registry.url: http://localhost:8081
               processing.guarantee: exactly_once
+              commit.interval.ms: 10000
+              state.dir: state-store
           bindings:
             notification-output-avro-channel:
               producer:
@@ -76,6 +80,9 @@ spring:
             abroad-orders-channel:
               producer:
                 valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
+            stock-input-channel:
+              consumer:
+                materializedAs: stock-input-store
 application:
   configs:
     users.topic.name: users
@@ -92,4 +99,5 @@ application:
     order.india.output.topic.name: india-orders-topic
     order.abroad.output.topic.name: abroad-orders-topic
     order.error.topic.name: order-error-topic
+    stock.tick.topic.name: stock-tick-topic
 ---

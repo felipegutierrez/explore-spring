@@ -43,6 +43,12 @@
 # Missing City Error ------------------------
 # <?xml version="1.0" encoding="UTF-8"?><order order-id="889927" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Abdul Hamid</order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city></city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
 
+# KTable stream demo
+# kafka-console-producer --topic stock-tick-topic --broker-list localhost:9092 --property parse.key=true --property key.separator=":"
+HDFCBANK:2120
+HDFCBANK:2150
+HDFCBANK:2180
+TCS:2920
 
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop
