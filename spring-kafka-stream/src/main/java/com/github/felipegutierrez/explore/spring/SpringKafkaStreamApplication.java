@@ -58,6 +58,9 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
                 Thread.sleep(1000);
             }
         }
+        if (args.containsOption("xml")) {
+
+        }
     }
 
     @Bean
