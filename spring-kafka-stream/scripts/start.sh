@@ -28,6 +28,22 @@
 # kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic loyalty-avro-ex-topic --from-beginning --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property print.key=true --property key.separator=":"
 # kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic hadoop-sink-avro-ex-topic --from-beginning --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property print.key=true --property key.separator=":"
 
+# consuming XML messages and producing JSON messages to 2 branches
+# kafka-console-producer --topic xml-order-topic --broker-list localhost:9092
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic india-orders-topic --from-beginning --property print.key=true --property key.separator=":"
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic abroad-orders-topic --from-beginning --property print.key=true --property key.separator=":"
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic order-error-topic --from-beginning --property print.key=true --property key.separator=":"
+# Abroad Order ---------------
+# <?xml version="1.0" encoding="UTF-8"?><order order-id="889923" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>John Smith</order-by><ship-to><name>Ola Nordmann</name><address>Langgt 23</address><city>4000 Stavanger</city><country>Norway</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
+# <?xml version="1.0" encoding="UTF-8"?><order order-id="889924" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Michael Jordan</order-by><ship-to><name>Chris Stokes</name><address>Fremont</address><city>Geneva</city><country>Switzerland</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
+# Indian Order --------------
+# <?xml version="1.0" encoding="UTF-8"?><order order-id="889925" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Abdul Hamid</order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city>Bangalore</city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
+# Parsing Error Order ---------------------
+# <?xml version="1.0" encoding="UTF-8"?><order order-id="889926" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Abdul Hamid<order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city>Bangalore</city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
+# Missing City Error ------------------------
+# <?xml version="1.0" encoding="UTF-8"?><order order-id="889927" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Abdul Hamid</order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city></city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
+
+
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop
 # $ confluent local destroy
