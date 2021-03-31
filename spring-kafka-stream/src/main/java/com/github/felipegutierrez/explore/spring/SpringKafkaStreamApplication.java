@@ -56,6 +56,8 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
 
     @Value("${application.configs.words.streaming.topic.name}")
     private String WORDS_STREAMING_TOPIC_NAME;
+    @Value("${application.configs.words.streaming.output.topic.name}")
+    private String WORDS_STREAMING_OUTPUT_TOPIC_NAME;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaStreamApplication.class, args);
@@ -184,6 +186,13 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(WORDS_STREAMING_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createWordsStreamingOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(WORDS_STREAMING_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 
     private void disclaimers() {

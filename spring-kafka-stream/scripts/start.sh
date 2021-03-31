@@ -52,6 +52,7 @@ TCS:2920
 
 # KTable streaming aggregation word count
 # kafka-console-producer --topic streaming-words-topic --broker-list localhost:9092
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic streaming-words-output-topic --from-beginning --property print.key=true --property key.separator=":"
 
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop

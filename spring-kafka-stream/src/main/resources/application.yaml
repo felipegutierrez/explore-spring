@@ -14,6 +14,11 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.add.type.headers: false
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: group-01
   cloud:
     stream:
       bindings:
@@ -112,4 +117,5 @@ application:
     order.error.topic.name: order-error-topic
     stock.tick.topic.name: stock-tick-topic
     words.streaming.topic.name: streaming-words-topic
+    words.streaming.output.topic.name: streaming-words-output-topic
 ---
