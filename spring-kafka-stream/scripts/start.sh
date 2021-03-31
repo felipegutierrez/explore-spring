@@ -50,6 +50,9 @@ HDFCBANK:2150
 HDFCBANK:2180
 TCS:2920
 
+# KTable streaming aggregation word count
+# kafka-console-producer --topic streaming-words-topic --broker-list localhost:9092
+
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop
 # $ confluent local destroy
