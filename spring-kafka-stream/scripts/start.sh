@@ -75,8 +75,17 @@ STR1536:{"InvoiceNumber": 104,"CreatedTime": "1549361160000","StoreID": "STR1536
 STR1534:{"InvoiceNumber": 105,"CreatedTime": "1549361270000","StoreID": "STR1534", "TotalAmount": 6375}
 STR1536:{"InvoiceNumber": 106,"CreatedTime": "1549361370000","StoreID": "STR1536", "TotalAmount": 9365}
 
-#
-#
+# User click session window
+# kafka-console-producer --broker-list localhost:9092 --topic user-clicks-topic --property parse.key=true --property key.separator=":"
+USR101:{"UserID": "USR101","CreatedTime": "1549360860000","CurrentLink": "NULL", "NextLink": "Home"}
+USR102:{"UserID": "USR102","CreatedTime": "1549360920000","CurrentLink": "NULL", "NextLink": "Home"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361040000","CurrentLink": "Home", "NextLink": "Books"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361400000","CurrentLink": "Books", "NextLink": "Kafka"}
+USR102:{"UserID": "USR102","CreatedTime": "1549360920000","CurrentLink": "NULL", "NextLink": "Home"}
+USR102:{"UserID": "USR102","CreatedTime": "1549361400000","CurrentLink": "Home", "NextLink": "Courses"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361220000","CurrentLink": "Kafka", "NextLink": "Preview"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Preview", "NextLink": "Buy"}
+
 #
 #
 

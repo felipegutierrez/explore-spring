@@ -57,6 +57,8 @@ spring:
           destination: employees-topic
         invoice-input-channel:
           destination: simple-invoice-topic
+        click-input-channel:
+          destination: user-clicks-topic
       kafka:
         streams:
           binder:
@@ -109,6 +111,9 @@ spring:
             invoice-input-channel:
               consumer:
                 timestampExtractorBeanName: invoiceTimesExtractor
+            click-input-channel:
+              consumer:
+                timestampExtractorBeanName: userClickTimeExtractor
 application:
   configs:
     users.topic.name: users
@@ -130,4 +135,5 @@ application:
     words.streaming.output.topic.name: streaming-words-output-topic
     employees.input.topic.name: employees-topic
     simple.invoice.input.topic: simple-invoice-topic
+    user.click.input.topic: user-clicks-topic
 ---

@@ -65,6 +65,9 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
     @Value("${application.configs.simple.invoice.input.topic}")
     private String SIMPLE_INVOICE_INPUT_TOPIC_NAME;
 
+    @Value("${application.configs.user.click.input.topic}")
+    private String USER_CLICK_INPUT_TOPIC_NAME;
+
     public static void main(String[] args) {
         SpringApplication.run(SpringKafkaStreamApplication.class, args);
     }
@@ -213,6 +216,13 @@ public class SpringKafkaStreamApplication implements ApplicationRunner {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(SIMPLE_INVOICE_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createUserClickInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(USER_CLICK_INPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 
     private void disclaimers() {
