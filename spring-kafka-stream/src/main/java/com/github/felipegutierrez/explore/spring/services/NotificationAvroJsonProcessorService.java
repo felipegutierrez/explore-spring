@@ -4,15 +4,20 @@ import com.github.felipegutierrez.explore.spring.bindings.PosListenerAvroJsonBin
 import com.github.felipegutierrez.explore.spring.model.Notification;
 import com.github.felipegutierrez.explore.spring.model.PosInvoiceAvro;
 import com.github.felipegutierrez.explore.spring.utils.CustomSerdes;
+import io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.streams.KeyValue;
+import org.apache.kafka.streams.kstream.Grouped;
 import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.Serialized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.kafka.support.serializer.JsonSerde;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedHashMap;
 
 import static com.github.felipegutierrez.explore.spring.utils.PosInvoiceConstants.PRIME;
 
@@ -47,7 +52,8 @@ public class NotificationAvroJsonProcessorService {
         KStream<String, Notification> notificationJsonKStream = input
                 .filter((k, v) -> v.getCustomerType().equalsIgnoreCase(PRIME))
                 .map((k, v) -> new KeyValue<>(v.getCustomerCardNo(), recordBuilder.getNotificationJson(v)))
-                .groupByKey(Serialized.with(CustomSerdes.String(), CustomSerdes.Notification()))
+                .groupByKey(Grouped.with(CustomSerdes.String(), CustomSerdes.Notification()))
+                // .groupByKey(Grouped.with(CustomSerdes.String(), CustomSerdes.NotificationJsonSerde()))
                 .reduce((aggValue, newValue) -> {
                     newValue.setTotalLoyaltyPoints(newValue.getEarnedLoyaltyPoints() + aggValue.getTotalLoyaltyPoints());
                     return newValue;
