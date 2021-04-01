@@ -156,4 +156,20 @@ public class RecordBuilder {
         departmentAggregate.setAvgSalary((aggValue.getTotalSalary() + emp.getSalary()) / (aggValue.getEmployeeCount() + 1D));
         return departmentAggregate;
     }
+
+    public DepartmentAggregate addedDepartmentAggregate(Employee emp, DepartmentAggregate aggValue){
+        DepartmentAggregate departmentAggregate = new DepartmentAggregate();
+        departmentAggregate.setEmployeeCount(aggValue.getEmployeeCount() + 1);
+        departmentAggregate.setTotalSalary(aggValue.getTotalSalary() + emp.getSalary());
+        departmentAggregate.setAvgSalary((aggValue.getTotalSalary() + emp.getSalary()) / (aggValue.getEmployeeCount() + 1D));
+        return departmentAggregate;
+    }
+
+    public DepartmentAggregate subtractDepartmentAggregate(Employee emp, DepartmentAggregate aggValue){
+        DepartmentAggregate departmentAggregate = new DepartmentAggregate();
+        departmentAggregate.setEmployeeCount(aggValue.getEmployeeCount() - 1);
+        departmentAggregate.setTotalSalary(aggValue.getTotalSalary() - emp.getSalary());
+        departmentAggregate.setAvgSalary((aggValue.getTotalSalary() - emp.getSalary()) / (aggValue.getEmployeeCount() - 1D));
+        return departmentAggregate;
+    }
 }
