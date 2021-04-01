@@ -1,4 +1,3 @@
-
 # configuring the confluent platform classpath at "~/.bashrc"
 # export CONFLUENT_HOME=/home/felipe/Servers/confluent-6.1.1
 # export PATH=$PATH:$CONFLUENT_HOME/bin
@@ -53,6 +52,18 @@ TCS:2920
 # KTable streaming aggregation word count
 # kafka-console-producer --topic streaming-words-topic --broker-list localhost:9092
 # kafka-console-consumer --bootstrap-server localhost:9092 --topic streaming-words-output-topic --from-beginning --property print.key=true --property key.separator=":"
+
+# KStream aggregation of Employees
+# kafka-avro-console-producer --broker-list localhost:9092 --topic employees-topic --property value.schema='{"namespace": "com.github.felipegutierrez.explore.spring.model","type": "record","name": "Employee","fields": [{"name": "id","type": "string"},{"name": "name","type": "string"},{"name": "department","type": "string"},{"name": "salary","type":"int"}]}'
+# data
+{"id": "101", "name": "Prashant", "department": "engineering", "salary": 5000}
+{"id": "102", "name": "John", "department": "accounts", "salary": 8000}
+{"id": "103", "name": "Abdul", "department": "engineering", "salary": 3000}
+{"id": "104", "name": "Melinda", "department": "support", "salary": 7000}
+{"id": "105", "name": "Jimmy", "department": "support", "salary": 6000}
+
+{"id": "101", "name": "Prashant", "department": "support", "salary": 5000}
+{"id": "104", "name": "Melinda", "department": "engineering", "salary": 7000}
 
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop

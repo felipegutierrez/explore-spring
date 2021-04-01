@@ -53,6 +53,8 @@ spring:
           consumer:
             useNativeDecoding: false
             contentType: text/plain
+        employee-input-channel:
+          destination: employees-topic
       kafka:
         streams:
           binder:
@@ -99,6 +101,9 @@ spring:
               consumer:
                 keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
                 valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            employee-input-channel:
+              consumer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
 application:
   configs:
     users.topic.name: users
@@ -118,4 +123,5 @@ application:
     stock.tick.topic.name: stock-tick-topic
     words.streaming.topic.name: streaming-words-topic
     words.streaming.output.topic.name: streaming-words-output-topic
+    employees.input.topic.name: employees-topic
 ---
