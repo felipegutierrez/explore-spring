@@ -65,6 +65,21 @@ TCS:2920
 {"id": "101", "name": "Prashant", "department": "support", "salary": 5000}
 {"id": "104", "name": "Melinda", "department": "engineering", "salary": 7000}
 
+# KStream with time window
+# kafka-console-producer --broker-list localhost:9092 --topic simple-invoice-topic --property parse.key=true --property key.separator=":"
+STR1534:{"InvoiceNumber": 101,"CreatedTime": "1549360860000","StoreID": "STR1534", "TotalAmount": 1920}
+STR1535:{"InvoiceNumber": 102,"CreatedTime": "1549360900000","StoreID": "STR1535", "TotalAmount": 1860}
+STR1534:{"InvoiceNumber": 103,"CreatedTime": "1549360999000","StoreID": "STR1534", "TotalAmount": 2400}
+
+STR1536:{"InvoiceNumber": 104,"CreatedTime": "1549361160000","StoreID": "STR1536", "TotalAmount": 8936}
+STR1534:{"InvoiceNumber": 105,"CreatedTime": "1549361270000","StoreID": "STR1534", "TotalAmount": 6375}
+STR1536:{"InvoiceNumber": 106,"CreatedTime": "1549361370000","StoreID": "STR1536", "TotalAmount": 9365}
+
+#
+#
+#
+#
+
 # Stop and delete all topics and data of confluent platform
 # $ confluent local stop
 # $ confluent local destroy

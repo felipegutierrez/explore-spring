@@ -55,6 +55,8 @@ spring:
             contentType: text/plain
         employee-input-channel:
           destination: employees-topic
+        invoice-input-channel:
+          destination: simple-invoice-topic
       kafka:
         streams:
           binder:
@@ -104,6 +106,9 @@ spring:
             employee-input-channel:
               consumer:
                 valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            invoice-input-channel:
+              consumer:
+                timestampExtractorBeanName: invoiceTimesExtractor
 application:
   configs:
     users.topic.name: users
@@ -124,4 +129,5 @@ application:
     words.streaming.topic.name: streaming-words-topic
     words.streaming.output.topic.name: streaming-words-output-topic
     employees.input.topic.name: employees-topic
+    simple.invoice.input.topic: simple-invoice-topic
 ---
