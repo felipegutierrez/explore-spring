@@ -72,4 +72,10 @@ public class CustomSerdes extends Serdes {
         departmentAggregateSerde.configure(serdeConfig, false);
         return departmentAggregateSerde;
     }
+
+    public static Serde<SimpleInvoice> SimpleInvoice() {
+        final Serde<SimpleInvoice> simpleInvoiceSerde = new KafkaJsonSchemaSerde<>();
+        simpleInvoiceSerde.configure(serdeConfig, false);
+        return simpleInvoiceSerde;
+    }
 }
