@@ -47,8 +47,7 @@ public class NotificationAvroJsonProcessorService {
         KStream<String, Notification> notificationJsonKStream = input
                 .filter((k, v) -> v.getCustomerType().equalsIgnoreCase(PRIME))
                 .map((k, v) -> new KeyValue<>(v.getCustomerCardNo(), recordBuilder.getNotificationJson(v)))
-                .groupByKey()
-                // .groupByKey(Serialized.with(CustomSerdes.String(), CustomSerdes.Notification()))
+                .groupByKey(Serialized.with(CustomSerdes.String(), CustomSerdes.Notification()))
                 .reduce((aggValue, newValue) -> {
                     newValue.setTotalLoyaltyPoints(newValue.getEarnedLoyaltyPoints() + aggValue.getTotalLoyaltyPoints());
                     return newValue;

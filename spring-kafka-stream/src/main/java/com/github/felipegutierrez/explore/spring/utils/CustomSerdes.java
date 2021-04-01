@@ -34,7 +34,7 @@ public class CustomSerdes extends Serdes {
     }
 
     public static Serde<Notification> Notification() {
-        final Serde<Notification> notificationSerde = new KafkaJsonSchemaSerde<>();
+        final Serde<Notification> notificationSerde = new KafkaJsonSchemaSerde<Notification>();
         notificationSerde.configure(serdeConfig, false);
         return notificationSerde;
     }

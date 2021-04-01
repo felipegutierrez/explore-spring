@@ -6,6 +6,7 @@ import com.github.felipegutierrez.explore.spring.model.PosInvoice;
 import com.github.felipegutierrez.explore.spring.utils.CustomSerdes;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.streams.KeyValue;
+import org.apache.kafka.streams.kstream.Grouped;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Serialized;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ import org.springframework.stereotype.Service;
 
 import static com.github.felipegutierrez.explore.spring.utils.PosInvoiceConstants.PRIME;
 
+/**
+ * Solution from:
+ * https://stackoverflow.com/questions/66901218/how-to-use-custom-serializers-with-ktable-in-kafka-streams
+ */
 @Service
 @Slf4j
 @EnableBinding(PosListenerJsonAvroBinding.class)
@@ -48,7 +53,7 @@ public class NotificationJsonAvroProcessorService {
         KStream<String, NotificationAvro> notificationAvroKStream = input
                 .filter((k, v) -> v.getCustomerType().equalsIgnoreCase(PRIME))
                 .map((k, v) -> new KeyValue<>(v.getCustomerCardNo(), recordBuilder.getNotificationAvro(v)))
-                .groupByKey(Serialized.with(CustomSerdes.String(), CustomSerdes.NotificationAvro()))
+                .groupByKey(Grouped.with(CustomSerdes.String(), CustomSerdes.NotificationAvro()))
                 .reduce((aggValue, newValue) -> {
                     newValue.setTotalLoyaltyPoints(newValue.getEarnedLoyaltyPoints() + aggValue.getTotalLoyaltyPoints());
                     return newValue;
