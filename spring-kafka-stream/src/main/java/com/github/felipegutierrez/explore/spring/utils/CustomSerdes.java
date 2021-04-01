@@ -1,9 +1,6 @@
 package com.github.felipegutierrez.explore.spring.utils;
 
-import com.github.felipegutierrez.explore.spring.model.HadoopRecordAvro;
-import com.github.felipegutierrez.explore.spring.model.Notification;
-import com.github.felipegutierrez.explore.spring.model.NotificationAvro;
-import com.github.felipegutierrez.explore.spring.model.OrderEnvelop;
+import com.github.felipegutierrez.explore.spring.model.*;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde;
 import org.apache.kafka.common.serialization.Serde;
@@ -17,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
-import static io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig.*;
+import static io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig.JSON_VALUE_TYPE;
 
 @Service
 public class CustomSerdes extends Serdes {
@@ -62,5 +59,17 @@ public class CustomSerdes extends Serdes {
         final Serde<OrderEnvelop> specificJsonSerde = new KafkaJsonSchemaSerde<>();
         specificJsonSerde.configure(serdeConfig, false);
         return specificJsonSerde;
+    }
+
+    public static Serde<Employee> EmployeeAvro() {
+        final Serde<Employee> employeeSerde = new SpecificAvroSerde<>();
+        employeeSerde.configure(serdeConfig, false);
+        return employeeSerde;
+    }
+
+    public static Serde<DepartmentAggregate> DepartmentAggregateAvro() {
+        final Serde<DepartmentAggregate> departmentAggregateSerde = new SpecificAvroSerde<>();
+        departmentAggregateSerde.configure(serdeConfig, false);
+        return departmentAggregateSerde;
     }
 }
