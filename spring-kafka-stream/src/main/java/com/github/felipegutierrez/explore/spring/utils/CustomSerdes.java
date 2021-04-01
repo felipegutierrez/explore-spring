@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
+import static io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializerConfig.FAIL_INVALID_SCHEMA;
 import static io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig.JSON_VALUE_TYPE;
 
 @Service
@@ -21,9 +22,10 @@ public class CustomSerdes extends Serdes {
 
     private final static Map<String, String> serdeConfig = Stream.of(
             new AbstractMap.SimpleEntry<>(SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081")
-            , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, "com.fasterxml.jackson.databind.JsonNode")
+            // , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, "com.fasterxml.jackson.databind.JsonNode")
+            , new AbstractMap.SimpleEntry<>(FAIL_INVALID_SCHEMA, "true")
+            , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, Notification.class.getName())
             // , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, "com.github.felipegutierrez.explore.spring.model.Notification")
-            // , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, Notification.class.getName())
             // , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, "com.fasterxml.jackson.databind.JavaType")
             // , new AbstractMap.SimpleEntry<>(TYPE_PROPERTY, TYPE_PROPERTY_DEFAULT)
             // , new AbstractMap.SimpleEntry<>("spring.json.add.type.headers", "false")
@@ -44,13 +46,7 @@ public class CustomSerdes extends Serdes {
     }
 
     public static Serde<Notification> Notification() {
-        final Serde<Notification> notificationSerde = new KafkaJsonSchemaSerde<Notification>();
-        notificationSerde.configure(serdeConfig, false);
-        return notificationSerde;
-    }
-
-    public static Serde<Notification> NotificationJsonSerde() {
-        final Serde<Notification> notificationSerde = new JsonSerde<Notification>();
+        final Serde<Notification> notificationSerde = new KafkaJsonSchemaSerde<>();
         notificationSerde.configure(serdeConfig, false);
         return notificationSerde;
     }
