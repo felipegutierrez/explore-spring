@@ -17,6 +17,7 @@ public class RecordBuilder {
                 .setCustomerCardNo(posInvoice.getCustomerCardNo())
                 .setTotalAmount(posInvoice.getTotalAmount())
                 .setEarnedLoyaltyPoints(posInvoice.getTotalAmount() * 0.02)
+                .setTotalLoyaltyPoints(posInvoice.getTotalAmount() * 0.02)
                 .build();
         return notificationAvro;
     }
@@ -27,6 +28,7 @@ public class RecordBuilder {
         notification.setCustomerCardNo(posInvoice.getCustomerCardNo());
         notification.setTotalAmount(posInvoice.getTotalAmount());
         notification.setEarnedLoyaltyPoints(posInvoice.getTotalAmount() * 0.02);
+        notification.setTotalLoyaltyPoints(posInvoice.getTotalAmount() * 0.02);
         return notification;
     }
 
@@ -36,6 +38,7 @@ public class RecordBuilder {
                 .setCustomerCardNo(posInvoice.getCustomerCardNo())
                 .setTotalAmount(posInvoice.getTotalAmount())
                 .setEarnedLoyaltyPoints(posInvoice.getTotalAmount() * 0.02)
+                .setTotalLoyaltyPoints(posInvoice.getTotalAmount() * 0.02)
                 .build();
         return notificationAvro;
     }

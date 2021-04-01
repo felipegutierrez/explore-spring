@@ -4,8 +4,9 @@
   "name": "NotificationAvro",
   "fields": [
     {"name": "InvoiceNumber", "type": ["null", "string"]},
-    {"name": "CustomerCardNo",  "type":["null", "string"]},
-    {"name": "TotalAmount",  "type": ["null", "double"]},
-    {"name": "EarnedLoyaltyPoints",  "type": ["null", "double"]}
+    {"name": "CustomerCardNo", "type":["null", "string"]},
+    {"name": "TotalAmount", "type": ["null", "double"]},
+    {"name": "EarnedLoyaltyPoints", "type": ["null", "double"]},
+    {"name": "TotalLoyaltyPoints", "type": ["null", "double"], "default": null}
   ]
 }
