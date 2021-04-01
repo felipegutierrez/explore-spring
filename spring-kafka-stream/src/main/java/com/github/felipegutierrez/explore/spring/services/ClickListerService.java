@@ -21,6 +21,17 @@ public class ClickListerService {
     @StreamListener("click-input-channel")
     public void process(KStream<String, UserClick> input) {
         input.peek((k, v) -> log.info("Key = " + k + " Created Time = "
-                + Instant.ofEpochMilli(v.getCreatedTime()).atOffset(ZoneOffset.UTC)));
+                + Instant.ofEpochMilli(v.getCreatedTime()).atOffset(ZoneOffset.UTC)))
+                .groupByKey()
+                .windowedBy(SessionWindows.with(Duration.ofMinutes(5)))
+                .count()
+                .toStream()
+                .foreach((k, v) -> log.info(
+                        "UserID: " + k.key() +
+                                " Window start: " + Instant.ofEpochMilli(k.window().start()).atOffset(ZoneOffset.UTC) +
+                                " Window end: " + Instant.ofEpochMilli(k.window().end()).atOffset(ZoneOffset.UTC) +
+                                " Count: " + v +
+                                " Window#: " + k.window().hashCode()
+                ));
     }
 }
