@@ -1,6 +1,7 @@
 package com.github.felipegutierrez.explore.spring.services;
 
 import com.github.felipegutierrez.explore.spring.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import static com.github.felipegutierrez.explore.spring.utils.PosInvoiceConstants.HOME_DELIVERY;
 
+@Slf4j
 @Service
 public class RecordBuilder {
 
@@ -171,5 +173,19 @@ public class RecordBuilder {
         departmentAggregate.setTotalSalary(aggValue.getTotalSalary() - emp.getSalary());
         departmentAggregate.setAvgSalary((aggValue.getTotalSalary() - emp.getSalary()) / (aggValue.getEmployeeCount() - 1D));
         return departmentAggregate;
+    }
+
+    public TransactionStatus getTransactionStatus(PaymentRequest request, PaymentConfirmation confirmation){
+        log.info("Evaluating request: {} with confirmation: {}", request.getOTP(), confirmation.getOTP());
+
+        String status = "Failure";
+        if(request.getOTP().equals(confirmation.getOTP())) {
+            status = "Success";
+        }
+
+        TransactionStatus transactionStatus = new TransactionStatus();
+        transactionStatus.setTransactionID(request.getTransactionID());
+        transactionStatus.setStatus(status);
+        return transactionStatus;
     }
 }
