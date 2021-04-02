@@ -68,6 +68,11 @@ public class KafkaTopicsConfig {
     @Value("${application.configs.user.login.input.topic}")
     private String USER_LOGIN_INPUT_TOPIC_NAME;
 
+    @Value("${application.configs.ad.inventories.input.topic}")
+    private String AD_INVENTORIES_INPUT_TOPIC_NAME;
+    @Value("${application.configs.ad.clicks.input.topic}")
+    private String AD_CLICKS_INPUT_TOPIC_NAME;
+
     @Bean
     NewTopic createInvoiceJsonTopic() {
         Integer partitions = 1;
@@ -227,5 +232,18 @@ public class KafkaTopicsConfig {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(USER_LOGIN_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createAdInventoriesInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(AD_INVENTORIES_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+    @Bean
+    NewTopic createAdClicksInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(AD_CLICKS_INPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }
