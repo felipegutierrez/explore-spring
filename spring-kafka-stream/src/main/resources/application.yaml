@@ -59,6 +59,10 @@ spring:
           destination: simple-invoice-topic
         click-input-channel:
           destination: user-clicks-topic
+        payment-request-channel:
+          destination: payment_request
+        payment-confirmation-channel:
+          destination: payment_confirmation
       kafka:
         streams:
           binder:
@@ -114,6 +118,12 @@ spring:
             click-input-channel:
               consumer:
                 timestampExtractorBeanName: userClickTimeExtractor
+            payment-request-channel:
+              consumer:
+                timestampExtractorBeanName: requestTimeExtractor
+            payment-confirmation-channel:
+              consumer:
+                timestampExtractorBeanName: confirmationTimeExtractor
 application:
   configs:
     users.topic.name: users
@@ -136,4 +146,6 @@ application:
     employees.input.topic.name: employees-topic
     simple.invoice.input.topic: simple-invoice-topic
     user.click.input.topic: user-clicks-topic
+    payment.request.input.topic: payment_request
+    payment.confirmation.input.topic: payment_confirmation
 ---

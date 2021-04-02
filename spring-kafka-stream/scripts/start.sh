@@ -86,6 +86,21 @@ USR102:{"UserID": "USR102","CreatedTime": "1549361400000","CurrentLink": "Home",
 USR101:{"UserID": "USR101","CreatedTime": "1549361220000","CurrentLink": "Kafka", "NextLink": "Preview"}
 USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Preview", "NextLink": "Buy"}
 
+# Kafka JOIN KStream of Payment Requests with Payment Confirmation
+# kafka-console-producer --broker-list localhost:9092 --topic payment_request --property parse.key=true --property key.separator=":"
+# kafka-console-producer --broker-list localhost:9092 --topic payment_confirmation --property parse.key=true --property key.separator=":"
+100001:{"TransactionID": "100001", "CreatedTime": 1550149860000, "SourceAccountID": "131100", "TargetAccountID": "151837", "Amount": 3000, "OTP": 852960}
+100002:{"TransactionID": "100002", "CreatedTime": 1550149920000, "SourceAccountID": "131200", "TargetAccountID": "151837", "Amount": 2000, "OTP": 931749}
+100003:{"TransactionID": "100003", "CreatedTime": 1550149980000, "SourceAccountID": "131300", "TargetAccountID": "151837", "Amount": 5000, "OTP": 591296}
+100004:{"TransactionID": "100004", "CreatedTime": 1550150100000, "SourceAccountID": "131400", "TargetAccountID": "151837", "Amount": 1000, "OTP": 283084}
+
+100001:{"TransactionID": "100001", "CreatedTime": 1550150100000, "OTP": 852960}
+100002:{"TransactionID": "100002", "CreatedTime": 1550150280000, "OTP": 931749}
+100004:{"TransactionID": "100004", "CreatedTime": 1550150040000, "OTP": 283086}
+
+#
+#
+#
 #
 #
 
