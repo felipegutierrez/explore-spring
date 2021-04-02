@@ -5,7 +5,6 @@ import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
-import org.springframework.kafka.support.serializer.JsonSerde;
 import org.springframework.stereotype.Service;
 
 import java.util.AbstractMap;
@@ -14,23 +13,20 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
-import static io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializerConfig.FAIL_INVALID_SCHEMA;
 import static io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializerConfig.JSON_VALUE_TYPE;
+import static io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializerConfig.FAIL_INVALID_SCHEMA;
 
 @Service
 public class CustomSerdes extends Serdes {
 
     private final static Map<String, String> serdeConfig = Stream.of(
+            new AbstractMap.SimpleEntry<>(SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081"))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    private final static Map<String, String> serdeConfigNotification = Stream.of(
             new AbstractMap.SimpleEntry<>(SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081")
-            // , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, "com.fasterxml.jackson.databind.JsonNode")
             , new AbstractMap.SimpleEntry<>(FAIL_INVALID_SCHEMA, "true")
-            , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, Notification.class.getName())
-            // , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, "com.github.felipegutierrez.explore.spring.model.Notification")
-            // , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, "com.fasterxml.jackson.databind.JavaType")
-            // , new AbstractMap.SimpleEntry<>(TYPE_PROPERTY, TYPE_PROPERTY_DEFAULT)
-            // , new AbstractMap.SimpleEntry<>("spring.json.add.type.headers", "false")
-            // , new AbstractMap.SimpleEntry<>("json.value.type", "org.springframework.kafka.support.serializer.JsonSerializer")
-    )
+            , new AbstractMap.SimpleEntry<>(JSON_VALUE_TYPE, Notification.class.getName()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     public static Serde<HadoopRecordAvro> HadoopRecordAvro() {
@@ -47,7 +43,7 @@ public class CustomSerdes extends Serdes {
 
     public static Serde<Notification> Notification() {
         final Serde<Notification> notificationSerde = new KafkaJsonSchemaSerde<>();
-        notificationSerde.configure(serdeConfig, false);
+        notificationSerde.configure(serdeConfigNotification, false);
         return notificationSerde;
     }
 
