@@ -63,6 +63,10 @@ spring:
           destination: payment_request
         payment-confirmation-channel:
           destination: payment_confirmation
+        user-master-channel:
+          destination: user-master
+        user-login-channel:
+          destination: user-login
       kafka:
         streams:
           binder:
@@ -148,4 +152,6 @@ application:
     user.click.input.topic: user-clicks-topic
     payment.request.input.topic: payment_request
     payment.confirmation.input.topic: payment_confirmation
+    user.master.input.topic: user-master
+    user.login.input.topic: user-login
 ---

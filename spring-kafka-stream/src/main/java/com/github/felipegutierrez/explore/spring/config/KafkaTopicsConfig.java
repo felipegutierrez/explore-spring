@@ -63,6 +63,11 @@ public class KafkaTopicsConfig {
     @Value("${application.configs.payment.confirmation.input.topic}")
     private String PAYMENT_CONFIRMATION_INPUT_TOPIC_NAME;
 
+    @Value("${application.configs.user.master.input.topic}")
+    private String USER_MASTER_INPUT_TOPIC_NAME;
+    @Value("${application.configs.user.login.input.topic}")
+    private String USER_LOGIN_INPUT_TOPIC_NAME;
+
     @Bean
     NewTopic createInvoiceJsonTopic() {
         Integer partitions = 1;
@@ -208,5 +213,19 @@ public class KafkaTopicsConfig {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(PAYMENT_CONFIRMATION_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createUserMasterInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(USER_MASTER_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createUserLoginInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(USER_LOGIN_INPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }
