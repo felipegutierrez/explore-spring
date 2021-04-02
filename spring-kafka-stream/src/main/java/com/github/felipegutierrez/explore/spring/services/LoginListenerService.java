@@ -26,7 +26,13 @@ public class LoginListenerService {
 
         logins.toStream().foreach((k, v) -> log.info("Login Key: {}, Last Login: {}, Value{}",
                 k, Instant.ofEpochMilli(v.getCreatedTime()).atOffset(ZoneOffset.UTC), v));
-        
 
+        logins
+                .join(users, (left, right) -> {
+                    right.setLastLogin(left.getCreatedTime());
+                    return right;
+                })
+                .toStream()
+                .foreach((k, v) -> log.info("Updated Last Login Key: {}, Last Login: {}", k, Instant.ofEpochMilli(v.getLastLogin()).atOffset(ZoneOffset.UTC)));
     }
 }

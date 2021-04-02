@@ -98,8 +98,16 @@ USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Previe
 100002:{"TransactionID": "100002", "CreatedTime": 1550150280000, "OTP": 931749}
 100004:{"TransactionID": "100004", "CreatedTime": 1550150040000, "OTP": 283086}
 
-#
-#
+# Kafka JOIN KTable of user login and details
+# kafka-console-producer --broker-list localhost:9092 --topic user-master --property parse.key=true --property key.separator=":"
+# kafka-console-producer --broker-list localhost:9092 --topic user-login --property parse.key=true --property key.separator=":"
+100001:{"UserName": "Prashant", "LoginID": "100001", "LastLogin": 1550150109302}
+100009:{"UserName": "Alisha", "LoginID": "100009", "LastLogin": 1550150280409}
+100087:{"UserName": "Abdul", "LoginID": "100087", "LastLogin": 1550150290305}
+
+100001:{"LoginID": "100001", "CreatedTime": 1550150291000}
+100087:{"LoginID": "100087", "CreatedTime": 1550150580000}
+
 #
 #
 #
