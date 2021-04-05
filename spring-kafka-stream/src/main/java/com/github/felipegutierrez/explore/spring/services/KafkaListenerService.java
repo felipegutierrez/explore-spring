@@ -16,9 +16,7 @@ public class KafkaListenerService {
     @StreamListener("process-in-0")
     @SendTo("process-out-0")
     public KStream<String, String> transformToUpperCase(KStream<String, String> input) {
-        return input
-                .peek((k, v) -> log.info("Received Input: {}", v))
-                .mapValues(v -> v.toUpperCase())
-                .peek((k, v) -> log.info("transformed to Output: {}", v));
+        input.peek((k, v) -> log.info("Received Input: {}", v));
+        return input.mapValues(v -> v.toUpperCase());
     }
 }

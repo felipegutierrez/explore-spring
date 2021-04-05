@@ -1,0 +1,156 @@
+spring:
+  kafka:
+    consumer:
+      group-id: group-01
+  cloud:
+    stream:
+      bindings:
+        process-in-0:
+          destination: input-topic
+        process-out-0:
+          destination: output-topic
+        notification-input-channel:
+          destination: pos-topic
+        notification-output-avro-channel:
+          destination: loyalty-avro-topic
+        hadoop-input-channel:
+          destination: pos-topic
+        hadoop-output-avro-channel:
+          destination: hadoop-sink-avro-topic
+        notification-input-avro-channel:
+          destination: pos-avro-topic
+        notification-output-json-channel:
+          destination: loyalty-topic
+        hadoop-input-avro-channel:
+          destination: pos-avro-topic
+        hadoop-output-json-channel:
+          destination: hadoop-sink-topic
+        pos-input-avro-exactly-once-channel:
+          destination: pos-avro-topic
+        xml-input-channel:
+          destination: xml-order-topic
+        india-orders-channel:
+          destination: india-orders-topic
+        abroad-orders-channel:
+          destination: abroad-orders-topic
+        stock-input-channel:
+          destination: stock-tick-topic
+        words-input-channel:
+          destination: streaming-words-topic
+          consumer:
+            useNativeDecoding: false
+            contentType: text/plain
+        employee-input-channel:
+          destination: employees-topic
+        invoice-input-channel:
+          destination: simple-invoice-topic
+        click-input-channel:
+          destination: user-clicks-topic
+        payment-request-channel:
+          destination: payment_request
+        payment-confirmation-channel:
+          destination: payment_confirmation
+        user-master-channel:
+          destination: user-master
+        user-login-channel:
+          destination: user-login
+        inventories-channel:
+          destination: active-inventories
+        clicks-channel:
+          destination: ad-clicks
+      kafka:
+        streams:
+          binder:
+            brokers: ${spring.embedded.kafka.brokers}
+            configuration:
+              schema.registry.url: not-used
+              commit.interval.ms: 100
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+          bindings:
+            process-in-0:
+              consumer:
+                valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            process-out-0:
+              producer:
+                valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            notification-output-avro-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            hadoop-output-avro-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            notification-input-avro-channel:
+              consumer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            notification-output-json-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
+            hadoop-input-avro-channel:
+              consumer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            hadoop-output-json-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
+            pos-input-avro-exactly-once-channel:
+              consumer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            india-orders-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
+            abroad-orders-channel:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.json.KafkaJsonSchemaSerde
+            stock-input-channel:
+              consumer:
+                materializedAs: stock-input-store
+            words-input-channel:
+              consumer:
+                keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            employee-input-channel:
+              consumer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            invoice-input-channel:
+              consumer:
+                timestampExtractorBeanName: invoiceTimesExtractor
+            click-input-channel:
+              consumer:
+                timestampExtractorBeanName: userClickTimeExtractor
+            payment-request-channel:
+              consumer:
+                timestampExtractorBeanName: requestTimeExtractor
+            payment-confirmation-channel:
+              consumer:
+                timestampExtractorBeanName: confirmationTimeExtractor
+application:
+  configs:
+    process.input.topic.name: input-topic
+    process.output.topic.name: output-topic
+    users.topic.name: users
+    invoice.count: 60
+    invoice.topic.json.name: pos-topic
+    invoice.topic.avro.name: pos-avro-topic
+    loyalty.topic.avro.name: loyalty-avro-topic
+    loyalty.topic.json.name: loyalty-topic
+    hadoop.topic.avro.name: hadoop-sink-avro-topic
+    hadoop.topic.json.name: hadoop-sink-topic
+    hadoop.topic.avro.ex.name: hadoop-sink-avro-ex-topic
+    loyalty.topic.avro.ex.name: loyalty-avro-ex-topic
+    order.xml.input.topic.name: xml-order-topic
+    order.india.output.topic.name: india-orders-topic
+    order.abroad.output.topic.name: abroad-orders-topic
+    order.error.topic.name: order-error-topic
+    stock.tick.topic.name: stock-tick-topic
+    words.streaming.topic.name: streaming-words-topic
+    words.streaming.output.topic.name: streaming-words-output-topic
+    employees.input.topic.name: employees-topic
+    simple.invoice.input.topic: simple-invoice-topic
+    user.click.input.topic: user-clicks-topic
+    payment.request.input.topic: payment_request
+    payment.confirmation.input.topic: payment_confirmation
+    user.master.input.topic: user-master
+    user.login.input.topic: user-login
+    ad.inventories.input.topic: active-inventories
+    ad.clicks.input.topic: ad-clicks
+---
