@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class KafkaTopicsConfig {
 
+    @Value("${application.configs.process.input.topic.name}")
+    private String PROCESS_INPUT_TOPIC_NAME;
+    @Value("${application.configs.process.output.topic.name}")
+    private String PROCESS_OUTPUT_TOPIC_NAME;
+
     @Value("${application.configs.users.topic.name}")
     private String USERS_TOPIC_NAME;
 
@@ -72,6 +77,21 @@ public class KafkaTopicsConfig {
     private String AD_INVENTORIES_INPUT_TOPIC_NAME;
     @Value("${application.configs.ad.clicks.input.topic}")
     private String AD_CLICKS_INPUT_TOPIC_NAME;
+
+
+    @Bean
+    NewTopic createProcessInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(PROCESS_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createProcessOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(PROCESS_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
 
     @Bean
     NewTopic createInvoiceJsonTopic() {

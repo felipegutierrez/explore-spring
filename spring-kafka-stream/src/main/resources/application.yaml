@@ -22,6 +22,10 @@ spring:
   cloud:
     stream:
       bindings:
+        process-in-0:
+          destination: input-topic
+        process-out-0:
+          destination: output-topic
         notification-input-channel:
           destination: pos-topic
         notification-output-avro-channel:
@@ -83,6 +87,12 @@ spring:
               default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
               default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
           bindings:
+            process-in-0:
+              consumer:
+                valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            process-out-0:
+              producer:
+                valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
             notification-output-avro-channel:
               producer:
                 valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
@@ -134,6 +144,8 @@ spring:
                 timestampExtractorBeanName: confirmationTimeExtractor
 application:
   configs:
+    process.input.topic.name: input-topic
+    process.output.topic.name: output-topic
     users.topic.name: users
     invoice.count: 60
     invoice.topic.json.name: pos-topic
