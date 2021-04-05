@@ -78,6 +78,10 @@ public class KafkaTopicsConfig {
     @Value("${application.configs.ad.clicks.input.topic}")
     private String AD_CLICKS_INPUT_TOPIC_NAME;
 
+    @Value("${application.configs.process.func.input.topic.name}")
+    private String PROCESS_FUNC_INPUT_TOPIC_NAME;
+    @Value("${application.configs.process.func.output.topic.name}")
+    private String PROCESS_FUNC_OUTPUT_TOPIC_NAME;
 
     @Bean
     NewTopic createProcessInputTopic() {
@@ -265,5 +269,18 @@ public class KafkaTopicsConfig {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(AD_CLICKS_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createProcessFunctionalInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(PROCESS_FUNC_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+    @Bean
+    NewTopic createProcessFunctionalOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(PROCESS_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }

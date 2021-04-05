@@ -3,7 +3,6 @@ package com.github.felipegutierrez.explore.spring.services;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.streams.kstream.KStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,26 +27,25 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.getRecords;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.producerProps;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, properties = {"server.port=0"})
 @ExtendWith(SpringExtension.class)
 @DirtiesContext
-@EmbeddedKafka(topics = {"output-topic"}, partitions = 1)
+@EmbeddedKafka(topics = {"output-func-topic"}, partitions = 1)
 @TestPropertySource(properties = {
         "spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
         "spring.kafka.admin.properties.bootstrap.servers=${spring.embedded.kafka.brokers}"
 })
-public class KafkaListenerServiceTest {
+public class KafkaListenerFunctionalServiceTest {
 
     @Autowired
     EmbeddedKafkaBroker embeddedKafkaBroker;
+
     @SpyBean
-    KafkaListenerService kafkaListenerServiceSpy;
+    KafkaListenerFunctionalService kafkaListenerFunctionalServiceSpy;
+
     private Consumer<String, String> consumer;
 
     @BeforeEach
@@ -73,20 +71,20 @@ public class KafkaListenerServiceTest {
         DefaultKafkaProducerFactory<Integer, String> pf = new DefaultKafkaProducerFactory<>(senderProps);
         try {
             KafkaTemplate<Integer, String> template = new KafkaTemplate<>(pf, true);
-            template.setDefaultTopic("input-topic");
+            template.setDefaultTopic("input-func-topic");
 
             template.sendDefault("hello1").get();
-            verify(kafkaListenerServiceSpy, times(1)).transformToUpperCase(isA(KStream.class));
+            // verify(kafkaListenerFunctionalServiceSpy).transformToUpperCase();
 
             template.sendDefault("hello2").get();
-            verify(kafkaListenerServiceSpy, times(1)).transformToUpperCase(isA(KStream.class));
+            // verify(kafkaListenerFunctionalServiceSpy, times(1)).transformToUpperCase();
 
             int receivedAll = 0;
             while (receivedAll < 2) {
                 ConsumerRecords<String, String> cr = getRecords(consumer);
                 receivedAll = receivedAll + cr.count();
                 cr.iterator().forEachRemaining(r -> {
-                    System.out.println("result: " + r.value());
+                    System.out.println("result functional: " + r.value());
                     actualResultSet.add(r.value());
                 });
             }

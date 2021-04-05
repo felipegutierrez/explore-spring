@@ -21,7 +21,13 @@ spring:
       group-id: group-01
   cloud:
     stream:
+      function:
+        definition: transformToUpperCase
       bindings:
+        transformToUpperCase-in-0:
+          destination: input-func-topic
+        transformToUpperCase-out-0:
+          destination: output-func-topic
         process-in-0:
           destination: input-topic
         process-out-0:
@@ -146,6 +152,8 @@ application:
   configs:
     process.input.topic.name: input-topic
     process.output.topic.name: output-topic
+    process.func.input.topic.name: input-func-topic
+    process.func.output.topic.name: output-func-topic
     users.topic.name: users
     invoice.count: 60
     invoice.topic.json.name: pos-topic

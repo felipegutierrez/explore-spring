@@ -28,7 +28,7 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "Hoxton.SR10") // 2020.0.2 | Hoxton.SR10
+	set('springCloudVersion', "2020.0.2") // 2020.0.2 | Hoxton.SR10
 	jaxbVersion = '2.3.1'
 }
 
