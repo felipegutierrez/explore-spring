@@ -4,7 +4,7 @@ import com.github.felipegutierrez.explore.spring.model.UserClick;
 import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.cloud.stream.annotation.Input;
 
-public interface ClickListenerBinding {
+public interface ClickCountWindowBinding {
 
     @Input("click-input-channel")
     KStream<String, UserClick> clickInputStream();

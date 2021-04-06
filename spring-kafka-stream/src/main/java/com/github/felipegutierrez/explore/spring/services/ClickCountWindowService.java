@@ -1,6 +1,6 @@
 package com.github.felipegutierrez.explore.spring.services;
 
-import com.github.felipegutierrez.explore.spring.bindings.ClickListenerBinding;
+import com.github.felipegutierrez.explore.spring.bindings.ClickCountWindowBinding;
 import com.github.felipegutierrez.explore.spring.model.UserClick;
 import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.streams.kstream.KStream;
@@ -15,8 +15,8 @@ import java.time.ZoneOffset;
 
 @Log4j2
 @Service
-@EnableBinding(ClickListenerBinding.class)
-public class ClickListerService {
+@EnableBinding(ClickCountWindowBinding.class)
+public class ClickCountWindowService {
 
     @StreamListener("click-input-channel")
     public void process(KStream<String, UserClick> input) {

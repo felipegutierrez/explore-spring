@@ -22,7 +22,7 @@ spring:
   cloud:
     stream:
       function:
-        definition: transformToUpperCase|streamFunctionalWordCount
+        definition: transformToUpperCase|streamFunctionalWordCount|clickUsersFunctionalCountWindow
       bindings:
         transformToUpperCase-in-0:
           destination: input-func-topic
@@ -32,6 +32,10 @@ spring:
           destination: input-func-stream-wordcount-topic
         streamFunctionalWordCount-out-0:
           destination: output-func-stream-wordcount-topic
+        clickUsersFunctionalCountWindow-in-0:
+          destination: user-clicks-func-in-topic
+        clickUsersFunctionalCountWindow-out-0:
+          destination: user-clicks-func-out-topic
         process-in-0:
           destination: input-topic
         process-out-0:
@@ -166,6 +170,8 @@ application:
     process.func.output.topic.name: output-func-topic
     stream.wordcount.func.input.topic.name: input-func-stream-wordcount-topic
     stream.wordcount.func.output.topic.name: output-func-stream-wordcount-topic
+    user.click.functional.input.topic.name: user-clicks-func-in-topic
+    user.click.functional.output.topic.name: user-clicks-func-out-topic
     users.topic.name: users
     invoice.count: 60
     invoice.topic.json.name: pos-topic

@@ -144,7 +144,18 @@ USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Previe
 # kafka-console-consumer --topic output-func-topic --from-beginning --bootstrap-server localhost:9092
 # kafka-console-producer --broker-list localhost:9092 --topic input-func-stream-wordcount-topic
 # kafka-console-consumer --topic output-func-stream-wordcount-topic --from-beginning --bootstrap-server localhost:9092 --property print.key=true --property key.separator=":"
-#
+
+# functional User click session window
+# kafka-console-producer --broker-list localhost:9092      --topic user-clicks-func-in-topic --property parse.key=true  --property key.separator=":"
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic user-clicks-func-out-topic --property print.key=true --property key.separator=":"
+USR101:{"UserID": "USR101","CreatedTime": "1549360860000","CurrentLink": "NULL", "NextLink": "Home"}
+USR102:{"UserID": "USR102","CreatedTime": "1549360920000","CurrentLink": "NULL", "NextLink": "Home"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361040000","CurrentLink": "Home", "NextLink": "Books"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361400000","CurrentLink": "Books", "NextLink": "Kafka"}
+USR102:{"UserID": "USR102","CreatedTime": "1549360920000","CurrentLink": "NULL", "NextLink": "Home"}
+USR102:{"UserID": "USR102","CreatedTime": "1549361400000","CurrentLink": "Home", "NextLink": "Courses"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361220000","CurrentLink": "Kafka", "NextLink": "Preview"}
+USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Preview", "NextLink": "Buy"}
 #
 #
 #

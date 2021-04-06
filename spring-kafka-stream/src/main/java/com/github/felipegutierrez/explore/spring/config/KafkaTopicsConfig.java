@@ -87,6 +87,11 @@ public class KafkaTopicsConfig {
     @Value("${application.configs.stream.wordcount.func.output.topic.name}")
     private String STREAM_FUNC_WORD_COUNT_OUTPUT_TOPIC_NAME;
 
+    @Value("${application.configs.user.click.functional.input.topic.name}")
+    private String USER_CLICK_FUNC_INPUT_TOPIC_NAME;
+    @Value("${application.configs.user.click.functional.output.topic.name}")
+    private String USER_CLICK_FUNC_OUTPUT_TOPIC_NAME;
+
     @Bean
     NewTopic createProcessInputTopic() {
         Integer partitions = 1;
@@ -268,6 +273,7 @@ public class KafkaTopicsConfig {
         short replicationFactor = 1;
         return new NewTopic(AD_INVENTORIES_INPUT_TOPIC_NAME, partitions, replicationFactor);
     }
+
     @Bean
     NewTopic createAdClicksInputTopic() {
         Integer partitions = 1;
@@ -281,6 +287,7 @@ public class KafkaTopicsConfig {
         short replicationFactor = 1;
         return new NewTopic(PROCESS_FUNC_INPUT_TOPIC_NAME, partitions, replicationFactor);
     }
+
     @Bean
     NewTopic createProcessFunctionalOutputTopic() {
         Integer partitions = 1;
@@ -294,10 +301,25 @@ public class KafkaTopicsConfig {
         short replicationFactor = 1;
         return new NewTopic(STREAM_FUNC_WORD_COUNT_INPUT_TOPIC_NAME, partitions, replicationFactor);
     }
+
     @Bean
     NewTopic createStreamWordCountFunctionalOutputTopic() {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(STREAM_FUNC_WORD_COUNT_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createUserClickFunctionalInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(USER_CLICK_FUNC_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createUserClickFunctionalOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(USER_CLICK_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }
