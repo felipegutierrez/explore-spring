@@ -29,11 +29,12 @@ public class ClickCountWindowFunctionalService {
                 .mapValues(value -> String.valueOf(value))
                 .toStream()
                 .map((windowedId, value) -> new KeyValue<>(windowedId.key(),
-                                "UserID: " + windowedId.key() +
-                                " Window start: " + Instant.ofEpochMilli(windowedId.window().start()).atOffset(ZoneOffset.UTC) +
-                                " Window end: " + Instant.ofEpochMilli(windowedId.window().end()).atOffset(ZoneOffset.UTC) +
-                                " Count: " + value +
-                                " Window#: " + windowedId.window().hashCode())
-                );
+                                "UserID: " + windowedId.key() + " Count: " + value
+                                // " Window start: " + Instant.ofEpochMilli(windowedId.window().start()).atOffset(ZoneOffset.UTC) +
+                                // " Window end: " + Instant.ofEpochMilli(windowedId.window().end()).atOffset(ZoneOffset.UTC) +
+                                // " Window#: " + windowedId.window().hashCode()
+                        )
+                )
+                .peek((key, value) -> log.info("key: {}, value: {}", key, value));
     }
 }
