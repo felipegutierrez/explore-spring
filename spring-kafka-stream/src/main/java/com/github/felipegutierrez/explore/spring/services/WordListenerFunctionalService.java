@@ -24,6 +24,5 @@ public class WordListenerFunctionalService {
                 .mapValues(value -> String.valueOf(value))
                 .toStream()
                 .peek((k, v) -> log.info("Word: [{}] Count: [{}]", k, v));
-        // .mapValues(i -> i.toUpperCase());
     }
 }
