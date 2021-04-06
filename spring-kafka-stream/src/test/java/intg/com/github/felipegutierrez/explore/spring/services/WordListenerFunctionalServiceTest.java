@@ -3,7 +3,7 @@ package com.github.felipegutierrez.explore.spring.services;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.streams.kstream.KStream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,33 +22,27 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.getRecords;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.producerProps;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, properties = {"server.port=0"})
 @ExtendWith(SpringExtension.class)
 @DirtiesContext
-@EmbeddedKafka(topics = {"output-topic"}, partitions = 1)
+@EmbeddedKafka(topics = {"output-func-stream-wordcount-topic"}, partitions = 1)
 @TestPropertySource(properties = {
         "spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
         "spring.kafka.admin.properties.bootstrap.servers=${spring.embedded.kafka.brokers}"
 })
-public class KafkaListenerServiceTest {
+public class WordListenerFunctionalServiceTest {
 
     @Autowired
     EmbeddedKafkaBroker embeddedKafkaBroker;
 
     @SpyBean
-    KafkaListenerService kafkaListenerServiceSpy;
+    WordListenerFunctionalService wordListenerFunctionalServiceSpy;
 
     private Consumer<String, String> consumer;
 
@@ -66,34 +60,33 @@ public class KafkaListenerServiceTest {
 
     @Test
     public void SimpleProcessorApplicationTest() throws ExecutionException, InterruptedException {
-        Set<String> actualResultSet = new HashSet<>();
-        Set<String> expectedResultSet = new HashSet<>();
-        expectedResultSet.add("HELLO1");
-        expectedResultSet.add("HELLO2");
+        Map<String, String> actualResultMap = new HashMap<>();
+        Map<String, String> expectedResultMap = new HashMap<>();
+        expectedResultMap.put("hello", "3");
+        expectedResultMap.put("felipe", "2");
+        expectedResultMap.put("kafka", "1");
+        expectedResultMap.put("stream", "1");
 
         Map<String, Object> senderProps = producerProps(embeddedKafkaBroker);
         DefaultKafkaProducerFactory<Integer, String> pf = new DefaultKafkaProducerFactory<>(senderProps);
         try {
             KafkaTemplate<Integer, String> template = new KafkaTemplate<>(pf, true);
-            template.setDefaultTopic("input-topic");
+            template.setDefaultTopic("input-func-stream-wordcount-topic");
 
-            template.sendDefault("hello1").get();
-            verify(kafkaListenerServiceSpy, times(1)).transformToUpperCase(isA(KStream.class));
-
-            template.sendDefault("hello2").get();
-            verify(kafkaListenerServiceSpy, times(1)).transformToUpperCase(isA(KStream.class));
+            template.sendDefault("hello hello hello felipe felipe kafka stream").get();
+            // verify(kafkaListenerFunctionalServiceSpy).transformToUpperCase();
 
             int receivedAll = 0;
-            while (receivedAll < 2) {
+            while (receivedAll < 4) {
                 ConsumerRecords<String, String> cr = getRecords(consumer);
                 receivedAll = receivedAll + cr.count();
                 cr.iterator().forEachRemaining(r -> {
-                    System.out.println("result: " + r.value());
-                    actualResultSet.add(r.value());
+                    System.out.println("result word count functional key: " + r.key() + " value:" + r.value());
+                    actualResultMap.put(r.key(), r.value());
                 });
             }
 
-            assertThat(actualResultSet.equals(expectedResultSet)).isTrue();
+            Assertions.assertThat(actualResultMap.equals(expectedResultMap)).isTrue();
         } finally {
             pf.destroy();
         }

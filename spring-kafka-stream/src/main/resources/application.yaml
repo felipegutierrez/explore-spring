@@ -22,12 +22,16 @@ spring:
   cloud:
     stream:
       function:
-        definition: transformToUpperCase
+        definition: transformToUpperCase|streamFunctionalWordCount
       bindings:
         transformToUpperCase-in-0:
           destination: input-func-topic
         transformToUpperCase-out-0:
           destination: output-func-topic
+        streamFunctionalWordCount-in-0:
+          destination: input-func-stream-wordcount-topic
+        streamFunctionalWordCount-out-0:
+          destination: output-func-stream-wordcount-topic
         process-in-0:
           destination: input-topic
         process-out-0:
@@ -59,10 +63,12 @@ spring:
         stock-input-channel:
           destination: stock-tick-topic
         words-input-channel:
-          destination: streaming-words-topic
+          destination: words-in-topic
           consumer:
             useNativeDecoding: false
             contentType: text/plain
+        words-output-channel:
+          destination: words-out-topic
         employee-input-channel:
           destination: employees-topic
         invoice-input-channel:
@@ -133,6 +139,10 @@ spring:
               consumer:
                 keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
                 valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            words-output-channel:
+              producer:
+                keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
             employee-input-channel:
               consumer:
                 valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
@@ -154,6 +164,8 @@ application:
     process.output.topic.name: output-topic
     process.func.input.topic.name: input-func-topic
     process.func.output.topic.name: output-func-topic
+    stream.wordcount.func.input.topic.name: input-func-stream-wordcount-topic
+    stream.wordcount.func.output.topic.name: output-func-stream-wordcount-topic
     users.topic.name: users
     invoice.count: 60
     invoice.topic.json.name: pos-topic
@@ -169,8 +181,8 @@ application:
     order.abroad.output.topic.name: abroad-orders-topic
     order.error.topic.name: order-error-topic
     stock.tick.topic.name: stock-tick-topic
-    words.streaming.topic.name: streaming-words-topic
-    words.streaming.output.topic.name: streaming-words-output-topic
+    words.streaming.topic.name: words-in-topic
+    words.streaming.output.topic.name: words-out-topic
     employees.input.topic.name: employees-topic
     simple.invoice.input.topic: simple-invoice-topic
     user.click.input.topic: user-clicks-topic

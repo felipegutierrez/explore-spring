@@ -138,6 +138,19 @@ USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Previe
 1009:{"InventoryID": "1009"}
 1010:{"InventoryID": "1010"}
 
+##########################################################
+################## FUNCTIONAL examples ###################
+# kafka-console-producer --broker-list localhost:9092 --topic input-func-topic
+# kafka-console-consumer --topic output-func-topic --from-beginning --bootstrap-server localhost:9092
+# kafka-console-producer --broker-list localhost:9092 --topic input-func-stream-wordcount-topic
+# kafka-console-consumer --topic output-func-stream-wordcount-topic --from-beginning --bootstrap-server localhost:9092 --property print.key=true --property key.separator=":"
+#
+#
+#
+#
+#
+#
+#
 #
 
 # Stop and delete all topics and data of confluent platform

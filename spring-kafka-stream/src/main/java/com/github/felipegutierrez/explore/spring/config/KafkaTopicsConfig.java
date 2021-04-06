@@ -82,6 +82,10 @@ public class KafkaTopicsConfig {
     private String PROCESS_FUNC_INPUT_TOPIC_NAME;
     @Value("${application.configs.process.func.output.topic.name}")
     private String PROCESS_FUNC_OUTPUT_TOPIC_NAME;
+    @Value("${application.configs.stream.wordcount.func.input.topic.name}")
+    private String STREAM_FUNC_WORD_COUNT_INPUT_TOPIC_NAME;
+    @Value("${application.configs.stream.wordcount.func.output.topic.name}")
+    private String STREAM_FUNC_WORD_COUNT_OUTPUT_TOPIC_NAME;
 
     @Bean
     NewTopic createProcessInputTopic() {
@@ -282,5 +286,18 @@ public class KafkaTopicsConfig {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(PROCESS_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createStreamWordCountFunctionalInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(STREAM_FUNC_WORD_COUNT_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+    @Bean
+    NewTopic createStreamWordCountFunctionalOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(STREAM_FUNC_WORD_COUNT_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }
