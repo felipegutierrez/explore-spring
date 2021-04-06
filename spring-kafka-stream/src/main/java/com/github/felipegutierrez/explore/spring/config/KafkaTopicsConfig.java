@@ -92,6 +92,13 @@ public class KafkaTopicsConfig {
     @Value("${application.configs.user.click.functional.output.topic.name}")
     private String USER_CLICK_FUNC_OUTPUT_TOPIC_NAME;
 
+    @Value("${application.configs.order.xml.functional.input.topic.name}")
+    private String ORDER_FUNC_INPUT_TOPIC_NAME;
+    @Value("${application.configs.order.functional.india.output.topic.name}")
+    private String ORDER_INDIA_FUNC_OUTPUT_TOPIC_NAME;
+    @Value("${application.configs.order.functional.abroad.output.topic.name}")
+    private String ORDER_ABROAD_FUNC_OUTPUT_TOPIC_NAME;
+
     @Bean
     NewTopic createProcessInputTopic() {
         Integer partitions = 1;
@@ -321,5 +328,24 @@ public class KafkaTopicsConfig {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(USER_CLICK_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createOrderFunctionalInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(ORDER_FUNC_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+    @Bean
+    NewTopic createOrderIndiaFunctionalOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(ORDER_INDIA_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+    @Bean
+    NewTopic createOrderAbroadFunctionalOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(ORDER_ABROAD_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }
