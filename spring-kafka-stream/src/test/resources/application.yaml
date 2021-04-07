@@ -6,7 +6,7 @@ spring:
   cloud:
     stream:
       function:
-        definition: transformToUpperCase|streamFunctionalWordCount|clickUsersFunctionalCountWindow
+        definition: transformToUpperCase|streamFunctionalWordCount|clickUsersFunctionalCountWindow|streamOrderBranches
       bindings:
         transformToUpperCase-in-0:
           destination: input-func-topic
@@ -20,6 +20,12 @@ spring:
           destination: user-clicks-func-in-topic
         clickUsersFunctionalCountWindow-out-0:
           destination: user-clicks-func-out-topic
+        streamOrderBranches-in-0:
+          destination: xml-input-order
+        streamOrderBranches-out-0:
+          destination: output-order-india
+        streamOrderBranches-out-1:
+          destination: output-order-abroad
         process-in-0:
           destination: input-topic
         process-out-0:
@@ -168,6 +174,9 @@ application:
     order.india.output.topic.name: india-orders-topic
     order.abroad.output.topic.name: abroad-orders-topic
     order.error.topic.name: order-error-topic
+    order.xml.functional.input.topic.name: xml-input-order
+    order.functional.india.output.topic.name: output-order-india
+    order.functional.abroad.output.topic.name: output-order-abroad
     stock.tick.topic.name: stock-tick-topic
     words.streaming.topic.name: words-in-topic
     words.streaming.output.topic.name: words-out-topic
