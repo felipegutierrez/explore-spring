@@ -7,10 +7,12 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
+import org.apache.kafka.streams.errors.StreamsException;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +42,8 @@ public class OrderListenerFunctionalServiceTest {
 
     final Serde<String> stringSerde = Serdes.String();
     final JsonSerde<Order> orderSerde = new JsonSerde<>(Order.class);
+    final JsonSerde<OrderEnvelop> orderEnvelopSerde = new JsonSerde<>(OrderEnvelop.class);
+
     @Autowired
     KafkaTopicsConfig kafkaTopicsConfig;
     @Autowired
@@ -47,10 +51,12 @@ public class OrderListenerFunctionalServiceTest {
     private String INPUT_TOPIC;
     private String OUTPUT_TOPIC_INDIA;
     private String OUTPUT_TOPIC_ABROAD;
+    private String OUTPUT_TOPIC_ERROR;
     private TopologyTestDriver testDriver;
     private TestInputTopic inputTopic;
     private TestOutputTopic outputTopicIndia;
     private TestOutputTopic outputTopicAbroad;
+    private TestOutputTopic outputTopicError;
 
     static Properties getStreamsConfiguration() {
         final Properties streamsConfiguration = new Properties();
@@ -67,6 +73,7 @@ public class OrderListenerFunctionalServiceTest {
         INPUT_TOPIC = kafkaTopicsConfig.getORDER_FUNC_INPUT_TOPIC_NAME();
         OUTPUT_TOPIC_INDIA = kafkaTopicsConfig.getORDER_INDIA_FUNC_OUTPUT_TOPIC_NAME();
         OUTPUT_TOPIC_ABROAD = kafkaTopicsConfig.getORDER_ABROAD_FUNC_OUTPUT_TOPIC_NAME();
+        OUTPUT_TOPIC_ERROR = kafkaTopicsConfig.getORDER_ERROR_TOPIC_NAME();
 
         final StreamsBuilder builder = new StreamsBuilder();
         buildStreamProcessingPipeline(builder);
@@ -75,6 +82,7 @@ public class OrderListenerFunctionalServiceTest {
         inputTopic = testDriver.createInputTopic(INPUT_TOPIC, stringSerde.serializer(), stringSerde.serializer());
         outputTopicIndia = testDriver.createOutputTopic(OUTPUT_TOPIC_INDIA, stringSerde.deserializer(), orderSerde.deserializer());
         outputTopicAbroad = testDriver.createOutputTopic(OUTPUT_TOPIC_ABROAD, stringSerde.deserializer(), orderSerde.deserializer());
+        outputTopicError = testDriver.createOutputTopic(OUTPUT_TOPIC_ERROR, stringSerde.deserializer(), orderEnvelopSerde.deserializer());
     }
 
     private void buildStreamProcessingPipeline(StreamsBuilder builder) {
@@ -101,7 +109,7 @@ public class OrderListenerFunctionalServiceTest {
         // Indian Order --------------
         // <?xml version="1.0" encoding="UTF-8"?><order order-id="889925" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Abdul Hamid</order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city>Bangalore</city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
         String indiaOrderXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order order-id=\"889925\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"order.xsd\"><order-by>Abdul Hamid</order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city>Bangalore</city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>";
-        Order indiaOrderExpected = createOrder(null, indiaOrderXml);
+        Order indiaOrderExpected = createOrder(null, indiaOrderXml).getValidOrder();
         inputTopic.pipeInput(indiaOrderXml);
 
         // Read and validate output
@@ -131,8 +139,9 @@ public class OrderListenerFunctionalServiceTest {
         // abroad order
         // <?xml version="1.0" encoding="UTF-8"?><order order-id="889923" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>John Smith</order-by><ship-to><name>Ola Nordmann</name><address>Langgt 23</address><city>4000 Stavanger</city><country>Norway</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
         String abroadOrderXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order order-id=\"889923\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"order.xsd\"><order-by>John Smith</order-by><ship-to><name>Ola Nordmann</name><address>Langgt 23</address><city>4000 Stavanger</city><country>Norway</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>";
-        Order abroadOrderExpected = createOrder(null, abroadOrderXml);
         inputTopic.pipeInput(abroadOrderXml);
+
+        Order abroadOrderExpected = createOrder(null, abroadOrderXml).getValidOrder();
 
         // Read and validate output
         final Order outputOrderAbroad = (Order) outputTopicAbroad.readValue();
@@ -156,7 +165,29 @@ public class OrderListenerFunctionalServiceTest {
         assertThat(outputTopicAbroad.isEmpty()).isTrue();
     }
 
-    private Order createOrder(String key, String value) {
+    @Test
+    public void testOrderError() {
+        // Error Order --------------
+        // <?xml version="1.0" encoding="UTF-8"?><order order-id="889926" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Abdul Hamid<order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city>Bangalore</city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
+        String errorOrderXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order order-id=\"889926\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"order.xsd\"><order-by>Abdul Hamid<order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city>Bangalore</city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>";
+        OrderEnvelop errorOrderEnvelopExpected = createOrder(null, errorOrderXml);
+
+        Assertions.assertThrows(StreamsException.class, () -> {
+            inputTopic.pipeInput(errorOrderXml);
+        });
+
+        // Read and validate output
+        // final OrderEnvelop outputOrderError = (OrderEnvelop) outputTopicError.readValue();
+        assertThat(outputTopicError).isNotNull();
+        assertThat(outputTopicIndia.isEmpty()).isTrue();
+        assertThat(outputTopicAbroad.isEmpty()).isTrue();
+
+        // System.out.println("outputOrder error");
+        // System.out.println(outputOrderError.getOrderTag());
+        // assertThat(outputOrderError.getOrderTag()).isEqualTo(PARSE_ERROR);
+    }
+
+    private OrderEnvelop createOrder(String key, String value) {
         OrderEnvelop orderEnvelop = new OrderEnvelop();
         orderEnvelop.setXmlOrderKey(key);
         orderEnvelop.setXmlOrderValue(value);
@@ -176,6 +207,6 @@ public class OrderListenerFunctionalServiceTest {
             System.err.println("Failed to Unmarshal the incoming XML");
             orderEnvelop.setOrderTag(PARSE_ERROR);
         }
-        return orderEnvelop.getValidOrder();
+        return orderEnvelop;
     }
 }
