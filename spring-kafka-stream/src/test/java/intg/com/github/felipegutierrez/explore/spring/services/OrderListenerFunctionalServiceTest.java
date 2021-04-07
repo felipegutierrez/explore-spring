@@ -104,25 +104,56 @@ public class OrderListenerFunctionalServiceTest {
         Order indiaOrderExpected = createOrder(null, indiaOrderXml);
         inputTopic.pipeInput(indiaOrderXml);
 
-        //Read and validate output
-        final Order outputOrder = (Order) outputTopicIndia.readValue();
-        assertThat(outputOrder).isNotNull();
+        // Read and validate output
+        final Order outputOrderIndia = (Order) outputTopicIndia.readValue();
+        assertThat(outputOrderIndia).isNotNull();
+        assertThat(outputTopicAbroad.isEmpty()).isTrue();
 
-        System.out.println("outputOrder");
-        System.out.println(outputOrder.getOrderId());
-        System.out.println(outputOrder.getOrderBy());
-        System.out.println(outputOrder.getShipTo().getName());
-        System.out.println(outputOrder.getShipTo().getAddress());
-        System.out.println(outputOrder.getShipTo().getCity());
-        System.out.println(outputOrder.getShipTo().getCountry());
-        System.out.println(outputOrder.getItem().get(0).getTitle());
-        System.out.println(outputOrder.getItem().get(0).getNote());
-        System.out.println(outputOrder.getItem().get(0).getQuantity());
-        System.out.println(outputOrder.getItem().get(0).getPrice());
-        assertThat(outputOrder).usingRecursiveComparison().isEqualTo(indiaOrderExpected);
+        System.out.println("outputOrder india");
+        System.out.println(outputOrderIndia.getOrderId());
+        System.out.println(outputOrderIndia.getOrderBy());
+        System.out.println(outputOrderIndia.getShipTo().getName());
+        System.out.println(outputOrderIndia.getShipTo().getAddress());
+        System.out.println(outputOrderIndia.getShipTo().getCity());
+        System.out.println(outputOrderIndia.getShipTo().getCountry());
+        System.out.println(outputOrderIndia.getItem().get(0).getTitle());
+        System.out.println(outputOrderIndia.getItem().get(0).getNote());
+        System.out.println(outputOrderIndia.getItem().get(0).getQuantity());
+        System.out.println(outputOrderIndia.getItem().get(0).getPrice());
+        assertThat(outputOrderIndia).usingRecursiveComparison().isEqualTo(indiaOrderExpected);
 
         //No more output in topic
         assertThat(outputTopicIndia.isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testOrderToAbroad() {
+        // abroad order
+        // <?xml version="1.0" encoding="UTF-8"?><order order-id="889923" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>John Smith</order-by><ship-to><name>Ola Nordmann</name><address>Langgt 23</address><city>4000 Stavanger</city><country>Norway</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
+        String abroadOrderXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order order-id=\"889923\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"order.xsd\"><order-by>John Smith</order-by><ship-to><name>Ola Nordmann</name><address>Langgt 23</address><city>4000 Stavanger</city><country>Norway</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>";
+        Order abroadOrderExpected = createOrder(null, abroadOrderXml);
+        inputTopic.pipeInput(abroadOrderXml);
+
+        // Read and validate output
+        final Order outputOrderAbroad = (Order) outputTopicAbroad.readValue();
+        assertThat(outputOrderAbroad).isNotNull();
+        assertThat(outputTopicIndia.isEmpty()).isTrue();
+
+        System.out.println("outputOrder abroad");
+        System.out.println(outputOrderAbroad.getOrderId());
+        System.out.println(outputOrderAbroad.getOrderBy());
+        System.out.println(outputOrderAbroad.getShipTo().getName());
+        System.out.println(outputOrderAbroad.getShipTo().getAddress());
+        System.out.println(outputOrderAbroad.getShipTo().getCity());
+        System.out.println(outputOrderAbroad.getShipTo().getCountry());
+        System.out.println(outputOrderAbroad.getItem().get(0).getTitle());
+        System.out.println(outputOrderAbroad.getItem().get(0).getNote());
+        System.out.println(outputOrderAbroad.getItem().get(0).getQuantity());
+        System.out.println(outputOrderAbroad.getItem().get(0).getPrice());
+        assertThat(outputOrderAbroad).usingRecursiveComparison().isEqualTo(abroadOrderExpected);
+
+        //No more output in topic
+        assertThat(outputTopicAbroad.isEmpty()).isTrue();
     }
 
     private Order createOrder(String key, String value) {
