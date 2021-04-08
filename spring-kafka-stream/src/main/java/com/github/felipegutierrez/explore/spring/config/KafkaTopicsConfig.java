@@ -104,6 +104,11 @@ public class KafkaTopicsConfig {
     @Value("${application.configs.employees.func.output.topic.name}")
     private String EMPLOYEE_FUNC_OUTPUT_TOPIC_NAME;
 
+    @Value("${application.configs.simple.invoice.stream.input.topic}")
+    private String SIMPLE_INVOICE_FUNC_INPUT_TOPIC_NAME;
+    @Value("${application.configs.simple.invoice.stream.output.topic}")
+    private String SIMPLE_INVOICE_FUNC_OUTPUT_TOPIC_NAME;
+
     @Bean
     NewTopic createProcessInputTopic() {
         Integer partitions = 1;
@@ -368,5 +373,19 @@ public class KafkaTopicsConfig {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(EMPLOYEE_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createSimpleInvoiceFunctionalInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(SIMPLE_INVOICE_FUNC_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createSimpleInvoiceFunctionalOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(SIMPLE_INVOICE_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }

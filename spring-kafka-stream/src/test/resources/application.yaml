@@ -6,7 +6,7 @@ spring:
   cloud:
     stream:
       function:
-        definition: transformToUpperCase|streamFunctionalWordCount|clickUsersFunctionalCountWindow|streamOrderBranches|streamAggEmployeesByDepartment
+        definition: transformToUpperCase|streamFunctionalWordCount|clickUsersFunctionalCountWindow|streamOrderBranches|streamAggEmployeesByDepartment|streamSimpleInvoiceCountWindow
       bindings:
         transformToUpperCase-in-0:
           destination: input-func-topic
@@ -71,6 +71,10 @@ spring:
           destination: employees-topic
         invoice-input-channel:
           destination: simple-invoice-topic
+        streamSimpleInvoiceCountWindow-in-0:
+          destination: simple-invoice-in-topic
+        streamSimpleInvoiceCountWindow-out-0:
+          destination: simple-invoice-out-topic
         click-input-channel:
           destination: user-clicks-topic
         payment-request-channel:
@@ -194,6 +198,8 @@ application:
     employees.func.input.topic.name: employees-func-in-topic
     employees.func.output.topic.name: employees-func-out-topic
     simple.invoice.input.topic: simple-invoice-topic
+    simple.invoice.stream.input.topic: simple-invoice-in-topic
+    simple.invoice.stream.output.topic: simple-invoice-out-topic
     user.click.input.topic: user-clicks-topic
     payment.request.input.topic: payment_request
     payment.confirmation.input.topic: payment_confirmation
