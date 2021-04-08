@@ -125,7 +125,6 @@ public class EmployeeStreamFunctionalListenerTest {
     public void testTwoEmployee() throws InterruptedException {
         inputTopic.pipeInput(employee101);
         inputTopic.pipeInput(employee103);
-        Thread.sleep(1000);
 
         DepartmentAggregate departmentAggregateEngineeringExpected00 = DepartmentAggregate.newBuilder()
                 .setEmployeeCount(1).setTotalSalary(5000).setAvgSalary(5000.0).build();
