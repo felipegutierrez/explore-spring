@@ -175,7 +175,7 @@ USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Previe
 
 # Functional KStream aggregation of Employees
 # kafka-avro-console-producer --broker-list localhost:9092 --topic employees-func-in-topic --property value.schema='{"namespace": "com.github.felipegutierrez.explore.spring.model","type": "record","name": "Employee","fields": [{"name": "id","type": "string"},{"name": "name","type": "string"},{"name": "department","type": "string"},{"name": "salary","type":"int"}]}'
-# kafka-console-consumer --bootstrap-server localhost:9092 --topic employees-func-out-topic --property print.key=true --property key.separator=":"
+# kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic employees-func-out-topic --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer --property print.key=true --property key.separator=":"
 # data
 {"id": "101", "name": "Prashant", "department": "engineering", "salary": 5000}
 {"id": "102", "name": "John", "department": "accounts", "salary": 8000}

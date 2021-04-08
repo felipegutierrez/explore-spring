@@ -163,6 +163,9 @@ spring:
             streamAggEmployeesByDepartment-in-0:
               consumer:
                 valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            streamAggEmployeesByDepartment-out-0:
+              producer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
             invoice-input-channel:
               consumer:
                 timestampExtractorBeanName: invoiceTimesExtractor
