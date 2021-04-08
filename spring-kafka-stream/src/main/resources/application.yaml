@@ -219,4 +219,5 @@ application:
     user.login.input.topic: user-login
     ad.inventories.input.topic: active-inventories
     ad.clicks.input.topic: ad-clicks
+    serdes.scope.test: false
 ---
