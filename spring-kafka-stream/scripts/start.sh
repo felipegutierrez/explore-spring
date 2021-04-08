@@ -173,7 +173,18 @@ USR101:{"UserID": "USR101","CreatedTime": "1549361940000","CurrentLink": "Previe
 # Missing City Error ------------------------
 # <?xml version="1.0" encoding="UTF-8"?><order order-id="889927" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="order.xsd"><order-by>Abdul Hamid</order-by><ship-to><name>Nawab Aalam</name><address>42 Park Squire</address><city></city><country>India</country></ship-to><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></order>
 
+# Functional KStream aggregation of Employees
+# kafka-avro-console-producer --broker-list localhost:9092 --topic employees-func-in-topic --property value.schema='{"namespace": "com.github.felipegutierrez.explore.spring.model","type": "record","name": "Employee","fields": [{"name": "id","type": "string"},{"name": "name","type": "string"},{"name": "department","type": "string"},{"name": "salary","type":"int"}]}'
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic employees-func-out-topic --property print.key=true --property key.separator=":"
+# data
+{"id": "101", "name": "Prashant", "department": "engineering", "salary": 5000}
+{"id": "102", "name": "John", "department": "accounts", "salary": 8000}
+{"id": "103", "name": "Abdul", "department": "engineering", "salary": 3000}
+{"id": "104", "name": "Melinda", "department": "support", "salary": 7000}
+{"id": "105", "name": "Jimmy", "department": "support", "salary": 6000}
 
+{"id": "101", "name": "Prashant", "department": "support", "salary": 5000}
+{"id": "104", "name": "Melinda", "department": "engineering", "salary": 7000}
 #
 #
 #

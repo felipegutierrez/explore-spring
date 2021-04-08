@@ -22,7 +22,7 @@ spring:
   cloud:
     stream:
       function:
-        definition: transformToUpperCase|streamFunctionalWordCount|clickUsersFunctionalCountWindow|streamOrderBranches
+        definition: transformToUpperCase|streamFunctionalWordCount|clickUsersFunctionalCountWindow|streamOrderBranches|streamAggEmployeesByDepartment
       bindings:
         transformToUpperCase-in-0:
           destination: input-func-topic
@@ -42,6 +42,10 @@ spring:
           destination: output-order-india
         streamOrderBranches-out-1:
           destination: output-order-abroad
+        streamAggEmployeesByDepartment-in-0:
+          destination: employees-func-in-topic
+        streamAggEmployeesByDepartment-out-0:
+          destination: employees-func-out-topic
         process-in-0:
           destination: input-topic
         process-out-0:
@@ -156,6 +160,9 @@ spring:
             employee-input-channel:
               consumer:
                 valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+            streamAggEmployeesByDepartment-in-0:
+              consumer:
+                valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
             invoice-input-channel:
               consumer:
                 timestampExtractorBeanName: invoiceTimesExtractor
@@ -199,6 +206,8 @@ application:
     words.streaming.topic.name: words-in-topic
     words.streaming.output.topic.name: words-out-topic
     employees.input.topic.name: employees-topic
+    employees.func.input.topic.name: employees-func-in-topic
+    employees.func.output.topic.name: employees-func-out-topic
     simple.invoice.input.topic: simple-invoice-topic
     user.click.input.topic: user-clicks-topic
     payment.request.input.topic: payment_request

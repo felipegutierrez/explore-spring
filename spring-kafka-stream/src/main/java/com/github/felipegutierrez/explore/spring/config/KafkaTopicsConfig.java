@@ -99,6 +99,11 @@ public class KafkaTopicsConfig {
     @Value("${application.configs.order.functional.abroad.output.topic.name}")
     private String ORDER_ABROAD_FUNC_OUTPUT_TOPIC_NAME;
 
+    @Value("${application.configs.employees.func.input.topic.name}")
+    private String EMPLOYEE_FUNC_INPUT_TOPIC_NAME;
+    @Value("${application.configs.employees.func.output.topic.name}")
+    private String EMPLOYEE_FUNC_OUTPUT_TOPIC_NAME;
+
     @Bean
     NewTopic createProcessInputTopic() {
         Integer partitions = 1;
@@ -336,16 +341,32 @@ public class KafkaTopicsConfig {
         short replicationFactor = 1;
         return new NewTopic(ORDER_FUNC_INPUT_TOPIC_NAME, partitions, replicationFactor);
     }
+
     @Bean
     NewTopic createOrderIndiaFunctionalOutputTopic() {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(ORDER_INDIA_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
+
     @Bean
     NewTopic createOrderAbroadFunctionalOutputTopic() {
         Integer partitions = 1;
         short replicationFactor = 1;
         return new NewTopic(ORDER_ABROAD_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createEmployeeFunctionalInputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(EMPLOYEE_FUNC_INPUT_TOPIC_NAME, partitions, replicationFactor);
+    }
+
+    @Bean
+    NewTopic createEmployeeFunctionalOutputTopic() {
+        Integer partitions = 1;
+        short replicationFactor = 1;
+        return new NewTopic(EMPLOYEE_FUNC_OUTPUT_TOPIC_NAME, partitions, replicationFactor);
     }
 }
