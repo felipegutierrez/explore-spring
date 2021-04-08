@@ -59,13 +59,13 @@ public class EmployeeStreamFunctionalListener {
          * the subtractor operation from KTable. */
         return input -> input.peek((k, v) -> log.info("Employee - Key: {}, Value:{}", k, v))
                 .map((k, v) -> new KeyValue<>(v.getDepartment(), v))
-                .map((k, v) -> new KeyValue<>(v.getDepartment(), v))
-                .toTable(Materialized.with(stringSerde, employeeSerde))
-                .groupBy((k, v) -> KeyValue.pair(v.getDepartment(), v), Grouped.with(stringSerde, employeeSerde))
+                // .toTable(Materialized.with(stringSerde, employeeSerde))
+                // .groupBy((k, v) -> KeyValue.pair(v.getDepartment(), v), Grouped.with(stringSerde, employeeSerde))
+                .groupByKey(Grouped.with(stringSerde, employeeSerde))
                 .aggregate(
                         () -> recordBuilder.initDepartmentAggregate(),
                         (k, v, aggV) -> recordBuilder.addedDepartmentAggregate(v, aggV),
-                        (k, v, aggV) -> recordBuilder.subtractDepartmentAggregate(v, aggV),
+                        // (k, v, aggV) -> aggV, // recordBuilder.subtractDepartmentAggregate(v, aggV),
                         Materialized.with(stringSerde, departmentAggregateSerde)
                 )
                 .toStream()

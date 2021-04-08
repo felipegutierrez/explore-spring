@@ -160,6 +160,7 @@ public class RecordBuilder {
     }
 
     public DepartmentAggregate addedDepartmentAggregate(Employee emp, DepartmentAggregate aggValue){
+        log.info("addedDepartmentAggregate Employee: {} DepartmentAggregate: {}", emp, aggValue);
         DepartmentAggregate departmentAggregate = new DepartmentAggregate();
         departmentAggregate.setEmployeeCount(aggValue.getEmployeeCount() + 1);
         departmentAggregate.setTotalSalary(aggValue.getTotalSalary() + emp.getSalary());
@@ -168,6 +169,7 @@ public class RecordBuilder {
     }
 
     public DepartmentAggregate subtractDepartmentAggregate(Employee emp, DepartmentAggregate aggValue){
+        log.info("subtractDepartmentAggregate Employee: {} DepartmentAggregate: {}", emp, aggValue);
         DepartmentAggregate departmentAggregate = new DepartmentAggregate();
         departmentAggregate.setEmployeeCount(aggValue.getEmployeeCount() - 1);
         departmentAggregate.setTotalSalary(aggValue.getTotalSalary() - emp.getSalary());

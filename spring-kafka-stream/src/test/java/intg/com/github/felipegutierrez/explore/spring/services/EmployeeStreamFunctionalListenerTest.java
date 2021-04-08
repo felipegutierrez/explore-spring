@@ -22,6 +22,7 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
@@ -51,6 +52,10 @@ public class EmployeeStreamFunctionalListenerTest {
     private TestInputTopic inputTopic;
     private TestOutputTopic outputTopic;
 
+    private Employee employee101;
+    private Employee employee102;
+    private Employee employee103;
+
     static Properties getStreamsConfiguration() {
         final Properties streamsConfiguration = new Properties();
         // Need to be set even these do not matter with TopologyTestDriver
@@ -64,6 +69,10 @@ public class EmployeeStreamFunctionalListenerTest {
 
     @BeforeEach
     public void setUp() {
+        employee101 = Employee.newBuilder().setId("101").setName("Prashant").setDepartment("engineering").setSalary(5000).build();
+        employee102 = Employee.newBuilder().setId("102").setName("John").setDepartment("accounts").setSalary(8000).build();
+        employee103 = Employee.newBuilder().setId("103").setName("Abdul").setDepartment("engineering").setSalary(3000).build();
+
         INPUT_TOPIC = kafkaTopicsConfig.getEMPLOYEE_FUNC_INPUT_TOPIC_NAME();
         OUTPUT_TOPIC = kafkaTopicsConfig.getEMPLOYEE_FUNC_OUTPUT_TOPIC_NAME();
 
@@ -90,13 +99,6 @@ public class EmployeeStreamFunctionalListenerTest {
 
     @Test
     public void testOneEmployee() {
-        // employee: {"id": "101", "name": "Prashant", "department": "engineering", "salary": 5000}
-        Employee employee101 = Employee.newBuilder()
-                .setId("101")
-                .setName("Prashant")
-                .setDepartment("engineering")
-                .setSalary(5000)
-                .build();
         inputTopic.pipeInput(employee101);
 
         DepartmentAggregate departmentAggregateExpected = DepartmentAggregate.newBuilder()
@@ -114,6 +116,29 @@ public class EmployeeStreamFunctionalListenerTest {
         System.out.println(outputDepartmentAggregate.getEmployeeCount());
         System.out.println(outputDepartmentAggregate.getAvgSalary());
         assertThat(outputDepartmentAggregate).usingRecursiveComparison().isEqualTo(departmentAggregateExpected);
+
+        //No more output in topic
+        assertThat(outputTopic.isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testTwoEmployee() throws InterruptedException {
+        inputTopic.pipeInput(employee101);
+        inputTopic.pipeInput(employee103);
+        Thread.sleep(1000);
+
+        DepartmentAggregate departmentAggregateEngineeringExpected00 = DepartmentAggregate.newBuilder()
+                .setEmployeeCount(1).setTotalSalary(5000).setAvgSalary(5000.0).build();
+        DepartmentAggregate departmentAggregateEngineeringExpected01 = DepartmentAggregate.newBuilder()
+                .setEmployeeCount(2).setTotalSalary(8000).setAvgSalary(4000.0).build();
+
+        final List<DepartmentAggregate> departmentAggregateList = (List<DepartmentAggregate>) outputTopic.readValuesToList();
+        assertThat(departmentAggregateList).isNotNull();
+        System.out.println("departmentAggregateList");
+        departmentAggregateList.forEach(System.out::println);
+
+        assertThat(departmentAggregateList.get(0)).usingRecursiveComparison().isEqualTo(departmentAggregateEngineeringExpected00);
+        assertThat(departmentAggregateList.get(1)).usingRecursiveComparison().isEqualTo(departmentAggregateEngineeringExpected01);
 
         //No more output in topic
         assertThat(outputTopic.isEmpty()).isTrue();
