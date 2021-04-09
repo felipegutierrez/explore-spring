@@ -44,13 +44,11 @@ public class EmployeeStreamFunctionalListenerTest {
     Serde<String> stringSerde = Serdes.String();
     Serde<Employee> employeeSerde = new SpecificAvroSerde<>();
     Serde<DepartmentAggregate> departmentAggregateSerde = new SpecificAvroSerde<>();
-    private TestInputTopic<String, Employee> employeeTopic;
-    private TestOutputTopic<String, DepartmentAggregate> departmentAggregateTopic;
+    private TestInputTopic<String, Employee> inputTopic;
+    private TestOutputTopic<String, DepartmentAggregate> outputTopic;
     private String INPUT_TOPIC;
     private String OUTPUT_TOPIC;
     private TopologyTestDriver testDriver;
-    private TestInputTopic inputTopic;
-    private TestOutputTopic outputTopic;
 
     private Employee employee101;
     private Employee employee102;
