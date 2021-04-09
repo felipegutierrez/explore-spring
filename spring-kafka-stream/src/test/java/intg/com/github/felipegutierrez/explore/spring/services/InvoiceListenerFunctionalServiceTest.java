@@ -22,6 +22,7 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
@@ -108,7 +109,7 @@ public class InvoiceListenerFunctionalServiceTest {
     }
 
     @Test
-    public void testOneInvoice() throws InterruptedException {
+    public void testOneInvoice() {
         simpleInvoiceTopic.pipeInput(simpleInvoice01.getStoreID(), simpleInvoice01);
 
         // Read and validate output
@@ -123,6 +124,52 @@ public class InvoiceListenerFunctionalServiceTest {
         System.out.println(outputInvoiceWindowArray[3]);
         assertThat(outputInvoiceWindowArray[1]).isEqualTo(simpleInvoice01.getStoreID());
         assertThat(outputInvoiceWindowArray[3]).isEqualTo("1");
+
+        //No more output in topic
+        assertThat(outputTopic.isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testTwoInvoicesWithSameStoreID() {
+        simpleInvoiceTopic.pipeInput(simpleInvoice01.getStoreID(), simpleInvoice01);
+        simpleInvoiceTopic.pipeInput(simpleInvoice03.getStoreID(), simpleInvoice03);
+
+        // Read and validate output
+        assertThat(outputTopic.isEmpty()).isFalse();
+        final List<String> outputInvoiceWindowList = outputTopic.readValuesToList();
+        System.out.println("outputInvoiceWindowList");
+        outputInvoiceWindowList.forEach(System.out::println);
+        assertThat(outputInvoiceWindowList.size()).isEqualTo(2);
+        String[] outputInvoiceWindowArray = outputInvoiceWindowList.get(1).split(" ");
+        assertThat(outputInvoiceWindowArray[1]).isEqualTo(simpleInvoice01.getStoreID());
+        assertThat(outputInvoiceWindowArray[3]).isEqualTo("2");
+
+        //No more output in topic
+        assertThat(outputTopic.isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testThreeInvoicesWithDifferentStoreID() {
+        simpleInvoiceTopic.pipeInput(simpleInvoice01.getStoreID(), simpleInvoice01);
+        simpleInvoiceTopic.pipeInput(simpleInvoice02.getStoreID(), simpleInvoice02);
+        simpleInvoiceTopic.pipeInput(simpleInvoice03.getStoreID(), simpleInvoice03);
+
+        // Read and validate output
+        assertThat(outputTopic.isEmpty()).isFalse();
+        final List<String> outputInvoiceWindowList = outputTopic.readValuesToList();
+        System.out.println("outputInvoiceWindowList");
+        outputInvoiceWindowList.forEach(System.out::println);
+        assertThat(outputInvoiceWindowList.size()).isEqualTo(3);
+
+        // testing simpleInvoice02
+        String[] outputInvoiceWindowArray00 = outputInvoiceWindowList.get(1).split(" ");
+        assertThat(outputInvoiceWindowArray00[1]).isEqualTo(simpleInvoice02.getStoreID());
+        assertThat(outputInvoiceWindowArray00[3]).isEqualTo("1");
+
+        // testing simpleInvoice01 and simpleInvoice03
+        String[] outputInvoiceWindowArray01 = outputInvoiceWindowList.get(2).split(" ");
+        assertThat(outputInvoiceWindowArray01[1]).isEqualTo(simpleInvoice01.getStoreID());
+        assertThat(outputInvoiceWindowArray01[3]).isEqualTo("2");
 
         //No more output in topic
         assertThat(outputTopic.isEmpty()).isTrue();
