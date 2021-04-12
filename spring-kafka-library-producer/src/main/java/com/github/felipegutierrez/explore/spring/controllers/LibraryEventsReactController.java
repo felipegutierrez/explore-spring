@@ -16,8 +16,8 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_ERROR_ID_NULL;
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_REACT_V1_ENDPOINT;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.LIBRARY_ERROR_ID_NULL;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.LIBRARY_REACT_V1_ENDPOINT;
 
 /**
  * Testing based on the project:

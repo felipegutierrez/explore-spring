@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_ENDPOINT_V1;
+import static com.github.felipegutierrez.explore.spring.util.ItemReactConstants.ITEM_ENDPOINT_V1;
 
 @RestController
 @Slf4j

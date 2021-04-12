@@ -3,8 +3,6 @@ name: Run Test Suites
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   test:
@@ -15,7 +13,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - run: gradle build jacocoTestReport
+      - run: gradle jacocoAggregatedReport
+      #- run: gradle build jacocoTestReport coveralls
       - run: bash <(curl -s https://codecov.io/bash) # Upload to Codecov
       - uses: codecov/codecov-action@v1
         with:

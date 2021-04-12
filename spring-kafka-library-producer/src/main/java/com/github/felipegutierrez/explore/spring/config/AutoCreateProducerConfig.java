@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.TopicBuilder;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.LIBRARY_V1_TOPIC;
 
 @Configuration
 @Profile("dev")
-public class AutoCreateConfig {
+public class AutoCreateProducerConfig {
 
     /**
      * The topic "library-events" will be create only for the @Profile("dev") profile.

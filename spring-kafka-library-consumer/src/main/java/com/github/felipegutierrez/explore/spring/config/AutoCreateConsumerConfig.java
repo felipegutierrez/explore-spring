@@ -24,7 +24,7 @@ import java.util.Map;
 @EnableKafka
 @Profile("dev")
 @Slf4j
-public class AutoCreateConfig {
+public class AutoCreateConsumerConfig {
 
     @Autowired
     LibraryEventService libraryEventService;

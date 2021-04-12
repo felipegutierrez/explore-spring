@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.*;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.*;
 
 @RestController
 @Slf4j

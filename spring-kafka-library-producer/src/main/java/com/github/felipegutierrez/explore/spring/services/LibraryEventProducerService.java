@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.LIBRARY_V1_TOPIC;
 
 @Service
 @Slf4j

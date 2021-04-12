@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_FUNC_V1_ENDPOINT;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.LIBRARY_FUNC_V1_ENDPOINT;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 

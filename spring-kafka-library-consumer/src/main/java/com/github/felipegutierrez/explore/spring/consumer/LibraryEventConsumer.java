@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
+import static com.github.felipegutierrez.explore.spring.util.LibraryConsumerConstants.LIBRARY_V1_TOPIC;
 
 /**
  * If @Component is disable this bean is not going to be recognized as a @KafkaListener to the topic

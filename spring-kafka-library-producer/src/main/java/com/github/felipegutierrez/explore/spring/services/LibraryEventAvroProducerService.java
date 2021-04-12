@@ -15,7 +15,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.List;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_V1_TOPIC;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.LIBRARY_V1_TOPIC;
 
 @Component
 @Slf4j

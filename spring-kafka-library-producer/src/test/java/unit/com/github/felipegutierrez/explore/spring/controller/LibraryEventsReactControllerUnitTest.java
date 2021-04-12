@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-import static com.github.felipegutierrez.explore.spring.util.LibraryConstants.LIBRARY_REACT_V1_ENDPOINT;
+import static com.github.felipegutierrez.explore.spring.util.LibraryProducerConstants.LIBRARY_REACT_V1_ENDPOINT;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
