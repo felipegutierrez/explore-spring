@@ -24,6 +24,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
+	// StopWatch
+	implementation('org.apache.commons:commons-lang3:3.0')
+
 	//jackson dependencies
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.1'
