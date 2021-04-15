@@ -61,4 +61,21 @@ class GitHubJobsClientTest {
         assertTrue(gitHubPositionList.size() > 0);
         gitHubPositionList.forEach(Assertions::assertNotNull);
     }
+
+    @Test
+    void invokeGithubJobsApiAsyncAllCompletableFuture() {
+
+        List<Integer> pageNumbers = List.of(1, 2, 3);
+        String description = "Java";
+
+        List<GitHubPosition> gitHubPositionList = gitHubJobsClient
+                .invokeGithubJobsApiAsyncAllCompletableFuture(pageNumbers, description);
+        gitHubPositionList.forEach(gitHubPosition -> {
+            System.out.println("Title: " + gitHubPosition.getTitle());
+            System.out.println("Location: " + gitHubPosition.getLocation());
+        });
+
+        assertTrue(gitHubPositionList.size() > 0);
+        gitHubPositionList.forEach(Assertions::assertNotNull);
+    }
 }

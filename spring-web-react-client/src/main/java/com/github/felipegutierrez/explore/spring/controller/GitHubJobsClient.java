@@ -66,4 +66,27 @@ public class GitHubJobsClient {
         log.info("time elapsed: " + stopWatch.getTime());
         return gitHubPositions;
     }
+
+
+    public List<GitHubPosition> invokeGithubJobsApiAsyncAllCompletableFuture(List<Integer> pageNumbers, String description) {
+        stopWatch.start();
+        List<CompletableFuture<List<GitHubPosition>>> gitHubPositionList = pageNumbers
+                .stream()
+                .map(pageNumber -> CompletableFuture.supplyAsync(() -> invokeGithubJobsApi(pageNumber, description)))
+                .collect(Collectors.toList());
+
+        List<GitHubPosition> gitHubPositions = CompletableFuture
+                .allOf(gitHubPositionList.toArray(new CompletableFuture[gitHubPositionList.size()]))
+                .thenApply(v -> gitHubPositionList
+                        .stream()
+                        .map(CompletableFuture::join)
+                        .flatMap(Collection::stream)
+                        .collect(Collectors.toList())
+                )
+                .join();
+
+        stopWatch.stop();
+        log.info("time elapsed: " + stopWatch.getTime());
+        return gitHubPositions;
+    }
 }
