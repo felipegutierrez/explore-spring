@@ -2,8 +2,8 @@ package com.github.felipegutierrez.explore.spring.controller;
 
 import com.github.felipegutierrez.explore.spring.domain.GitHubPosition;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
@@ -32,7 +32,7 @@ class GitHubJobsClientTest {
     }
 
     @Test
-    @Disabled("Do not run in lower environment")
+    @DisabledIfEnvironmentVariable(named = "ENV", matches = "ci")
     void testInvokeGithubJobsApi() {
         List<Integer> pageNumbers = List.of(1, 2, 3);
         String description = "Java";
@@ -65,7 +65,7 @@ class GitHubJobsClientTest {
     }
 
     @Test
-    @Disabled("Do not run in lower environment")
+    @DisabledIfEnvironmentVariable(named = "ENV", matches = "ci")
     void invokeGithubJobsApiAsyncAllCompletableFuture() {
 
         List<Integer> pageNumbers = List.of(1, 2, 3);
