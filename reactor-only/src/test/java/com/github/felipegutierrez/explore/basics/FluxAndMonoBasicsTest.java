@@ -255,4 +255,25 @@ public class FluxAndMonoBasicsTest {
                 .expectNext(expected.get(3))
                 .verifyComplete();
     }
+
+    @Test
+    void createFluxUsingTransform() {
+        var actual = "1258";
+        var expected = Arrays.stream(actual.split(""))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        Flux<Integer> integerFlux = myFluxTest.createFluxUsingTransform(actual);
+
+        StepVerifier.create(integerFlux)
+                .expectNextCount(4)
+                .verifyComplete();
+
+        StepVerifier.create(integerFlux)
+                .expectNext(expected.get(0))
+                .expectNext(expected.get(1))
+                .expectNext(expected.get(2))
+                .expectNext(expected.get(3))
+                .verifyComplete();
+    }
 }

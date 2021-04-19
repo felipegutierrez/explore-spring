@@ -6,10 +6,21 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class FluxAndMonoBasics {
+
+    final Function<Flux<String>, Flux<Integer>> monoStringToFluxInteger = value -> value
+            .flatMap(v -> {
+                var arrayOfStrings = v.split("");
+                return Flux.fromIterable(
+                        Arrays.stream(arrayOfStrings)
+                                .map(Integer::parseInt)
+                                .collect(Collectors.toList())
+                );
+            });
 
     public static void main(String[] args) {
         FluxAndMonoBasics myFlux = new FluxAndMonoBasics();
@@ -146,6 +157,13 @@ public class FluxAndMonoBasics {
                                     .collect(Collectors.toList())
                     );
                 })
+                .log();
+        return integerFlux;
+    }
+
+    public Flux<Integer> createFluxUsingTransform(String data) {
+        Flux<Integer> integerFlux = Flux.just(data)
+                .transform(monoStringToFluxInteger)
                 .log();
         return integerFlux;
     }
