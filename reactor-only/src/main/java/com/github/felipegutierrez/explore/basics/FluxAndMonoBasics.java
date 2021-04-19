@@ -5,10 +5,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class FluxAndMonoBasics {
@@ -136,6 +134,20 @@ public class FluxAndMonoBasics {
                 .map(value -> Integer.parseInt(value))
                 .log();
         return integerMono;
+    }
+
+    public Flux<Integer> createFluxFromMono(String data) {
+        Flux<Integer> integerFlux = Mono.just(data)
+                .flatMapMany(value -> {
+                    var arrayOfStrings = value.split("");
+                    return Flux.fromIterable(
+                            Arrays.stream(arrayOfStrings)
+                                    .map(Integer::parseInt)
+                                    .collect(Collectors.toList())
+                    );
+                })
+                .log();
+        return integerFlux;
     }
 
 
