@@ -29,8 +29,12 @@ public class FluxAndMonoBasics {
 
     public Collection<String> createBasicFluxToMap(String data) {
         return Flux.just(data)
-                .collectMap(value -> { return value; },
-                            value -> { return value; })
+                .collectMap(value -> {
+                            return value;
+                        },
+                        value -> {
+                            return value;
+                        })
                 .block()
                 .values();
     }
@@ -81,6 +85,14 @@ public class FluxAndMonoBasics {
         return stringFlux;
     }
 
+    public Flux<String> createBasicFluxWithFlatmap(List<String> data) {
+        Flux<String> stringFlux = Flux
+                .fromIterable(data)
+                .flatMap(value -> Flux.fromArray(value.split("")))
+                .log();
+        return stringFlux;
+    }
+
     public Flux<Integer> createFluxWithoutSubscribeConverterStringToInt(String[] data) {
         Flux<Integer> stringFlux = Flux
                 .just(data)
@@ -95,7 +107,6 @@ public class FluxAndMonoBasics {
                 .log();
         return integerMono;
     }
-
 
 
 //    public <OUT> Mono<OUT> createMonoConverterString(String data) {

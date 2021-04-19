@@ -163,4 +163,39 @@ public class FluxAndMonoBasicsTest {
                 .expectError(NumberFormatException.class)
                 .verify();
     }
+
+    @Test
+    void createBasicFluxWithFlatmap() {
+        String actual = "reactor-project";
+        String delimiter = "";
+        String[] expected = actual.split(delimiter);
+        Flux<String> stringFlux = myFluxTest.createBasicFluxWithFlatmap(List.of(actual));
+
+        // the StepVerifier.create calls the subscribe for us
+        StepVerifier.create(stringFlux)
+                .expectNext(expected[0])
+                .expectNext(expected[1])
+                .expectNext(expected[2])
+                .expectNext(expected[3])
+                .expectNext(expected[4])
+                .expectNext(expected[5])
+                .expectNext(expected[6])
+                .expectNext(expected[7])
+                .expectNext(expected[8])
+                .expectNext(expected[9])
+                .expectNext(expected[10])
+                .expectNext(expected[11])
+                .expectNext(expected[12])
+                .expectNext(expected[13])
+                .expectNext(expected[14])
+                .verifyComplete();
+
+        StepVerifier.create(stringFlux)
+                .expectNext(expected)
+                .verifyComplete();
+
+        StepVerifier.create(stringFlux)
+                .expectNextCount(15)
+                .verifyComplete();
+    }
 }
