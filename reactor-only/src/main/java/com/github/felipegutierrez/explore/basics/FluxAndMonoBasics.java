@@ -20,6 +20,17 @@ public class FluxAndMonoBasics {
                                 .stream(arrayOfStrings)
                                 .map(Integer::parseInt)
                                 .collect(Collectors.collectingAndThen(Collectors.toList(), c -> !c.isEmpty() ? c : new ArrayList<Integer>()))
+                        );
+            });
+
+    final Function<Flux<String>, Flux<Integer>> integerToStringFluxFilterTransformation = value -> value
+            .flatMap(v -> {
+                var arrayOfStrings = v.split("");
+                return Flux
+                        .fromIterable(Arrays
+                                .stream(arrayOfStrings)
+                                .map(Integer::parseInt)
+                                .collect(Collectors.collectingAndThen(Collectors.toList(), c -> !c.isEmpty() ? c : new ArrayList<Integer>()))
                         )
                         .filter(number -> number.equals(0));
             });
