@@ -109,6 +109,20 @@ public class FluxAndMonoBasics {
         return stringFlux;
     }
 
+    public Flux<String> createBasicFluxWithConcatmapDelay(List<String> data) {
+        Flux<String> stringFlux = Flux
+                .fromIterable(data)
+                .concatMap(value -> {
+                            var delay = new Random().nextInt(1000);
+                            return Flux
+                                    .fromArray(value.split(""))
+                                    .delayElements(Duration.ofMillis(delay));
+                        }
+                )
+                .log();
+        return stringFlux;
+    }
+
     public Flux<Integer> createFluxWithoutSubscribeConverterStringToInt(String[] data) {
         Flux<Integer> stringFlux = Flux
                 .just(data)

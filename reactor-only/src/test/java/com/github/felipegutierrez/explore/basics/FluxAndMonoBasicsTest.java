@@ -215,4 +215,22 @@ public class FluxAndMonoBasicsTest {
                 .expectNextCount(21)
                 .verifyComplete();
     }
+
+    @Test
+    void createBasicFluxWithConcatmapDelay() {
+
+        var actual = "reactorprojectinjava8";
+        var delimiter = "";
+        String[] expected = actual.split(delimiter);
+        Flux<String> stringFlux = myFluxTest.createBasicFluxWithConcatmapDelay(List.of("reactor", "project", "in", "java", "8"));
+
+        /** concatMap guarantees order, hence this test will not pass eventually */
+        StepVerifier.create(stringFlux)
+                .expectNext(expected)
+                .verifyComplete();
+
+        StepVerifier.create(stringFlux)
+                .expectNextCount(21)
+                .verifyComplete();
+    }
 }
