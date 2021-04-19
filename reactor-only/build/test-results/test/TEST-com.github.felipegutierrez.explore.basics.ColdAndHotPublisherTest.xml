@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.felipegutierrez.explore.basics.ColdAndHotPublisherTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-04-19T07:39:58" hostname="stamina" time="18.105">
+  <properties/>
+  <testcase name="testFluxColdPublisher()" classname="com.github.felipegutierrez.explore.basics.ColdAndHotPublisherTest" time="10.087"/>
+  <testcase name="testFluxHotPublisher()" classname="com.github.felipegutierrez.explore.basics.ColdAndHotPublisherTest" time="8.017"/>
+  <system-out><![CDATA[09:39:58.524 [Test worker] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Cold subscriber
+09:39:59.539 [parallel-3] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Spring
+09:40:00.541 [parallel-4] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Spring Boot
+09:40:01.542 [parallel-1] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Reactive Spring
+09:40:02.539 [parallel-2] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Spring
+09:40:02.543 [parallel-3] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Java 8
+09:40:03.540 [parallel-4] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Spring Boot
+09:40:03.545 [parallel-1] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Project reactor
+09:40:04.542 [parallel-2] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Reactive Spring
+09:40:04.546 [parallel-3] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Scala did it first
+09:40:05.543 [parallel-4] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Java 8
+09:40:06.544 [parallel-1] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Project reactor
+09:40:07.545 [parallel-2] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Scala did it first
+09:40:08.612 [Test worker] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Hot subscriber
+09:40:09.621 [parallel-3] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Spring
+09:40:10.623 [parallel-4] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Spring Boot
+09:40:11.626 [parallel-1] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Reactive Spring
+09:40:11.628 [parallel-1] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Reactive Spring
+09:40:12.629 [parallel-2] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Java 8
+09:40:12.630 [parallel-2] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Java 8
+09:40:13.632 [parallel-3] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Project reactor
+09:40:13.633 [parallel-3] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Project reactor
+09:40:14.634 [parallel-4] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 1: Scala did it first
+09:40:14.635 [parallel-4] INFO com.github.felipegutierrez.explore.basics.ColdAndHotPublisher - Sub 2: Scala did it first
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

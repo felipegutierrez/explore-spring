@@ -13,11 +13,12 @@ Exploring Spring framework version 2.4.3 with [projectreactor](https://projectre
 
 - [Spring basics](spring-basics)
 - [Spring web](spring-web)
+- [Exploring reactor project](reactor-only)
 - [Spring reactive web server](spring-web-react)
 - [Spring reactive web client](spring-web-react-client)
 - [Spring with Kafka producer](spring-kafka-library-producer)
 - [Spring with Kafka consumer](spring-kafka-library-consumer)
-- [Spring cloud stream + Kafka streams](spring-kafka-stream)
+- [Exploring Spring cloud stream + Kafka streams](spring-kafka-stream)
 
 ### Basic commands
 

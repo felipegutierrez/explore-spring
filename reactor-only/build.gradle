@@ -3,6 +3,8 @@ plugins {
     id 'jacoco'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
     id "io.freefair.lombok" version "5.3.0"
+    id "org.springframework.boot" version "2.4.4"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
 }
 
 description = "reactor-only"
@@ -22,6 +24,8 @@ repositories {
 
 dependencies {
     implementation "io.projectreactor:reactor-core:3.4.0"
+
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
 
     //log - logback
     implementation "ch.qos.logback:logback-classic:1.2.3"

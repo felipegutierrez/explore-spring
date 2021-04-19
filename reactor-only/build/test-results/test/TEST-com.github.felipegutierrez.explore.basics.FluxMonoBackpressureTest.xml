@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.felipegutierrez.explore.basics.FluxMonoBackpressureTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2021-04-19T07:40:52" hostname="stamina" time="0.023">
+  <properties/>
+  <testcase name="testFluxBackpressureSubscribeCancel()" classname="com.github.felipegutierrez.explore.basics.FluxMonoBackpressureTest" time="0.005"/>
+  <testcase name="testFluxBackpressureCustomSubscribe()" classname="com.github.felipegutierrez.explore.basics.FluxMonoBackpressureTest" time="0.006"/>
+  <testcase name="testFluxBackpressureSubscribe()" classname="com.github.felipegutierrez.explore.basics.FluxMonoBackpressureTest" time="0.005"/>
+  <testcase name="testFluxBackpressure()" classname="com.github.felipegutierrez.explore.basics.FluxMonoBackpressureTest" time="0.005"/>
+  <system-out><![CDATA[09:40:52.146 [Test worker] INFO reactor.Flux.Range.48 - | onSubscribe([Synchronous Fuseable] FluxRange.RangeSubscription)
+09:40:52.147 [Test worker] INFO reactor.Flux.Range.48 - | cancel()
+09:40:52.152 [Test worker] INFO reactor.Flux.Range.49 - | onSubscribe([Synchronous Fuseable] FluxRange.RangeSubscription)
+09:40:52.152 [Test worker] INFO reactor.Flux.Range.49 - | request(unbounded)
+09:40:52.152 [Test worker] INFO reactor.Flux.Range.49 - | onNext(1)
+09:40:52.153 [Test worker] INFO reactor.Flux.Range.49 - | request(1)
+received value: 1
+09:40:52.154 [Test worker] INFO reactor.Flux.Range.49 - | onNext(2)
+09:40:52.154 [Test worker] INFO reactor.Flux.Range.49 - | request(1)
+received value: 2
+09:40:52.154 [Test worker] INFO reactor.Flux.Range.49 - | onNext(3)
+09:40:52.154 [Test worker] INFO reactor.Flux.Range.49 - | request(1)
+received value: 3
+09:40:52.154 [Test worker] INFO reactor.Flux.Range.49 - | onNext(4)
+09:40:52.154 [Test worker] INFO reactor.Flux.Range.49 - | request(1)
+received value: 4
+09:40:52.154 [Test worker] INFO reactor.Flux.Range.49 - | cancel()
+09:40:52.159 [Test worker] INFO reactor.Flux.Range.50 - | onSubscribe([Synchronous Fuseable] FluxRange.RangeSubscription)
+09:40:52.159 [Test worker] INFO reactor.Flux.Range.50 - | request(3)
+09:40:52.159 [Test worker] INFO reactor.Flux.Range.50 - | onNext(1)
+Element is: 1
+09:40:52.160 [Test worker] INFO reactor.Flux.Range.50 - | onNext(2)
+Element is: 2
+09:40:52.160 [Test worker] INFO reactor.Flux.Range.50 - | onNext(3)
+Element is: 3
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | onSubscribe([Synchronous Fuseable] FluxRange.RangeSubscription)
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | request(1)
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | onNext(1)
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | request(1)
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | onNext(2)
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | request(1)
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | onNext(3)
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | cancel()
+09:40:52.165 [Test worker] INFO reactor.Flux.Range.51 - | request(unbounded)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

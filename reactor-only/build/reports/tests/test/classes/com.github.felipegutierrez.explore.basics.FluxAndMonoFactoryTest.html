@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - FluxAndMonoFactoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>FluxAndMonoFactoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.github.felipegutierrez.explore.basics.html">com.github.felipegutierrez.explore.basics</a> &gt; FluxAndMonoFactoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">9</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.040s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">testEmptyMono()</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testFluxFromRange()</td>
+<td class="success">0.012s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testFluxUsingArray()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testFluxUsingIterable()</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testFluxUsingIterableRepeat()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testFluxUsingIterableWithFilter()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testFluxUsingStream()</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testMono()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testMonoWithSupplier()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>09:40:51.990 [Test worker] INFO reactor.Mono.Just.30 - | onSubscribe([Synchronous Fuseable] Operators.ScalarSubscription)
+09:40:51.991 [Test worker] INFO reactor.Mono.Just.30 - | request(unbounded)
+09:40:51.991 [Test worker] INFO reactor.Mono.Just.30 - | onNext(Spring Boot Reactive Spring)
+09:40:51.991 [Test worker] INFO reactor.Mono.Just.30 - | onComplete()
+09:40:51.996 [Test worker] INFO reactor.Flux.Range.31 - | onSubscribe([Synchronous Fuseable] FluxRange.RangeSubscription)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | request(unbounded)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | onNext(0)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | onNext(1)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | onNext(2)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | onNext(3)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | onNext(4)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | onNext(5)
+09:40:51.997 [Test worker] INFO reactor.Flux.Range.31 - | onNext(6)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(7)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(8)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(9)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(10)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(11)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(12)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(13)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(14)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(15)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(16)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(17)
+09:40:51.998 [Test worker] INFO reactor.Flux.Range.31 - | onNext(18)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(19)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(20)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(21)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(22)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(23)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(24)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(25)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(26)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(27)
+09:40:51.999 [Test worker] INFO reactor.Flux.Range.31 - | onNext(28)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(29)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(30)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(31)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(32)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(33)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(34)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(35)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(36)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(37)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(38)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(39)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(40)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(41)
+09:40:52.000 [Test worker] INFO reactor.Flux.Range.31 - | onNext(42)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(43)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(44)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(45)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(46)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(47)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(48)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(49)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(50)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(51)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(52)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(53)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(54)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(55)
+09:40:52.001 [Test worker] INFO reactor.Flux.Range.31 - | onNext(56)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(57)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(58)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(59)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(60)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(61)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(62)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(63)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(64)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(65)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(66)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(67)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(68)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(69)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(70)
+09:40:52.002 [Test worker] INFO reactor.Flux.Range.31 - | onNext(71)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(72)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(73)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(74)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(75)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(76)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(77)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(78)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(79)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(80)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(81)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(82)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(83)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(84)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(85)
+09:40:52.003 [Test worker] INFO reactor.Flux.Range.31 - | onNext(86)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(87)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(88)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(89)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(90)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(91)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(92)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(93)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(94)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(95)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(96)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(97)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(98)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onNext(99)
+09:40:52.004 [Test worker] INFO reactor.Flux.Range.31 - | onComplete()
+09:40:52.009 [Test worker] INFO reactor.Flux.Repeat.32 - onSubscribe(FluxRepeat.RepeatSubscriber)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - request(unbounded)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring Boot)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Reactive Spring)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring Boot)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Reactive Spring)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring Boot)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Reactive Spring)
+09:40:52.010 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring)
+09:40:52.011 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring Boot)
+09:40:52.011 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Reactive Spring)
+09:40:52.011 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring)
+09:40:52.011 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Spring Boot)
+09:40:52.011 [Test worker] INFO reactor.Flux.Repeat.32 - onNext(Reactive Spring)
+09:40:52.011 [Test worker] INFO reactor.Flux.Repeat.32 - onComplete()
+09:40:52.014 [Test worker] INFO reactor.Mono.Empty.33 - onSubscribe([Fuseable] Operators.EmptySubscription)
+09:40:52.014 [Test worker] INFO reactor.Mono.Empty.33 - request(unbounded)
+09:40:52.014 [Test worker] INFO reactor.Mono.Empty.33 - onComplete()
+09:40:52.016 [Test worker] INFO reactor.Flux.Stream.34 - | onSubscribe([Synchronous Fuseable] FluxIterable.IterableSubscription)
+09:40:52.017 [Test worker] INFO reactor.Flux.Stream.34 - | request(unbounded)
+09:40:52.017 [Test worker] INFO reactor.Flux.Stream.34 - | onNext(Spring)
+09:40:52.017 [Test worker] INFO reactor.Flux.Stream.34 - | onNext(Spring Boot)
+09:40:52.017 [Test worker] INFO reactor.Flux.Stream.34 - | onNext(Reactive Spring)
+09:40:52.017 [Test worker] INFO reactor.Flux.Stream.34 - | onComplete()
+09:40:52.020 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onSubscribe([Fuseable] FluxFilterFuseable.FilterFuseableSubscriber)
+09:40:52.020 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | request(unbounded)
+09:40:52.020 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onNext(Spring)
+09:40:52.020 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onNext(Spring Boot)
+09:40:52.020 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onNext(Reactive Spring)
+09:40:52.020 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onComplete()
+09:40:52.021 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onSubscribe([Fuseable] FluxFilterFuseable.FilterFuseableSubscriber)
+09:40:52.021 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | request(unbounded)
+09:40:52.021 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onNext(Spring)
+09:40:52.021 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onNext(Spring Boot)
+09:40:52.021 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onNext(Reactive Spring)
+09:40:52.021 [Test worker] INFO reactor.Flux.FilterFuseable.35 - | onComplete()
+09:40:52.024 [Test worker] INFO reactor.Flux.Iterable.36 - | onSubscribe([Synchronous Fuseable] FluxIterable.IterableSubscription)
+09:40:52.024 [Test worker] INFO reactor.Flux.Iterable.36 - | request(unbounded)
+09:40:52.024 [Test worker] INFO reactor.Flux.Iterable.36 - | onNext(Spring)
+09:40:52.024 [Test worker] INFO reactor.Flux.Iterable.36 - | onNext(Spring Boot)
+09:40:52.024 [Test worker] INFO reactor.Flux.Iterable.36 - | onNext(Reactive Spring)
+09:40:52.024 [Test worker] INFO reactor.Flux.Iterable.36 - | onComplete()
+09:40:52.029 [Test worker] INFO reactor.Flux.Array.37 - | onSubscribe([Synchronous Fuseable] FluxArray.ArraySubscription)
+09:40:52.029 [Test worker] INFO reactor.Flux.Array.37 - | request(unbounded)
+09:40:52.029 [Test worker] INFO reactor.Flux.Array.37 - | onNext(Spring)
+09:40:52.029 [Test worker] INFO reactor.Flux.Array.37 - | onNext(Spring Boot)
+09:40:52.029 [Test worker] INFO reactor.Flux.Array.37 - | onNext(Reactive Spring)
+09:40:52.029 [Test worker] INFO reactor.Flux.Array.37 - | onComplete()
+09:40:52.033 [Test worker] INFO reactor.Mono.Supplier.38 - | onSubscribe([Fuseable] Operators.MonoSubscriber)
+09:40:52.033 [Test worker] INFO reactor.Mono.Supplier.38 - | request(unbounded)
+09:40:52.033 [Test worker] INFO reactor.Mono.Supplier.38 - | onNext(Spring Boot Reactive Spring)
+09:40:52.033 [Test worker] INFO reactor.Mono.Supplier.38 - | onComplete()
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 6.8.3</a> at Apr 19, 2021, 9:40:52 AM</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+com/github/felipegutierrez/explore/basics/FluxMonoBackpressureTest.java
+ com.github.felipegutierrez.explore.basics.FluxMonoBackpressureTest
+ com.github.felipegutierrez.explore.basics.FluxMonoBackpressureTest$1
+com/github/felipegutierrez/explore/basics/FluxAndMonoTransformationsTest.java
+ com.github.felipegutierrez.explore.basics.FluxAndMonoTransformationsTest
+com/github/felipegutierrez/explore/basics/FluxAndMonoGenericTest.java
+ com.github.felipegutierrez.explore.basics.FluxAndMonoGenericTest
+com/github/felipegutierrez/explore/basics/FluxAndMonoStreamsTest.java
+ com.github.felipegutierrez.explore.basics.FluxAndMonoStreamsTest
+com/github/felipegutierrez/explore/basics/ColdAndHotPublisherTest.java
+ com.github.felipegutierrez.explore.basics.ColdAndHotPublisherTest
+com/github/felipegutierrez/explore/basics/FluxAndMonoBasicsTest.java
+ com.github.felipegutierrez.explore.basics.FluxAndMonoBasicsTest
+com/github/felipegutierrez/explore/basics/FluxAndMonoExceptionHandlingTest.java
+ com.github.felipegutierrez.explore.basics.FluxAndMonoExceptionHandlingTest
+com/github/felipegutierrez/explore/basics/FluxAndMonoFactoryTest.java
+ com.github.felipegutierrez.explore.basics.FluxAndMonoFactoryTest
