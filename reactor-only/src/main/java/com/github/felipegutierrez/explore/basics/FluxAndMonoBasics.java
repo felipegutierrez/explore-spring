@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
 public class FluxAndMonoBasics {
@@ -89,6 +91,20 @@ public class FluxAndMonoBasics {
         Flux<String> stringFlux = Flux
                 .fromIterable(data)
                 .flatMap(value -> Flux.fromArray(value.split("")))
+                .log();
+        return stringFlux;
+    }
+
+    public Flux<String> createBasicFluxWithFlatmapDelay(List<String> data) {
+        Flux<String> stringFlux = Flux
+                .fromIterable(data)
+                .flatMap(value -> {
+                            var delay = new Random().nextInt(1000);
+                            return Flux
+                                    .fromArray(value.split(""))
+                                    .delayElements(Duration.ofMillis(delay));
+                        }
+                )
                 .log();
         return stringFlux;
     }

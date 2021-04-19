@@ -198,4 +198,21 @@ public class FluxAndMonoBasicsTest {
                 .expectNextCount(15)
                 .verifyComplete();
     }
+
+    @Test
+    void createBasicFluxWithFlatmapDelay() {
+        var actual = "reactorprojectinjava8";
+        var delimiter = "";
+        String[] expected = actual.split(delimiter);
+        Flux<String> stringFlux = myFluxTest.createBasicFluxWithFlatmapDelay(List.of("reactor", "project", "in", "java", "8"));
+
+        /** flatmap does not guarantee order, hence this test will not pass eventually */
+        //        StepVerifier.create(stringFlux)
+        //                .expectNext(expected)
+        //                .verifyComplete();
+
+        StepVerifier.create(stringFlux)
+                .expectNextCount(21)
+                .verifyComplete();
+    }
 }
