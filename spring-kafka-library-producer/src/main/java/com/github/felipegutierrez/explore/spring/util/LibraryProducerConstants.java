@@ -10,6 +10,7 @@ public class LibraryProducerConstants {
     public static final String LIBRARY_V1_TOPIC = "library-events";
 
     public static final String LIBRARY_REACT_V1_ENDPOINT = "/v1/react/libraryevent";
+    public static final String LIBRARY_REACTIVE_V1_ENDPOINT = "/v1/reactive/libraryevent";
     public static final String LIBRARY_FUNC_V1_ENDPOINT = "/v1/func/libraryevent";
 
     public static final String LIBRARY_ERROR_ID_NULL = "LibraryEvent ID is null";
