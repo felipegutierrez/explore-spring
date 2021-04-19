@@ -276,4 +276,69 @@ public class FluxAndMonoBasicsTest {
                 .expectNext(expected.get(3))
                 .verifyComplete();
     }
+
+    @Test
+    void namesFlux_transform_switchIfEmpty() {
+
+        //given
+        var namesList = List.of("alex", "ben", "chloe");
+        int stringLength = 6;
+
+        //when
+        var namesFlux = myFluxTest.namesFlux_transform_switchIfEmpty(namesList, stringLength)
+                .log();
+
+        //then
+        StepVerifier.create(namesFlux)
+                .expectNext("D", "E", "F", "A", "U", "L", "T")
+                .verifyComplete();
+    }
+
+    @Test
+    void namesMono_map_filter_switchIfEmpty() {
+        //given
+        var name = "alex";
+        int stringLength = 6;
+
+        //when
+        var namesFlux = myFluxTest.namesMono_map_filter_switchIfEmpty(name, stringLength)
+                .log();
+
+        //then
+        StepVerifier.create(namesFlux)
+                .expectNext("DEFAULT")
+                .verifyComplete();
+    }
+
+    @Test
+    void namesFlux_transform_defaultIfEmpty() {
+        //given
+        var namesList = List.of("alex", "ben", "chloe");
+        int stringLength = 6;
+
+        //when
+        var namesFlux = myFluxTest.namesFlux_transform_defaultIfEmpty(namesList, stringLength)
+                .log();
+
+        //then
+        StepVerifier.create(namesFlux)
+                .expectNext("DEFAULT")
+                .verifyComplete();
+    }
+
+    @Test
+    void namesMono_transform_defaultIfEmpty() {
+        //given
+        var name = "alex";
+        int stringLength = 6;
+
+        //when
+        var namesFlux = myFluxTest.namesMono_transform_defaultIfEmpty(name, stringLength)
+                .log();
+
+        //then
+        StepVerifier.create(namesFlux)
+                .expectNext("DEFAULT")
+                .verifyComplete();
+    }
 }

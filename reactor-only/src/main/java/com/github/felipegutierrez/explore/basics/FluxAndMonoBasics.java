@@ -12,14 +12,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FluxAndMonoBasics {
 
-    final Function<Flux<String>, Flux<Integer>> monoStringToFluxInteger = value -> value
+    final Function<Flux<String>, Flux<Integer>> integerToStringFluxTransformation = value -> value
             .flatMap(v -> {
                 var arrayOfStrings = v.split("");
-                return Flux.fromIterable(
-                        Arrays.stream(arrayOfStrings)
+                return Flux
+                        .fromIterable(Arrays
+                                .stream(arrayOfStrings)
                                 .map(Integer::parseInt)
-                                .collect(Collectors.toList())
-                );
+                                .collect(Collectors.collectingAndThen(Collectors.toList(), c -> !c.isEmpty() ? c : new ArrayList<Integer>()))
+                        )
+                        .filter(number -> number.equals(0));
             });
 
     public static void main(String[] args) {
@@ -163,23 +165,63 @@ public class FluxAndMonoBasics {
 
     public Flux<Integer> createFluxUsingTransform(String data) {
         Flux<Integer> integerFlux = Flux.just(data)
-                .transform(monoStringToFluxInteger)
+                .transform(integerToStringFluxTransformation)
                 .log();
         return integerFlux;
     }
 
+    public Flux<String> namesFlux_transform_switchIfEmpty(List<String> namesList, int stringLength) {
 
-//    public <OUT> Mono<OUT> createMonoConverterString(String data) {
-//        // Class<OUT> clazz = new Class<OUT>();
-//        // OUT instance = clazz.newInstance();
-//        // OUT instance = ((Class)((OUT)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();;
-//        OUT instance;
-//        Mono<OUT> integerMono = Mono.just(data)
-//                // .map(value -> Integer.parseInt(value))
-//                // .map(value -> clazz.cast(value) )
-//                .map(value -> instance.getClass().cast(value))
-//                .log();
-//
-//        return integerMono;
-//    }
+        Function<Flux<String>, Flux<String>> filterMap = name -> name.map(String::toUpperCase)
+                .filter(s -> s.length() > stringLength)
+                .flatMap(v -> {
+                    var charArray = v.split("");
+                    return Flux.fromArray(charArray);
+                });
+
+        var defaultFlux = Flux.just("default")
+                .transform(filterMap); //"D","E","F","A","U","L","T"
+
+        return Flux.fromIterable(namesList)
+                .transform(filterMap) // gives u the opportunity to combine multiple operations using a single call.
+                .switchIfEmpty(defaultFlux);
+        //using "map" would give the return type as Flux<Flux<String>
+
+    }
+
+    public Flux<String> namesFlux_transform_defaultIfEmpty(List<String> namesList, int stringLength) {
+
+        Function<Flux<String>, Flux<String>> filterMap = name -> name.map(String::toUpperCase)
+                .filter(s -> s.length() > stringLength)
+                .flatMap(v -> {
+                    var charArray = v.split("");
+                    return Flux.fromArray(charArray);
+                });
+        return Flux.fromIterable(namesList)
+                .transform(filterMap)
+                .defaultIfEmpty("DEFAULT");
+    }
+
+    public Mono<String> namesMono_map_filter_switchIfEmpty(String namesList, int stringLength) {
+
+        Function<Mono<String>, Mono<String>> filterMap = name -> name
+                .map(String::toUpperCase)
+                .filter(s -> s.length() > stringLength);
+
+        var defaultMono = Mono.just("default")
+                .transform(filterMap); //"D","E","F","A","U","L","T"
+
+        return Mono.just(namesList)
+                .transform(filterMap)
+                .switchIfEmpty(defaultMono);
+    }
+
+    public Mono<String> namesMono_transform_defaultIfEmpty(String name, int stringLength) {
+
+        Function<Mono<String>, Mono<String>> filterMap = v -> v.map(String::toUpperCase)
+                .filter(s -> s.length() > stringLength);
+        return Mono.just(name)
+                .transform(filterMap)
+                .defaultIfEmpty("DEFAULT");
+    }
 }
