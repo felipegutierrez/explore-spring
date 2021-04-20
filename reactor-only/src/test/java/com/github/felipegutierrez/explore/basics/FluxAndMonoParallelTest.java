@@ -26,4 +26,14 @@ class FluxAndMonoParallelTest {
                 .expectNextCount(50)
                 .verifyComplete();
     }
+
+    @Test
+    void parallelUsingFlatmap() {
+        var integerParallelFlux = fluxAndMonoParallel.parallelUsingFlatmap(actualList);
+
+        StepVerifier.create(integerParallelFlux)
+                .expectSubscription()
+                .expectNextCount(50)
+                .verifyComplete();
+    }
 }

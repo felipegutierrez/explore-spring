@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.basics;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.publisher.ParallelFlux;
 import reactor.core.scheduler.Schedulers;
 
@@ -36,6 +37,14 @@ public class FluxAndMonoParallel {
                 .parallel()
                 .runOn(Schedulers.parallel())
                 .map(this::parseIntWithDelay)
+                .log();
+    }
+
+    public Flux<Integer> parallelUsingFlatmap(List<String> numbersList) {
+        return Flux.fromIterable(numbersList)
+                .flatMap(s -> Mono.just(s)
+                        .map(this::parseIntWithDelay)
+                        .subscribeOn(Schedulers.parallel()))
                 .log();
     }
 
