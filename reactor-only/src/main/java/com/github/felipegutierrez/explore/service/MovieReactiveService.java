@@ -1,9 +1,12 @@
 package com.github.felipegutierrez.explore.service;
 
 import com.github.felipegutierrez.explore.domain.Movie;
+import com.github.felipegutierrez.explore.exception.MovieException;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 public class MovieReactiveService {
 
     private final MovieInfoService movieInfoService;
@@ -22,6 +25,10 @@ public class MovieReactiveService {
                             .collectList();
                     return reviewListMono
                             .map(reviewsList -> new Movie(movieInfo, reviewsList));
+                })
+                .onErrorMap(ex -> {
+                    log.error("Exception occurred: {}", ex);
+                    throw new MovieException(ex.getMessage());
                 })
                 .log();
     }

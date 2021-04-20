@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.explore.basics;
 
+import com.github.felipegutierrez.explore.exception.CustomException;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

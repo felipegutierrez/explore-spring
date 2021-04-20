@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.basics;
+package com.github.felipegutierrez.explore.exception;
 
 public class CustomException extends Throwable {
 

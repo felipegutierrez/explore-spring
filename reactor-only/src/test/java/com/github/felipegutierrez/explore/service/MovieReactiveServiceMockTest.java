@@ -1,0 +1,38 @@
+package com.github.felipegutierrez.explore.service;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.test.StepVerifier;
+
+import static org.mockito.ArgumentMatchers.anyLong;
+
+@ExtendWith(MockitoExtension.class)
+class MovieReactiveServiceMockTest {
+
+    @Mock
+    MovieInfoService movieInfoService;
+
+    @Mock
+    ReviewService reviewService;
+
+    @InjectMocks
+    MovieReactiveService movieReactiveService;
+
+    @Test
+    void getAllMovies() {
+
+        Mockito.when(movieInfoService.retrieveMoviesFlux()).thenCallRealMethod();
+        Mockito.when(reviewService.retrieveReviewsFlux(anyLong())).thenCallRealMethod();
+
+        var movieFlux = movieReactiveService.getAllMovies();
+
+        StepVerifier.create(movieFlux)
+                .expectSubscription()
+                .expectNextCount(3)
+                .verifyComplete();
+    }
+}

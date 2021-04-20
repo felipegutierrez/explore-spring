@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.explore.basics;
 
+import com.github.felipegutierrez.explore.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
