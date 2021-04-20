@@ -42,4 +42,17 @@ class MovieReactiveServiceTest {
                 })
                 .verifyComplete();
     }
+
+    @Test
+    void getMovieByIdUsingFlatmap() {
+        long movieId = 100l;
+        var movieMono = movieReactiveService.getMovieByIdUsingFlatmap(movieId);
+
+        StepVerifier.create(movieMono)
+                .assertNext(movie -> {
+                    assertEquals("Batman Begins", movie.getMovie().getName());
+                    assertEquals(2, movie.getReviewList().size());
+                })
+                .verifyComplete();
+    }
 }
