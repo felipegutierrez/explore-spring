@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.service;
 
 import com.github.felipegutierrez.explore.domain.Movie;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public class MovieReactiveService {
 
@@ -21,6 +22,14 @@ public class MovieReactiveService {
                             .collectList();
                     return reviewListMono
                             .map(reviewsList -> new Movie(movieInfo, reviewsList));
-                });
+                })
+                .log();
+    }
+
+    public Mono<Movie> getMovieById(long movieId) {
+        var movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
+        var movieReviewsFlux = reviewService.retrieveReviewsFlux(movieId).collectList();
+        return movieInfoMono.zipWith(movieReviewsFlux, (movieInfo, movieReviews) -> new Movie(movieInfo, movieReviews))
+                .log();
     }
 }
