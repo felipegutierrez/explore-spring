@@ -28,12 +28,23 @@ class FluxAndMonoParallelTest {
     }
 
     @Test
-    void parallelUsingFlatmap() {
-        var integerParallelFlux = fluxAndMonoParallel.parallelUsingFlatmap(actualList);
+    void parallelUsingFlatMap() {
+        var integerParallelFlux = fluxAndMonoParallel.parallelUsingFlatMap(actualList);
 
         StepVerifier.create(integerParallelFlux)
                 .expectSubscription()
                 .expectNextCount(50)
+                .verifyComplete();
+    }
+
+    @Test
+    void parallelUsingFlatMapSequential() {
+        var expectList = actualList.stream().map(Integer::parseInt).collect(Collectors.toList());
+        var integerParallelFlux = fluxAndMonoParallel.parallelUsingFlatMapSequential(actualList);
+
+        StepVerifier.create(integerParallelFlux)
+                .expectSubscription()
+                .expectNextSequence(expectList)
                 .verifyComplete();
     }
 }

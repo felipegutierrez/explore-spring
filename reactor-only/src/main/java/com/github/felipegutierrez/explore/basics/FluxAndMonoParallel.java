@@ -40,9 +40,17 @@ public class FluxAndMonoParallel {
                 .log();
     }
 
-    public Flux<Integer> parallelUsingFlatmap(List<String> numbersList) {
+    public Flux<Integer> parallelUsingFlatMap(List<String> numbersList) {
         return Flux.fromIterable(numbersList)
                 .flatMap(s -> Mono.just(s)
+                        .map(this::parseIntWithDelay)
+                        .subscribeOn(Schedulers.parallel()))
+                .log();
+    }
+
+    public Flux<Integer> parallelUsingFlatMapSequential(List<String> numbersList) {
+        return Flux.fromIterable(numbersList)
+                .flatMapSequential(s -> Mono.just(s)
                         .map(this::parseIntWithDelay)
                         .subscribeOn(Schedulers.parallel()))
                 .log();
