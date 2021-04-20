@@ -16,7 +16,7 @@ public class ColdAndHotPublisherTest {
     List<String> expect = Stream.concat(list.stream(), list.stream()).collect(Collectors.toList());
 
     @Test
-    public void testFluxColdPublisher() throws InterruptedException {
+    public void testFluxColdPublisher() {
         List<String> result = coldAndHotPublisher.coldPublisher(list);
 
         assertEquals(expect.size(), result.size());
@@ -24,9 +24,23 @@ public class ColdAndHotPublisherTest {
     }
 
     @Test
-    public void testFluxHotPublisher() throws InterruptedException {
+    public void testFluxHotPublisher() {
         List<String> result = coldAndHotPublisher.hotPublisher(list);
 
-        assertNotEquals(expect.size(), result.size());
+        assertNotEquals(list.size(), result.size());
+    }
+
+    @Test
+    public void hotPublisherAuto() {
+        List<String> result = coldAndHotPublisher.hotPublisherAuto(list);
+
+        assertNotEquals(list.size(), result.size());
+    }
+
+    @Test
+    void hotPublisherRefCount() {
+        List<String> result = coldAndHotPublisher.hotPublisherRefCount(list);
+
+        assertEquals(expect.size(), result.size());
     }
 }
