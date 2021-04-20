@@ -72,4 +72,14 @@ public class FluxAndMonoExceptionHandling {
                 .onErrorReturn(0)
                 .log();
     }
+
+    public Mono<Integer> createMonoIntegerParseOnErrorContinue(String value) {
+        return Mono.just(value)
+                .map(Integer::parseInt)
+                .onErrorContinue((ex, v) -> {
+                    log.error("Exception is: {}", ex);
+                    log.info("value is: {}", v);
+                })
+                .log();
+    }
 }

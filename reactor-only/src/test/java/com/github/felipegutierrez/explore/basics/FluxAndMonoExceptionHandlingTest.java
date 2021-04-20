@@ -98,4 +98,21 @@ public class FluxAndMonoExceptionHandlingTest {
                 .expectNext(expected)
                 .verifyComplete();
     }
+
+    @Test
+    void createMonoIntegerParseOnErrorContinue() {
+
+        var actual = "1";
+        Mono<Integer> integerMono = fluxAndMonoExceptionHandling.createMonoIntegerParseOnErrorContinue(actual);
+        StepVerifier.create(integerMono)
+                .expectSubscription()
+                .expectNext(Integer.parseInt(actual))
+                .verifyComplete();
+
+        var actualError = "um";
+        Mono<Integer> integerMonoError = fluxAndMonoExceptionHandling.createMonoIntegerParseOnErrorContinue(actualError);
+        StepVerifier.create(integerMonoError)
+                .expectSubscription()
+                .verifyComplete();
+    }
 }
