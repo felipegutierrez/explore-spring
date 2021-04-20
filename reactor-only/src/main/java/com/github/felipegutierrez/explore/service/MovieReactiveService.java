@@ -4,20 +4,24 @@ import com.github.felipegutierrez.explore.domain.Movie;
 import com.github.felipegutierrez.explore.exception.MovieException;
 import com.github.felipegutierrez.explore.exception.NetworkException;
 import com.github.felipegutierrez.explore.exception.ServiceException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.Exceptions;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.util.retry.Retry;
 import reactor.util.retry.RetryBackoffSpec;
 
 import java.time.Duration;
 
 @Slf4j
+@AllArgsConstructor
 public class MovieReactiveService {
 
     private final MovieInfoService movieInfoService;
     private final ReviewService reviewService;
+    private RevenueService revenueService;
 
     public MovieReactiveService(MovieInfoService movieInfoService, ReviewService reviewService) {
         this.movieInfoService = movieInfoService;
@@ -81,5 +85,23 @@ public class MovieReactiveService {
                     .collectList();
             return movieReviews.map(reviewList -> new Movie(movieInfo, reviewList));
         });
+    }
+
+    public Mono<Movie> getMovieByIdWithRevenue(long movieId) {
+        var movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
+        var movieReviewsFlux = reviewService.retrieveReviewsFlux(movieId).collectList();
+
+        // RevenueService is a blocking service
+        var revenueMono = Mono
+                .fromCallable(() -> revenueService.getRevenue(movieId))
+                .subscribeOn(Schedulers.boundedElastic());
+
+        return movieInfoMono
+                .zipWith(movieReviewsFlux, (movieInfo, movieReviews) -> new Movie(movieInfo, movieReviews))
+                .zipWith(revenueMono, (movie, revenue) -> {
+                    movie.setRevenue(revenue);
+                    return movie;
+                })
+                .log();
     }
 }
