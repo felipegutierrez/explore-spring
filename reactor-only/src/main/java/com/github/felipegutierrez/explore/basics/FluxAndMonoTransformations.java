@@ -108,6 +108,33 @@ public class FluxAndMonoTransformations {
                 .log();
     }
 
+    public Flux<String> createFluxUsingZip(List<String> list1, List<String> list2,
+                                           List<String> list3, List<String> list4) {
+        var flux1 = Flux.fromIterable(list1);
+        var flux2 = Flux.fromIterable(list2);
+        var flux3 = Flux.fromIterable(list3);
+        var flux4 = Flux.fromIterable(list4);
+        return Flux
+                .zip(flux1, flux2, flux3, flux4)
+                .map(tuple4 -> tuple4.getT1() + tuple4.getT2() + tuple4.getT3() + tuple4.getT4())
+                .log();
+    }
+
+    public Flux<String> createFluxUsingZipWith(List<String> list1, List<String> list2) {
+        var flux1 = Flux.fromIterable(list1);
+        var flux2 = Flux.fromIterable(list2);
+        return flux1.zipWith(flux2, (tuple1, tuple2) -> tuple1.concat(tuple2))
+                .log();
+    }
+
+    public Mono<String> createMonoUsingZip(String list1, String list2) {
+        var mono1 = Mono.just(list1);
+        var mono2 = Mono.just(list2);
+        return Mono
+                .zip(mono1, mono2, (tuple1, tuple2) -> tuple1.concat(tuple2))
+                .log();
+    }
+
     public Flux<GroupedFlux<Integer, Data>> createFluxUsingGroupBy(List<String> dataList, int numberOfPartitions, int maxCount) {
         return Flux
                 .fromStream(IntStream.range(0, maxCount)

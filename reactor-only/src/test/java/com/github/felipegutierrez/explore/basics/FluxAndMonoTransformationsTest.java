@@ -3,6 +3,7 @@ package com.github.felipegutierrez.explore.basics;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.GroupedFlux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
@@ -21,6 +22,8 @@ public class FluxAndMonoTransformationsTest {
     );
     List<String> list1 = Arrays.asList("A", "B", "C");
     List<String> list2 = Arrays.asList("D", "E", "F");
+    List<String> list3 = Arrays.asList("1", "2", "3");
+    List<String> list4 = Arrays.asList("4", "5", "6");
 
     @Test
     void testFluxUsingIterable() {
@@ -161,6 +164,36 @@ public class FluxAndMonoTransformationsTest {
     void testFluxUsingZip() {
         Flux<String> zipFlux = fluxAndMonoTransformations.createFluxUsingZip(list1, list2);
         List<String> expect = Arrays.asList("AD", "BE", "CF");
+        StepVerifier.create(zipFlux)
+                .expectSubscription()
+                .expectNextSequence(expect)
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingZipWith() {
+        Flux<String> zipFlux = fluxAndMonoTransformations.createFluxUsingZipWith(list1, list2);
+        List<String> expect = Arrays.asList("AD", "BE", "CF");
+        StepVerifier.create(zipFlux)
+                .expectSubscription()
+                .expectNextSequence(expect)
+                .verifyComplete();
+    }
+
+    @Test
+    void testMonoUsingZipWith() {
+        Mono<String> zipMono = fluxAndMonoTransformations.createMonoUsingZip("ABC", "DEF");
+        var expect = "ABCDEF";
+        StepVerifier.create(zipMono)
+                .expectSubscription()
+                .expectNext(expect)
+                .verifyComplete();
+    }
+
+    @Test
+    void test4FluxUsingZip() {
+        Flux<String> zipFlux = fluxAndMonoTransformations.createFluxUsingZip(list1, list2, list3, list4);
+        List<String> expect = Arrays.asList("AD14", "BE25", "CF36");
         StepVerifier.create(zipFlux)
                 .expectSubscription()
                 .expectNextSequence(expect)
