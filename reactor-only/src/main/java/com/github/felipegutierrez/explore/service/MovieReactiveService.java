@@ -2,9 +2,16 @@ package com.github.felipegutierrez.explore.service;
 
 import com.github.felipegutierrez.explore.domain.Movie;
 import com.github.felipegutierrez.explore.exception.MovieException;
+import com.github.felipegutierrez.explore.exception.NetworkException;
+import com.github.felipegutierrez.explore.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.Exceptions;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
+import reactor.util.retry.RetryBackoffSpec;
+
+import java.time.Duration;
 
 @Slf4j
 public class MovieReactiveService {
@@ -32,6 +39,32 @@ public class MovieReactiveService {
                 })
                 .retry(3)
                 .log();
+    }
+
+    public Flux<Movie> getAllMoviesWithRetry() {
+        var moviesInfoFlux = movieInfoService.retrieveMoviesFlux();
+        return moviesInfoFlux
+                .flatMap(movieInfo -> {
+                    var reviewListMono = reviewService.retrieveReviewsFlux(movieInfo.getMovieInfoId())
+                            .collectList();
+                    return reviewListMono
+                            .map(reviewsList -> new Movie(movieInfo, reviewsList));
+                })
+                .onErrorMap(ex -> {
+                    log.error("Exception occurred: {}", ex);
+                    if (ex instanceof NetworkException) throw new MovieException(ex.getMessage());
+                    else throw new ServiceException(ex.getMessage());
+                })
+                .retryWhen(getRetryBackoffSpec())
+                .log();
+    }
+
+    private RetryBackoffSpec getRetryBackoffSpec() {
+        var retryConfig = Retry.fixedDelay(3, Duration.ofMillis(400))
+                .filter(ex -> ex instanceof MovieException)
+                .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) ->
+                        Exceptions.propagate(retrySignal.failure()));
+        return retryConfig;
     }
 
     public Mono<Movie> getMovieById(long movieId) {
