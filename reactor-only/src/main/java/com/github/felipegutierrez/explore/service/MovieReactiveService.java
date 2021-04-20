@@ -30,6 +30,7 @@ public class MovieReactiveService {
                     log.error("Exception occurred: {}", ex);
                     throw new MovieException(ex.getMessage());
                 })
+                .retry(3)
                 .log();
     }
 

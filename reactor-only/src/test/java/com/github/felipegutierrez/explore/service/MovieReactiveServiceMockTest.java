@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.test.StepVerifier;
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.isA;
 
 @ExtendWith(MockitoExtension.class)
 class MovieReactiveServiceMockTest {
@@ -54,6 +55,9 @@ class MovieReactiveServiceMockTest {
                 .expectSubscription()
                 .expectError(MovieException.class)
                 .verify();
+
+        Mockito.verify(reviewService, Mockito.times(4))
+                .retrieveReviewsFlux(isA(Long.class));
 
         StepVerifier.create(movieFlux)
                 .expectSubscription()
