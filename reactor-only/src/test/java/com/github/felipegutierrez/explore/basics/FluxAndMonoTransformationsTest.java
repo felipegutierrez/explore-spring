@@ -79,7 +79,10 @@ public class FluxAndMonoTransformationsTest {
     @Test
     void testFluxUsingMergeWith() {
         Flux<String> mergeFlux = fluxAndMonoTransformations.createFluxUsingMergeWith(list1, list2);
-        List<String> expect = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+        List<String> expect = Stream.concat(
+                list1.stream().map(String::toLowerCase),
+                list2.stream().map(String::toLowerCase)
+        ).collect(Collectors.toList());
         StepVerifier.create(mergeFlux)
                 .expectSubscription()
                 .expectNextSequence(expect)

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.GroupedFlux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -64,8 +65,12 @@ public class FluxAndMonoTransformations {
     }
 
     public Flux<String> createFluxUsingMergeWith(List<String> list1, List<String> list2) {
-        var flux1 = Flux.fromIterable(list1);
-        var flux2 = Flux.fromIterable(list2);
+        var flux1 = Flux.fromIterable(list1)
+                .publishOn(Schedulers.parallel())
+                .map(String::toLowerCase);
+        var flux2 = Flux.fromIterable(list2)
+                .publishOn(Schedulers.parallel())
+                .map(String::toLowerCase);
         return flux1.mergeWith(flux2).log();
     }
 
