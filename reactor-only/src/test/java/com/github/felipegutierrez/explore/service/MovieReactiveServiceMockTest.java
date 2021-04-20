@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.explore.service;
 
+import com.github.felipegutierrez.explore.exception.MovieException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,8 +26,10 @@ class MovieReactiveServiceMockTest {
     @Test
     void getAllMovies() {
 
-        Mockito.when(movieInfoService.retrieveMoviesFlux()).thenCallRealMethod();
-        Mockito.when(reviewService.retrieveReviewsFlux(anyLong())).thenCallRealMethod();
+        Mockito.when(movieInfoService.retrieveMoviesFlux())
+                .thenCallRealMethod();
+        Mockito.when(reviewService.retrieveReviewsFlux(anyLong()))
+                .thenCallRealMethod();
 
         var movieFlux = movieReactiveService.getAllMovies();
 
@@ -34,5 +37,27 @@ class MovieReactiveServiceMockTest {
                 .expectSubscription()
                 .expectNextCount(3)
                 .verifyComplete();
+    }
+
+    @Test
+    void getAllMoviesException() {
+
+        var errorMsg = "this is an error message for the movie service";
+        Mockito.when(movieInfoService.retrieveMoviesFlux())
+                .thenCallRealMethod();
+        Mockito.when(reviewService.retrieveReviewsFlux(anyLong()))
+                .thenThrow(new RuntimeException(errorMsg));
+
+        var movieFlux = movieReactiveService.getAllMovies();
+
+        StepVerifier.create(movieFlux)
+                .expectSubscription()
+                .expectError(MovieException.class)
+                .verify();
+
+        StepVerifier.create(movieFlux)
+                .expectSubscription()
+                .expectErrorMessage(errorMsg)
+                .verify();
     }
 }
