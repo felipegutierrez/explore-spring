@@ -3,6 +3,7 @@ package com.github.felipegutierrez.explore.basics;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.GroupedFlux;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -56,10 +57,35 @@ public class FluxAndMonoTransformations {
         return Flux.merge(flux1, flux2).log();
     }
 
-    public Flux<String> createFluxUsingMergeWithDelay(List<String> list1, List<String> list2) {
-        Flux<String> flux1 = Flux.fromIterable(list1).delayElements(Duration.ofSeconds(1));
-        Flux<String> flux2 = Flux.fromIterable(list2).delayElements(Duration.ofSeconds(1));
+    public Flux<String> createFluxUsingMergeDelay(List<String> list1, List<String> list2) {
+        Flux<String> flux1 = Flux.fromIterable(list1).delayElements(Duration.ofMillis(100));
+        Flux<String> flux2 = Flux.fromIterable(list2).delayElements(Duration.ofMillis(125));
         return Flux.merge(flux1, flux2).log();
+    }
+
+    public Flux<String> createFluxUsingMergeWith(List<String> list1, List<String> list2) {
+        var flux1 = Flux.fromIterable(list1);
+        var flux2 = Flux.fromIterable(list2);
+        return flux1.mergeWith(flux2).log();
+    }
+
+    public Flux<String> createFluxUsingMergeWithDelay(List<String> list1, List<String> list2) {
+        var flux1 = Flux.fromIterable(list1).delayElements(Duration.ofMillis(100));
+        var flux2 = Flux.fromIterable(list2).delayElements(Duration.ofMillis(125));
+        return flux1.mergeWith(flux2).log();
+    }
+
+    public Flux<String> createFluxUsingMergeSequentialWithDelay(List<String> list1, List<String> list2) {
+        var flux1 = Flux.fromIterable(list1).delayElements(Duration.ofMillis(100));
+        var flux2 = Flux.fromIterable(list2).delayElements(Duration.ofMillis(125));
+        // return flux1.mergeWith(flux2).log();
+        return Flux.mergeSequential(flux1, flux2).log();
+    }
+
+    public Flux<String> createFluxUsingMonoMergeWithDelay(String list1, String list2) {
+        var mono1 = Mono.just(list1);
+        var mono2 = Mono.just(list2);
+        return mono1.mergeWith(mono2).log();
     }
 
     public Flux<String> createFluxUsingConcat(List<String> list1, List<String> list2) {
@@ -69,8 +95,8 @@ public class FluxAndMonoTransformations {
     }
 
     public Flux<String> createFluxUsingConcatWithDelay(List<String> list1, List<String> list2) {
-        Flux<String> flux1 = Flux.fromIterable(list1).delayElements(Duration.ofSeconds(1));
-        Flux<String> flux2 = Flux.fromIterable(list2).delayElements(Duration.ofSeconds(1));
+        Flux<String> flux1 = Flux.fromIterable(list1).delayElements(Duration.ofMillis(100));
+        Flux<String> flux2 = Flux.fromIterable(list2).delayElements(Duration.ofMillis(125));
         return Flux.concat(flux1, flux2).log();
     }
 

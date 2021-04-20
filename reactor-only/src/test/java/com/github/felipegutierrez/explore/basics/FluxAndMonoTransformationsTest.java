@@ -58,13 +58,76 @@ public class FluxAndMonoTransformationsTest {
     }
 
     @Test
-    void testFluxUsingMergeWithDelay() {
-        Flux<String> mergeFlux = fluxAndMonoTransformations.createFluxUsingMergeWithDelay(list1, list2);
+    void testFluxUsingMergeDelay() {
+        Flux<String> mergeFlux = fluxAndMonoTransformations.createFluxUsingMergeDelay(list1, list2);
+        var expect = Arrays.asList("A", "D", "B", "E", "C", "F");
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextSequence(expect) // merge with delay does NOT preserve order
+                .verifyComplete();
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextCount(expect.size())
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingMergeWith() {
+        Flux<String> mergeFlux = fluxAndMonoTransformations.createFluxUsingMergeWith(list1, list2);
         List<String> expect = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
         StepVerifier.create(mergeFlux)
                 .expectSubscription()
-                // .expectNextSequence(expect) // merge with delay does NOT preserve order
+                .expectNextSequence(expect)
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingMergeWithDelay() {
+        var mergeFlux = fluxAndMonoTransformations.createFluxUsingMergeWithDelay(list1, list2);
+        var expect = Arrays.asList("A", "D", "B", "E", "C", "F");
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
                 .expectNextCount(expect.size())
+                .verifyComplete();
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextSequence(expect) // merge with delay does NOT preserve order
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingMergeSequentialWithDelay() {
+        var mergeFlux = fluxAndMonoTransformations.createFluxUsingMergeSequentialWithDelay(list1, list2);
+        var expect = Arrays.asList("A", "B", "C", "D", "E", "F");
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextCount(expect.size())
+                .verifyComplete();
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextSequence(expect) // merge sequential with delay still DOES preserve order
+                .verifyComplete();
+    }
+
+    @Test
+    void testFluxUsingMergeMonoWithDelay() {
+        var mergeFlux = fluxAndMonoTransformations.createFluxUsingMonoMergeWithDelay("A", "B");
+        var expect = Arrays.asList("A", "B");
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextCount(expect.size())
+                .verifyComplete();
+
+        StepVerifier.create(mergeFlux)
+                .expectSubscription()
+                .expectNextSequence(expect) // merge with delay does NOT preserve order
                 .verifyComplete();
     }
 
@@ -82,10 +145,15 @@ public class FluxAndMonoTransformationsTest {
     void testFluxUsingConcatWithDelay() {
         Flux<String> concatFlux = fluxAndMonoTransformations.createFluxUsingConcatWithDelay(list1, list2);
         List<String> expect = Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList());
+
         StepVerifier.create(concatFlux)
                 .expectSubscription()
                 .expectNextSequence(expect) // concat with delay DOES preserve order
-                // .expectNextCount(expect.size()) // if we use expectNextSequence() we cannot use another expectNextCount
+                .verifyComplete();
+
+        StepVerifier.create(concatFlux)
+                .expectSubscription()
+                .expectNextCount(expect.size()) // if we use expectNextSequence() we cannot use another expectNextCount
                 .verifyComplete();
     }
 
