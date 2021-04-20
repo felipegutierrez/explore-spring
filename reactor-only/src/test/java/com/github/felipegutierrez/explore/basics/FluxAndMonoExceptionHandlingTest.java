@@ -35,6 +35,16 @@ public class FluxAndMonoExceptionHandlingTest {
     }
 
     @Test
+    public void testFluxErrorHandlingOnMapWithExceptionMessage() {
+        Flux<String> stringFlux = fluxAndMonoExceptionHandling.createFluxErrorHandlingOnMap(expect, resumeList);
+        StepVerifier.create(stringFlux)
+                .expectSubscription()
+                .expectNextSequence(expect)
+                .expectErrorMessage("an exception occurred")
+                .verify();
+    }
+
+    @Test
     public void testFluxErrorHandlingOnMapWithRetry() {
         Flux<String> stringFlux = fluxAndMonoExceptionHandling.createFluxErrorHandlingOnMapRetry(expect, resumeList, 2);
         StepVerifier.create(stringFlux)
