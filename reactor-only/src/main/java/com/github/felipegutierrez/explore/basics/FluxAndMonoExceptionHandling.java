@@ -21,6 +21,21 @@ public class FluxAndMonoExceptionHandling {
                 .log();
     }
 
+    public Flux<String> createFluxErrorContinueGuaranteeCompletion(List<String> data, List<String> resumeList) {
+        return Flux
+                .fromIterable(data)
+                .map(value -> {
+                    if (value.equalsIgnoreCase("Spring Boot")) throw new RuntimeException("an exception occurred");
+                    return value;
+                })
+                .concatWith(Flux.fromIterable(resumeList))
+                .onErrorContinue((ex, value) -> {
+                    log.error("Exception is: {}", ex);
+                    log.info("value is: {}", value);
+                })
+                .log();
+    }
+
     public Flux<String> createFluxErrorHandlingOnMap(List<String> data, List<String> anotherData) {
         return Flux
                 .fromIterable(data)

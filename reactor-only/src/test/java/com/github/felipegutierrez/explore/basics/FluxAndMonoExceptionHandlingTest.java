@@ -19,7 +19,16 @@ public class FluxAndMonoExceptionHandlingTest {
         StepVerifier.create(stringFlux)
                 .expectSubscription()
                 .expectNextSequence(expect)
-                // .expectError(RuntimeException.class)
+                .expectNextSequence(resumeList)
+                .verifyComplete();
+    }
+
+    @Test
+    public void testFluxErrorContinue() {
+        Flux<String> stringFlux = fluxAndMonoExceptionHandling.createFluxErrorContinueGuaranteeCompletion(expect, resumeList);
+        StepVerifier.create(stringFlux)
+                .expectSubscription()
+                .expectNextSequence(Arrays.asList("Spring", "Reactive Spring"))
                 .expectNextSequence(resumeList)
                 .verifyComplete();
     }
