@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.basics;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 
 import java.time.Duration;
@@ -62,6 +63,13 @@ public class FluxAndMonoExceptionHandling {
                 .concatWith(Flux.fromIterable(anotherData))
                 .onErrorMap(e -> new CustomException(e))
                 .retryWhen(Retry.backoff(maxAttempts, Duration.ofSeconds(2)))
+                .log();
+    }
+
+    public Mono<Integer> createMonoIntegerParse(String value) {
+        return Mono.just(value)
+                .map(Integer::parseInt)
+                .onErrorReturn(0)
                 .log();
     }
 }

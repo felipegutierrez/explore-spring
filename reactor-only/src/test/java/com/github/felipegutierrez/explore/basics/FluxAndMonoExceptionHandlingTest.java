@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.basics;
 
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
@@ -75,5 +76,26 @@ public class FluxAndMonoExceptionHandlingTest {
                 .expectNextSequence(expect)
                 .expectError(IllegalStateException.class)
                 .verify();
+    }
+
+    @Test
+    void createMonoIntegerParse() {
+        var actual = "1";
+        Mono<Integer> integerMono = fluxAndMonoExceptionHandling.createMonoIntegerParse(actual);
+        StepVerifier.create(integerMono)
+                .expectSubscription()
+                .expectNext(Integer.parseInt(actual))
+                .verifyComplete();
+    }
+
+    @Test
+    void createMonoIntegerParseError() {
+        var actualError = "um";
+        var expected = 0;
+        Mono<Integer> integerMonoError = fluxAndMonoExceptionHandling.createMonoIntegerParse(actualError);
+        StepVerifier.create(integerMonoError)
+                .expectSubscription()
+                .expectNext(expected)
+                .verifyComplete();
     }
 }
