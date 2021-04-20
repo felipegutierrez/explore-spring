@@ -66,10 +66,23 @@ public class FluxAndMonoBasics {
     public List<String> createConcatenateFlux(String[] data01, String[] data02) {
         List<String> result = new ArrayList<String>();
 
-        Flux<String> stringFlux = Flux
-                .just(data01)
-                .concatWith(Flux.just(data02))
-                .log();
+        var flux01 = Flux.just(data01);
+        var flux02 = Flux.just(data02);
+
+        Flux<String> stringFlux = flux01.concatWith(flux02).log();
+
+        stringFlux.subscribe(value -> result.add(value));
+
+        return result;
+    }
+
+    public List<String> createConcatenateMono(String data01, String data02) {
+        List<String> result = new ArrayList<String>();
+
+        var mono01 = Mono.just(data01);
+        var mono02 = Mono.just(data02);
+
+        Flux<String> stringFlux = mono01.concatWith(mono02).log();
 
         stringFlux.subscribe(value -> result.add(value));
 

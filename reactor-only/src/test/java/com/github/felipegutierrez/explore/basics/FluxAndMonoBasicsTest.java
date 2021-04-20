@@ -41,6 +41,19 @@ public class FluxAndMonoBasicsTest {
     }
 
     @Test
+    void createConcatenateMono() {
+        String expect01 = "Java is also functional";
+        String expect02 = "Flux can concatenate";
+        String expect = expect01 + expect02;
+
+        List<String> result = myFluxTest.createConcatenateMono(expect01, expect02);
+
+        String actual = result.stream().collect(Collectors.joining());
+
+        assertEquals(expect, actual);
+    }
+
+    @Test
     void testCreateFluxWithComplete() {
         String message = "Spring,Spring Boot,Reactive Spring";
         String completeMsg = "Flux has completed";
