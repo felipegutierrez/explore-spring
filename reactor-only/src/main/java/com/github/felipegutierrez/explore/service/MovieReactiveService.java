@@ -95,6 +95,13 @@ public class MovieReactiveService {
                 .log();
     }
 
+    public Mono<Movie> getMovieByIdWebClient(long movieId) {
+        var movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingIdWebClient(movieId);
+        var movieReviewsFlux = reviewService.retrieveReviewsFluxWebClient(movieId).collectList();
+        return movieInfoMono.zipWith(movieReviewsFlux, (movieInfo, movieReviews) -> new Movie(movieInfo, movieReviews))
+                .log();
+    }
+
     public Mono<Movie> getMovieByIdUsingFlatmap(long movieId) {
         var movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
         return movieInfoMono.flatMap(movieInfo -> {
