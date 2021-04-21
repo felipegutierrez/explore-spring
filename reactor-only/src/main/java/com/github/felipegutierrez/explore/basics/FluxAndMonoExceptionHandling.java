@@ -74,9 +74,17 @@ public class FluxAndMonoExceptionHandling {
                 .log();
     }
 
+    public Flux<Integer> createFluxIntegerParse(List<String> values) {
+        return Flux.fromIterable(values)
+                .map(Integer::parseInt)
+                .checkpoint("error to parse string to integer")
+                .log();
+    }
+
     public Mono<Integer> createMonoIntegerParseOnErrorContinue(String value) {
         return Mono.just(value)
                 .map(Integer::parseInt)
+                .checkpoint("error to parse string to integer")
                 .onErrorContinue((ex, v) -> {
                     log.error("Exception is: {}", ex);
                     log.info("value is: {}", v);

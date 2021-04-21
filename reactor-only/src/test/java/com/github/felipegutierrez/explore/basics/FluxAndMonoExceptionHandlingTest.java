@@ -3,6 +3,7 @@ package com.github.felipegutierrez.explore.basics;
 import com.github.felipegutierrez.explore.exception.CustomException;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -101,7 +102,23 @@ public class FluxAndMonoExceptionHandlingTest {
     }
 
     @Test
+    void createFluxIntegerParse() {
+        var actual = List.of("0", "1", "2", "tres", "4", "5");
+        Flux<Integer> integerFluxError = fluxAndMonoExceptionHandling.createFluxIntegerParse(actual);
+        StepVerifier.create(integerFluxError)
+                .expectSubscription()
+                .expectNext(0)
+                .expectNext(1)
+                .expectNext(2)
+                .expectError(NumberFormatException.class)
+                .verify();
+    }
+
+    @Test
     void createMonoIntegerParseOnErrorContinue() {
+
+        // not recommended for production code
+        Hooks.onOperatorDebug();
 
         var actual = "1";
         Mono<Integer> integerMono = fluxAndMonoExceptionHandling.createMonoIntegerParseOnErrorContinue(actual);
