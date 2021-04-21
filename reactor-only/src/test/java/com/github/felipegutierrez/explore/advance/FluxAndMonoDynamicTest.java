@@ -25,4 +25,12 @@ class FluxAndMonoDynamicTest {
                 .expectNextCount(10)
                 .verifyComplete();
     }
+
+    @Test
+    void createAsyncMono() {
+        var integerMono = fluxAndMonoDynamic.createAsyncMono("135");
+        StepVerifier.create(integerMono)
+                .expectNext(135)
+                .verifyComplete();
+    }
 }
