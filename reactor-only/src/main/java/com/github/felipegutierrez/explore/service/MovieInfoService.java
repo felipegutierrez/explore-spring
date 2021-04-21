@@ -1,6 +1,9 @@
 package com.github.felipegutierrez.explore.service;
 
 import com.github.felipegutierrez.explore.domain.MovieInfo;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -9,7 +12,18 @@ import java.util.List;
 
 import static com.github.felipegutierrez.explore.util.CommonUtil.delay;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class MovieInfoService {
+
+    private WebClient webClient;
+
+
+    public Flux<MovieInfo> retrieveMoviesFluxWebClient() {
+        return webClient.get().uri("/v1/movie_infos")
+                .retrieve()
+                .bodyToFlux(MovieInfo.class);
+    }
 
     public Flux<MovieInfo> retrieveMoviesFlux() {
 
