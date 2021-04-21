@@ -41,4 +41,13 @@ public class FluxAndMonoDynamic {
             monoSink.success(Integer.parseInt(name));
         });
     }
+
+    public Flux<Integer> handleFlux(List<String> names) {
+        return Flux.fromIterable(names)
+                .handle((s, integerSynchronousSink) -> {
+                    if (s.length() >= 3) {
+                        integerSynchronousSink.next(Integer.parseInt(s));
+                    }
+                });
+    }
 }

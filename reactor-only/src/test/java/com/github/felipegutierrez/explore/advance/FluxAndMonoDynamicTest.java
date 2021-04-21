@@ -33,4 +33,13 @@ class FluxAndMonoDynamicTest {
                 .expectNext(135)
                 .verifyComplete();
     }
+
+    @Test
+    void handleFlux() {
+        var list = List.of("00", "10", "224", "325", "4456", "5780", "65", "771", "808", "905");
+        var integerFlux = fluxAndMonoDynamic.handleFlux(list).log();
+        StepVerifier.create(integerFlux)
+                .expectNextCount(7)
+                .verifyComplete();
+    }
 }
