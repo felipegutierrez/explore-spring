@@ -17,8 +17,6 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
 
 import static com.github.felipegutierrez.explore.spring.util.ItemConstants.ITEM_CAPPED_STREAM_ENDPOINT_V1;
 

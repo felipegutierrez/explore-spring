@@ -29,6 +29,9 @@ dependencies {
 
     annotationProcessor 'org.projectlombok:lombok'
 
+    // swagger
+    compile 'io.springfox:springfox-boot-starter:3.0.0'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     testImplementation 'io.projectreactor:reactor-test'
