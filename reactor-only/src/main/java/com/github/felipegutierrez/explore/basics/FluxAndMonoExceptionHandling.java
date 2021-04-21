@@ -74,10 +74,16 @@ public class FluxAndMonoExceptionHandling {
                 .log();
     }
 
-    public Flux<Integer> createFluxIntegerParse(List<String> values) {
+    public Flux<Integer> createFluxIntegerParseWithCheckpoint(List<String> values) {
         return Flux.fromIterable(values)
                 .map(Integer::parseInt)
                 .checkpoint("error to parse string to integer")
+                .log();
+    }
+
+    public Flux<Integer> createFluxIntegerParse(List<String> values) {
+        return Flux.fromIterable(values)
+                .map(Integer::parseInt)
                 .log();
     }
 
