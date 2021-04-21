@@ -18,7 +18,6 @@ public class MovieInfoService {
 
     private WebClient webClient;
 
-
     public Flux<MovieInfo> retrieveMoviesFluxWebClient() {
         return webClient.get().uri("/v1/movie_infos")
                 .retrieve()
