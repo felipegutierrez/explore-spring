@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.basics;
+package com.github.felipegutierrez.explore.advance;
 
 import org.junit.jupiter.api.Test;
 
