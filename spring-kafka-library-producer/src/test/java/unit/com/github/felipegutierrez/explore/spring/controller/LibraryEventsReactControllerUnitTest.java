@@ -18,18 +18,8 @@ import static com.github.felipegutierrez.explore.spring.util.LibraryProducerCons
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
-// @SpringBootTest
-// @ExtendWith(SpringExtension.class)
-// @DirtiesContext
-//@ActiveProfiles("test")
-// @AutoConfigureWebTestClient
-// @WebMvcTest(LibraryEventsReactController.class)
-// @AutoConfigureMockMvc
 @WebFluxTest(LibraryEventsReactController.class)
 public class LibraryEventsReactControllerUnitTest {
-
-    // @Autowired
-    // MockMvc mockMvc;
 
     @Autowired
     WebTestClient webTestClient;
@@ -63,16 +53,7 @@ public class LibraryEventsReactControllerUnitTest {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(LibraryEvent.class)
-        // .expectBody()
-        // .jsonPath("$.libraryEventType", "NEW")
         ;
-        // when
-        /*
-        mockMvc.perform(post(LIBRARY_REACT_V1_ENDPOINT)
-                .content(libraryEventJson)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-        */
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.github.felipegutierrez.explore.spring.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.felipegutierrez.explore.spring.domain.LibraryEvent;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
@@ -65,7 +66,8 @@ public class LibraryEventProducerService {
      * @return ListenableFuture<SendResult < Integer, String>> to facilitate unit tests
      * @throws JsonProcessingException
      */
-    public ListenableFuture<SendResult<Integer, String>> sendLibraryEventWithProducerRecord(LibraryEvent libraryEvent) throws JsonProcessingException {
+    @SneakyThrows(JsonProcessingException.class)
+    public ListenableFuture<SendResult<Integer, String>> sendLibraryEventWithProducerRecord(LibraryEvent libraryEvent) {
 
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);

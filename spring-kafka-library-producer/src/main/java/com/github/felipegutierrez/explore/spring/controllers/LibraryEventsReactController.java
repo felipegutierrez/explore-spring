@@ -46,12 +46,16 @@ public class LibraryEventsReactController {
     public Mono<ResponseEntity<LibraryEvent>> postLibraryEvent(@RequestBody @Valid LibraryEvent libraryEvent) throws JsonProcessingException {
         log.info("received POST reactive request: {}", libraryEvent);
 
-        libraryEvent.setLibraryEventType(LibraryEventType.NEW);
+        return Mono.just(libraryEvent)
+                .map(le -> {
+                    le.setLibraryEventType(LibraryEventType.NEW);
+                    libraryEventProducerService.sendLibraryEventWithProducerRecord(le);
+                    return new ResponseEntity<>(le, HttpStatus.CREATED);
+                });
 
-        libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
-
-        return Mono.just(new ResponseEntity<>(libraryEvent, HttpStatus.CREATED))
-                .log();
+        // libraryEvent.setLibraryEventType(LibraryEventType.NEW);
+        // libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
+        // return Mono.just(new ResponseEntity<>(libraryEvent, HttpStatus.CREATED)).log();
     }
 
     /**
@@ -77,13 +81,17 @@ public class LibraryEventsReactController {
                     .just(new ResponseEntity(LIBRARY_ERROR_ID_NULL, HttpStatus.BAD_REQUEST))
                     .log();
         }
-        libraryEvent.setLibraryEventType(LibraryEventType.UPDATE);
-
-        // invoke the kafka producer and send message asynchronously
-        libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
-
+        // libraryEvent.setLibraryEventType(LibraryEventType.UPDATE);
+        // // invoke the kafka producer and send message asynchronously
+        // libraryEventProducerService.sendLibraryEventWithProducerRecord(libraryEvent);
+        // return Mono.just(libraryEvent)
+        //         .map(event -> new ResponseEntity(event, HttpStatus.OK))
+        //         .log();
         return Mono.just(libraryEvent)
-                .map(event -> new ResponseEntity(event, HttpStatus.OK))
-                .log();
+                .map(le -> {
+                    le.setLibraryEventType(LibraryEventType.UPDATE);
+                    libraryEventProducerService.sendLibraryEventWithProducerRecord(le);
+                    return new ResponseEntity<>(le, HttpStatus.OK);
+                });
     }
 }
