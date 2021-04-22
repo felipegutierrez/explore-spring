@@ -7,9 +7,9 @@ plugins {
 }
 
 description = "spring-web-react"
-group = 'com.github.felipegutierrez.explore.spring'
-version = '0.0.1'
-sourceCompatibility = '11'
+group = "com.github.felipegutierrez.explore.spring"
+version = "0.1.0"
+sourceCompatibility = "11"
 
 configurations {
     compileOnly {

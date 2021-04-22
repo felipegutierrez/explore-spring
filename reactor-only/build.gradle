@@ -1,14 +1,18 @@
 plugins {
-    id 'java'
-    id 'jacoco'
-    id 'idea' // optional (to generate IntelliJ IDEA project files)
+    id "java"
+    id "jacoco"
+    id "application"
+    id "idea" // optional (to generate IntelliJ IDEA project files)
     id "io.freefair.lombok" version "5.3.0"
+    id "com.palantir.docker" version "0.26.0" // Docker Gradle Plugin to build image
+    id "com.palantir.docker-run" version "0.26.0" // Docker Gradle Plugin to run image
 }
 
 description = "reactor-only"
-group = 'com.github.felipegutierrez.explore.spring'
-version = '0.0.1'
-sourceCompatibility = '11'
+group = "com.github.felipegutierrez.explore.spring"
+version = "0.1.0"
+sourceCompatibility = "11"
+mainClassName = "com.github.felipegutierrez.explore.MainClass"
 
 configurations {
     compileOnly {
@@ -51,4 +55,33 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'com.github.felipegutierrez.explore.MainClass'
+        )
+    }
+}
+
+docker.dependsOn(jar)
+docker {
+    dependsOn jar
+    name "${project.name}:${project.version}"
+    files 'build/libs/reactor-only-0.1.0.jar'
+    // uri("${project.name}:".plus(version))
+    copySpec.from("build").into("build")
+    pull(true)
+    setDockerfile(file("Dockerfile"))
+    // tag 'DockerHub', "felipeogutierrez/reactor-only:${project.version}"
+}
+
+dockerRun {
+    name "${project.name}"
+    image "${project.name}:${project.version}"
+    ports '8080:8080'
+    arguments "-it"
+    clean true
 }

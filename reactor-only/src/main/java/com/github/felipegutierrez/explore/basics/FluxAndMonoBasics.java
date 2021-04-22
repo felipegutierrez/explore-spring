@@ -12,6 +12,20 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FluxAndMonoBasics {
 
+    public void run() {
+        FluxAndMonoBasics myFlux = new FluxAndMonoBasics();
+
+        String expect = "Spring,Spring Boot,Reactive Spring";
+        String delimiter = ",";
+        myFlux.createBasicFlux(expect.split(delimiter));
+
+        String expect01 = "Spring,Spring Boot,Reactive Spring";
+        String expect02 = "Flux can concatenate,Java is also functional";
+        myFlux.createConcatenateFlux(expect01.split(delimiter), expect02.split(delimiter));
+
+        myFlux.createConcatenateMono(expect01, expect02);
+    }
+
     final Function<Flux<String>, Flux<Integer>> integerToStringFluxTransformation = value -> value
             .flatMap(v -> {
                 var arrayOfStrings = v.split("");
@@ -34,12 +48,6 @@ public class FluxAndMonoBasics {
                         )
                         .filter(number -> number.equals(0));
             });
-
-    public static void main(String[] args) {
-        FluxAndMonoBasics myFlux = new FluxAndMonoBasics();
-        List<String> result = myFlux.createBasicFlux("Spring,Spring Boot,Reactive Spring".split(","));
-        result.stream().forEach(System.out::println);
-    }
 
     public List<String> createBasicFlux(String[] data) {
         List<String> result = new ArrayList<String>();
