@@ -12,6 +12,7 @@ on:
 
 env:
   IMAGE_NAME: reactor-only
+  VERSION: 0.1.0
 
 jobs:
   # Push image to GitHub Packages.
@@ -39,12 +40,14 @@ jobs:
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "$default-branch" ] && VERSION=latest
+          # [ "$VERSION" == "$default-branch" ] && VERSION=latest
+          echo IMAGE_NAME=$IMAGE_NAME
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
+          echo DOCKER_USER=${{secrets.DOCKER_USER}}
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
