@@ -6,14 +6,12 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/felipegutierrez/explore-spring)
 
 # Explore Spring Framework
-
 Exploring Spring framework version 2.4.3 with [projectreactor](https://projectreactor.io/) and JDK 11.
 
-### Modules
-
+### Modules to explore projects
 - [Spring basics](spring-basics)
 - [Spring web](spring-web)
-- [Exploring reactor project](reactor-only)
+- [Reactor project](reactor-only) [![Docker reactor-only project](https://github.com/felipegutierrez/explore-spring/actions/workflows/docker-publish-reactor-only.yml/badge.svg)](https://github.com/felipegutierrez/explore-spring/actions/workflows/docker-publish-reactor-only.yml) ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/felipeogutierrez/reactor-only)
 - [Spring reactive web server](spring-web-react)
 - [Spring reactive web client](spring-web-react-client)
 - [Spring with Kafka producer](spring-kafka-library-producer)
