@@ -7,8 +7,8 @@ on:
       - main
 
     # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
+      # tags:
+      # - v*
 
 env:
   IMAGE_NAME: reactor-only
@@ -19,27 +19,33 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/
   push:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    # if: github.event_name == 'push'
 
     steps:
       - uses: actions/checkout@v2
+
+      # - name: Log into registry
+        # run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
       - name: Build image
         working-directory: reactor-only
         run: |
           ./gradlew jar docker
           # docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
-
-      - name: Log into registry
-        working-directory: reactor-only
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          docker build . --file Dockerfile --tag felipeogutierrez/reactor-only:0.1.0
 
       - name: Push image
         working-directory: reactor-only
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          # IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
           # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
           # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Strip "v" prefix from tag name
@@ -51,6 +57,5 @@ jobs:
           echo VERSION=$VERSION
           echo DOCKER_USER=${{secrets.DOCKER_USER}}
           # docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker build . --file Dockerfile --tag felipeogutierrez/reactor-only:0.1.0
           docker push felipeogutierrez/reactor-only:0.1.0
           # docker push ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
