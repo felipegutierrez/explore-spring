@@ -26,8 +26,9 @@ jobs:
 
       - name: Build image
         working-directory: reactor-only
-        # run: docker build . --file Dockerfile --tag $IMAGE_NAME
-        run: ./gradlew jar docker
+        run: |
+          ./gradlew jar docker
+          docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
 
       - name: Log into registry
         working-directory: reactor-only
@@ -42,7 +43,7 @@ jobs:
           # Strip git ref prefix from version
           # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
           # [ "$VERSION" == "$default-branch" ] && VERSION=latest
           echo IMAGE_NAME=$IMAGE_NAME
