@@ -51,4 +51,4 @@ jobs:
           echo VERSION=$VERSION
           echo DOCKER_USER=${{secrets.DOCKER_USER}}
           # docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push ${{secrets.DOCKER_USER}}/$IMAGE_ID:$VERSION
+          docker push ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
