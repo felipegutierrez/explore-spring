@@ -28,7 +28,7 @@ jobs:
         working-directory: reactor-only
         run: |
           ./gradlew jar docker
-          docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
+          # docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
 
       - name: Log into registry
         working-directory: reactor-only
@@ -51,4 +51,6 @@ jobs:
           echo VERSION=$VERSION
           echo DOCKER_USER=${{secrets.DOCKER_USER}}
           # docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
+          docker build . --file Dockerfile --tag felipeogutierrez/reactor-only:0.1.0
+          docker push felipeogutierrez/reactor-only:0.1.0
+          # docker push ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
