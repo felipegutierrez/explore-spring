@@ -16,7 +16,7 @@
             <ul class="navbar">
                 <li><a href="">home</a></li>
                 <li><a href="">login</a></li>
-                <li><a href=""">search</a></li>
+                <li><a href="/goToSearch">search</a></li>
                 <li><a href="">linkedin</a></li>
             </ul><!-- navbar -->
         </div><!-- container nav-elements -->
