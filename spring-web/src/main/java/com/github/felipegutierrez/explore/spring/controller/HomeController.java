@@ -9,6 +9,7 @@ public class HomeController {
     @GetMapping("/home")
     public String goHome() {
         System.out.println("in home controller");
+        System.out.println("Thread from the servlet container: " + Thread.currentThread().getName());
         return "index";
     }
 
