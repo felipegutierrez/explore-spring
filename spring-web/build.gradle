@@ -41,6 +41,14 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-runner:1.7.1")
 }
 
+bootWar {
+    enabled = false
+}
+
+war {
+    enabled = true
+}
+
 test {
     useJUnitPlatform()
     testLogging {
