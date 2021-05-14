@@ -40,7 +40,7 @@
 	<section id="registration" class="section">
 	 <div class="container tagline">
 	 <em>Register User</em><br/>
-    		 <form method="post" action="#" >
+    		 <form method="post" action="#" modelAttribute="newuser" >
     			<label>Username</label> <input name="username" type="text" /><br/>
     			<label>Password</label> <input name="password" type="password" /><br/>
     			<label>First Name</label> <input name="firstName" type="text" /><br/>
