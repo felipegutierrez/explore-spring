@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -40,25 +41,21 @@
 	<section id="registration" class="section">
 	 <div class="container tagline">
 	 <em>Register User</em><br/>
-    		 <form method="post" action="#" modelAttribute="newuser" >
-    			<label>Username</label> <input name="username" type="text" /><br/>
-    			<label>Password</label> <input name="password" type="password" /><br/>
-    			<label>First Name</label> <input name="firstName" type="text" /><br/>
-    			<label>Last Name</label> <input name="lastName" type="text" /><br/>
+    		 <form:form method="post" action="/registeruser" modelAttribute="newuser">
+    			<label>Username</label> <form:input path="username" type="text" /><br/>
+    			<label>Password</label> <form:input path="password" type="password" /><br/>
+    			<label>First Name</label> <form:input path="firstName" type="text" /><br/>
+    			<label>Last Name</label> <form:input path="lastName" type="text" /><br/>
     			<label>What do you want to do? </label> 
-				<input type="radio" name="activity" id="activity" value="Playing a sport">Play a Sport?
-				<input type="radio" name="activity" id="activity" value="Exercise in Gym">Hit the Gym?<br/>
+				<form:radiobutton path="activity" id="activity" value="sport"/>Play a Sport?
+				<form:radiobutton path="activity" id="activity" value="gym"/>Hit the Gym?<br/>
     			<label>Date of birth</label>
-    			<input name="dateOfBirth" type="date" /><br/>
+    			<form:input path="dateOfBirth" type="date" /><br/>
     			<label>Gender</label>
-    			<select>
-					<option value="Male">Male</option>
-					<option value="Female">Female</option>
-					<option value="Other">Other</option>
-			
-				</select><br/>
+    			<form:select path="gender" items="${genderItems}"/>
+    			<br/>
     			<input type="submit" value="Submit" id="submit">
-    		</form>
+    		</form:form>
 		</div>
 	</section>
 	<footer class="footer">
