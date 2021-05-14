@@ -1,4 +1,4 @@
-package com.github.felipegutierrez.explore.spring;
+package com.github.felipegutierrez.explore.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

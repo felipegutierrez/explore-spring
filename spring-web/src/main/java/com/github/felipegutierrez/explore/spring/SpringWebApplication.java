@@ -1,5 +1,6 @@
 package com.github.felipegutierrez.explore.spring;
 
+import com.github.felipegutierrez.explore.spring.config.ApplicationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
