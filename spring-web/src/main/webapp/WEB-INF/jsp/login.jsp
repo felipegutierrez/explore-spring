@@ -33,7 +33,7 @@
    	<section id="login" class="section">
 		<div class="container tagline">
 			<em>LOGIN USER</em>
-			<form action="#" method="post" >
+			<form action="/login" method="post" modelAttribute="login">
 				<label>Username</label> <input type="text" name="username"/><br />
 			    <label>Password</label> <input type="password" name="password"/><br />
 			     <input type="submit" value="Login">
