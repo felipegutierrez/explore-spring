@@ -1,10 +1,11 @@
 package com.github.felipegutierrez.explore.spring;
 
-import com.github.felipegutierrez.explore.spring.config.ApplicationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -15,7 +16,7 @@ import javax.servlet.ServletRegistration;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class SpringWebApplication {
+public class SpringWebApplication extends SpringBootServletInitializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringWebApplication.class);
 
@@ -33,6 +34,11 @@ public class SpringWebApplication {
         Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(name ->
                 LOGGER.info(name)
         );
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(SpringWebApplication.class);
     }
 
     // @Override
