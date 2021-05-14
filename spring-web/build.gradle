@@ -5,6 +5,7 @@ plugins {
     id 'war'
     id 'org.springframework.boot' version '2.4.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'application'
 }
 
 description = "spring-web"
@@ -35,19 +36,21 @@ dependencies {
     compileOnly ("javax.servlet.jsp:jsp-api:2.2")
     implementation ("javax.servlet:jstl:1.2")
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    // Tomcat
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper:10.0.6'
+
     implementation("org.springframework.data:spring-data-rest-hal-browser:3.3.7.RELEASE")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework:spring-test:5.3.4")
     testImplementation("org.junit.platform:junit-platform-runner:1.7.1")
 }
 
-bootWar {
-    enabled = false
-}
-
-war {
-    enabled = true
-}
+bootWar { enabled = false }
+war { enabled = true }
 
 test {
     useJUnitPlatform()

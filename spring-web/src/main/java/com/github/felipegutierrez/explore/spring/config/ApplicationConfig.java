@@ -16,7 +16,7 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         // mapping the css and images
         registry.addResourceHandler("css/**", "images/**")
-                .addResourceLocations("classpath:/css/", "classpath:/images/");
+                .addResourceLocations("classpath:/static/css/", "classpath:/static/images/");
     }
 
     @Bean
