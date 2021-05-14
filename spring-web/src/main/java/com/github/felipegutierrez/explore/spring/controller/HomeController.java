@@ -11,4 +11,10 @@ public class HomeController {
         System.out.println("in home controller");
         return "index";
     }
+
+    @GetMapping("/goToSearch")
+    public String goToSearch(){
+        System.out.println("going to search page");
+        return "search";
+    }
 }
