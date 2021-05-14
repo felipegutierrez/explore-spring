@@ -51,7 +51,9 @@
 				<form:radiobutton path="activity" id="activity" value="gym"/>Hit the Gym?
 				<form:errors path="activity" cssClass="error"/><br/>
     			<label>Date of birth</label>
-    			<form:input path="dateOfBirth" type="date" /><br/>
+    			<form:input path="dateOfBirth" type="date" />
+    			<form:errors path="dateOfBirth" cssClass="error"/>
+    			<br/>
     			<label>Gender</label>
     			<form:select path="gender" items="${genderItems}"/>
     			<br/>
