@@ -18,8 +18,8 @@
 				</div>
 				<!-- branding -->
 				<ul class="navbar">
-					<li><a href="">home</a></li>
-					<li><a href="">search</a></li>
+					<li><a href="/home">home</a></li>
+					<li><a href="/goToSearch">search</a></li>
 					<li><a href="">linkedIn</a></li>
 
 				</ul>
