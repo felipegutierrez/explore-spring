@@ -43,8 +43,8 @@ public class SearchController {
     }
 
     /** Handling exception asynchronously with org.springframework.web.context.request.async.DeferredResult */
-    @GetMapping("/search")
-    public DeferredResult<String> search(@RequestParam("search") String search, Model model, HttpServletRequest request) {
+    @GetMapping("/search/deferred")
+    public DeferredResult<String> searchDeferred(@RequestParam("search") String search, Model model, HttpServletRequest request) {
         DeferredResult<String> deferredResult = new DeferredResult<>();
         System.out.println("in search controller");
         System.out.println("search criteria: " + search);
@@ -64,5 +64,19 @@ public class SearchController {
             deferredResult.setResult("search");
         });
         return deferredResult;
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("search") String search, Model model, HttpServletRequest request) {
+        System.out.println("in search controller");
+        System.out.println("search criteria: " + search);
+        System.out.println("Async supported in application: " + request.isAsyncSupported());
+        System.out.println("Thread from the servlet container: " + Thread.currentThread().getName());
+
+        System.out.println("Thread from the spring mvc task executor: " + Thread.currentThread().getName());
+        List<Product> products = new ArrayList<>();
+        products = productRepository.searchByName(search);
+        model.addAttribute("products", products);
+        return "search";
     }
 }
