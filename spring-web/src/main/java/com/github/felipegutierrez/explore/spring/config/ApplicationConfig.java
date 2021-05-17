@@ -56,17 +56,17 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
         return threadPoolTaskExecutor;
     }
 
-//    @Bean
-//    public XmlViewResolver xmlViewResolver() {
-//        XmlViewResolver viewResolver = new XmlViewResolver();
-//        viewResolver.setLocation(new ClassPathResource("views.xml"));
-//        return viewResolver;
-//    }
-
     @Bean
+    public XmlViewResolver xmlViewResolver() {
+        XmlViewResolver viewResolver = new XmlViewResolver();
+        viewResolver.setLocation(new ClassPathResource("views.xml"));
+        return viewResolver;
+    }
+
+    /*@Bean
     public ResourceBundleViewResolver resourceBundleViewResolver(){
         ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
         viewResolver.setBasename("views");
         return viewResolver;
-    }
+    }*/
 }
