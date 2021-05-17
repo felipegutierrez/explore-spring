@@ -25,9 +25,8 @@ public class SearchController {
     private AsyncTaskExecutor taskExecutor;
 
     /** Handling exception asynchronously with java.util.concurrent.Callable */
-    /*
-    @GetMapping("/search")
-    public Callable<String> search(@RequestParam("search") String search, Model model, HttpServletRequest request) {
+    @GetMapping("/search/callable")
+    public Callable<String> searchCallable(@RequestParam("search") String search, Model model, HttpServletRequest request) {
         System.out.println("in search controller");
         System.out.println("search criteria: " + search);
         System.out.println("async enabled: " + request.isAsyncSupported());
@@ -42,7 +41,6 @@ public class SearchController {
             return "search";
         };
     }
-     */
 
     /** Handling exception asynchronously with org.springframework.web.context.request.async.DeferredResult */
     @GetMapping("/search")
