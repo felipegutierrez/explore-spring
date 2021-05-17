@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+    <bean id="index" class="org.springframework.web.servlet.view.JstlView">
+        <property name="url" value="/WEB-INF/jsp/index.jsp"/>
+    </bean>
+
+    <bean id="search" class="org.springframework.web.servlet.view.JstlView">
+        <property name="url" value="/WEB-INF/jsp/search.jsp"/>
+    </bean>
+
+    <bean id="register" class="org.springframework.web.servlet.view.JstlView">
+        <property name="url" value="/WEB-INF/jsp/register.jsp"/>
+    </bean>
+
+    <bean id="login" class="org.springframework.web.servlet.view.JstlView">
+        <property name="url" value="/WEB-INF/jsp/login.jsp"/>
+    </bean>
+</beans>
