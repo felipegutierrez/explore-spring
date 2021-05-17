@@ -26,15 +26,16 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/static/css/", "classpath:/static/images/");
     }
 
-    @Bean
-    public InternalResourceViewResolver jspViewResolver() {
-        System.out.println("Loading WEB-INF ...");
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/jsp/");
-        viewResolver.setSuffix(".jsp");
-        viewResolver.setViewClass(JstlView.class);
-        return viewResolver;
-    }
+//    using the XmlViewResolver
+//    @Bean
+//    public InternalResourceViewResolver jspViewResolver() {
+//        System.out.println("Loading WEB-INF ...");
+//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//        viewResolver.setPrefix("/WEB-INF/jsp/");
+//        viewResolver.setSuffix(".jsp");
+//        viewResolver.setViewClass(JstlView.class);
+//        return viewResolver;
+//    }
 
     @Override
     protected void addFormatters(FormatterRegistry registry) {
