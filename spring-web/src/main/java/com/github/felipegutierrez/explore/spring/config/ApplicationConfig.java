@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 import org.springframework.web.servlet.view.XmlViewResolver;
 
 @Configuration
@@ -55,10 +56,17 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
         return threadPoolTaskExecutor;
     }
 
+//    @Bean
+//    public XmlViewResolver xmlViewResolver() {
+//        XmlViewResolver viewResolver = new XmlViewResolver();
+//        viewResolver.setLocation(new ClassPathResource("views.xml"));
+//        return viewResolver;
+//    }
+
     @Bean
-    public XmlViewResolver xmlViewResolver() {
-        XmlViewResolver viewResolver = new XmlViewResolver();
-        viewResolver.setLocation(new ClassPathResource("views.xml"));
+    public ResourceBundleViewResolver resourceBundleViewResolver(){
+        ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
+        viewResolver.setBasename("views");
         return viewResolver;
     }
 }
