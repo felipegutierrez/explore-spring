@@ -15,10 +15,10 @@
                 <a href="#home"><img src="images/hpluslogo.svg" alt="Logo - H Plus Sports"></a>
             </div><!-- branding -->
             <ul class="navbar">
-                <li><a href="/home">home</a></li>
-                <li><a href="/goToLogin">login</a></li>
-                <li><a href="/goToSearch">search</a></li>
-                <li><a href="/redirectToLinkedIn">linkedin</a></li>
+                <li><a href="/home"><spring:message code="label.home"/></a></li>
+                <li><a href="/goToLogin"><spring:message code="label.login"/></a></li>
+                <li><a href="/goToSearch"><spring:message code="label.search"/></a></li>
+                <li><a href="/redirectToLinkedIn"><spring:message code="label.linkedin"/></a></li>
             </ul><!-- navbar -->
         </div><!-- container nav-elements -->
     </nav>
