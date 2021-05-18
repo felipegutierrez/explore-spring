@@ -16,6 +16,8 @@ import java.util.Arrays;
 @Configuration
 @PropertySource("classpath:application.properties")
 @ComponentScan({"com.github.felipegutierrez.explore.spring.basics.beans",
+        "com.github.felipegutierrez.explore.spring.controller",
+        "com.github.felipegutierrez.explore.spring.factory",
         "com.github.felipegutierrez.explore.spring.basics.dao",
         "com.github.felipegutierrez.explore.spring.basics.services"})
 public class ExploreSpringApplication {

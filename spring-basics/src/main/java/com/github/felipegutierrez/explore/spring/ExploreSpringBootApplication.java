@@ -15,7 +15,9 @@ import java.util.Arrays;
 @SpringBootApplication
 @ComponentScan({"com.github.felipegutierrez.explore.spring.basics.beans",
         "com.github.felipegutierrez.explore.spring.basics.services",
-        "com.github.felipegutierrez.explore.spring.basics.dao"})
+        "com.github.felipegutierrez.explore.spring.basics.dao",
+        "com.github.felipegutierrez.explore.spring.controller",
+        "com.github.felipegutierrez.explore.spring.factory"})
 public class ExploreSpringBootApplication {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ExploreSpringBootApplication.class);
