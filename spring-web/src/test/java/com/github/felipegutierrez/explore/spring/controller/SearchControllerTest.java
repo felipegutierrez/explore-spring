@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
@@ -32,39 +33,39 @@ class SearchControllerTest {
     @Test
     void searchCallable() throws Exception {
 
-        Product product = new Product().setId(1).setImagePath("path").setName("name");
-
         Mockito.when(productRepository.searchByName(any()))
-                .thenReturn(List.of(product));
+                .thenReturn(List.of(new Product().setId(1).setImagePath("path").setName("name")));
 
         MvcResult result = mockMvc.perform(get("/search/callable?search=water"))
+                .andExpect(MockMvcResultMatchers.request().asyncStarted())
+                .andDo(MvcResult::getAsyncResult)
                 .andExpect(status().isOk())
-                .andReturn()
-                ;
+                .andExpect(MockMvcResultMatchers.request().asyncResult("search"))
+                .andReturn();
     }
 
     @Test
     void searchDeferred() throws Exception {
-        Product product = new Product().setId(1).setImagePath("path").setName("name");
 
         Mockito.when(productRepository.searchByName(any()))
-                .thenReturn(List.of(product));
+                .thenReturn(List.of(new Product().setId(1).setImagePath("path").setName("name")));
 
         MvcResult result = mockMvc.perform(get("/search/deferred?search=water"))
+                .andExpect(MockMvcResultMatchers.request().asyncStarted())
+                .andDo(MvcResult::getAsyncResult)
                 .andExpect(status().isOk())
-                .andReturn()
-                ;
+                .andExpect(MockMvcResultMatchers.request().asyncResult("search"))
+                .andReturn();
     }
 
     @Test
     void search() throws Exception {
 
-        Product product = new Product().setId(1).setImagePath("path").setName("name");
-
         Mockito.when(productRepository.searchByName(any()))
-                .thenReturn(List.of(product));
+                .thenReturn(List.of(new Product().setId(1).setImagePath("path").setName("name")));
 
         MvcResult result = mockMvc.perform(get("/search?search=water"))
+                .andExpect(MockMvcResultMatchers.request().asyncNotStarted())
                 .andExpect(status().isOk())
                 .andReturn()
 //                .andExpect(new ResultMatcher() {
