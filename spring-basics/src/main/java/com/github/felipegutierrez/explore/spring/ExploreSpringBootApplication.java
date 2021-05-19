@@ -3,12 +3,16 @@ package com.github.felipegutierrez.explore.spring;
 import com.github.felipegutierrez.explore.spring.basics.dao.PersonDao;
 import com.github.felipegutierrez.explore.spring.basics.services.QuickSortAlgorithm;
 import com.github.felipegutierrez.explore.spring.basics.services.SomeCdiBusiness;
+import com.github.felipegutierrez.explore.spring.prototype.ProtoFalse;
+import com.github.felipegutierrez.explore.spring.prototype.ProtoTrue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Scope;
 
 import java.util.Arrays;
 
@@ -18,6 +22,7 @@ import java.util.Arrays;
         "com.github.felipegutierrez.explore.spring.basics.dao",
         "com.github.felipegutierrez.explore.spring.singleton",
         "com.github.felipegutierrez.explore.spring.controller",
+        "com.github.felipegutierrez.explore.spring.prototype",
         "com.github.felipegutierrez.explore.spring.factory"})
 public class ExploreSpringBootApplication {
 
@@ -43,5 +48,16 @@ public class ExploreSpringBootApplication {
             SomeCdiBusiness someCdiBusiness = applicationContext.getBean(SomeCdiBusiness.class);
             LOGGER.info("using CDI instead of Spring annotations: {}, DAO: {}", someCdiBusiness, someCdiBusiness.getPersonCdiDao());
         }
+    }
+
+    @Bean
+    public ProtoFalse protoFalse(){
+        return new ProtoFalse();
+    }
+
+    @Bean
+    @Scope("prototype")
+    public ProtoTrue protoTrue(){
+        return new ProtoTrue();
     }
 }

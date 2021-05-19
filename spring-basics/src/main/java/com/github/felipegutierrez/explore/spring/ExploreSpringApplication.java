@@ -19,6 +19,7 @@ import java.util.Arrays;
         "com.github.felipegutierrez.explore.spring.controller",
         "com.github.felipegutierrez.explore.spring.factory",
         "com.github.felipegutierrez.explore.spring.singleton",
+        "com.github.felipegutierrez.explore.spring.prototype",
         "com.github.felipegutierrez.explore.spring.basics.dao",
         "com.github.felipegutierrez.explore.spring.basics.services"})
 public class ExploreSpringApplication {
