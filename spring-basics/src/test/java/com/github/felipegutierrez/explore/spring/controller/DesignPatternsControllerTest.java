@@ -11,6 +11,7 @@ import org.springframework.web.util.NestedServletException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,7 +39,7 @@ class DesignPatternsControllerTest {
     }
 
     @Test
-    void adoptPet_Exception() throws Exception {
+    void adoptPet_Exception() {
 
         Exception exception = assertThrows(NestedServletException.class, () -> {
             mockMvc.perform(post("/adoptPet/mouse/jerry"));
@@ -48,5 +49,13 @@ class DesignPatternsControllerTest {
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void getPresidents() throws Exception {
+        mockMvc.perform(get("/presidents"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.is("[{\"firstName\":\"George\",\"lastName\":\"Washington\",\"emailAddress\":null},{\"firstName\":\"John\",\"lastName\":\"Adams\",\"emailAddress\":null},{\"firstName\":\"Thomas\",\"lastName\":\"Jefferson\",\"emailAddress\":null}]")))
+                .andReturn();
     }
 }
