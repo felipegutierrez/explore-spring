@@ -18,6 +18,7 @@ import java.util.Arrays;
 @ComponentScan({"com.github.felipegutierrez.explore.spring.basics.beans",
         "com.github.felipegutierrez.explore.spring.controller",
         "com.github.felipegutierrez.explore.spring.factory",
+        "com.github.felipegutierrez.explore.spring.adapter",
         "com.github.felipegutierrez.explore.spring.singleton",
         "com.github.felipegutierrez.explore.spring.prototype",
         "com.github.felipegutierrez.explore.spring.basics.dao",
