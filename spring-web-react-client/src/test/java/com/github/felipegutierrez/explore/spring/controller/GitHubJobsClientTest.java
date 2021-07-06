@@ -16,9 +16,10 @@ class GitHubJobsClientTest {
     GitHubJobsClient gitHubJobsClient = new GitHubJobsClient(webClient);
 
     @Test
+    @Disabled("GitHub Jobs is deprecated! New jobs will not be posted from May 19, 2021. It will shut down entirely on August 19, 2021.")
     void invokeGithubJobsApi() {
         int pageNum = 1;
-        String description = "Java";
+        String description = "java";
 
         List<GitHubPosition> gitHubPositionList = gitHubJobsClient
                 .invokeGithubJobsApi(pageNum, description);
@@ -31,9 +32,8 @@ class GitHubJobsClientTest {
         gitHubPositionList.forEach(Assertions::assertNotNull);
     }
 
-    // @DisabledIfEnvironmentVariable(named = "ENV", matches = "ci")
     @Test
-    @Disabled
+    @Disabled("GitHub Jobs is deprecated! New jobs will not be posted from May 19, 2021. It will shut down entirely on August 19, 2021.")
     void testInvokeGithubJobsApi() {
         List<Integer> pageNumbers = List.of(1, 2, 3);
         String description = "Java";
@@ -50,6 +50,7 @@ class GitHubJobsClientTest {
     }
 
     @Test
+    @Disabled("GitHub Jobs is deprecated! New jobs will not be posted from May 19, 2021. It will shut down entirely on August 19, 2021.")
     void invokeGithubJobsApiAsync() {
         List<Integer> pageNumbers = List.of(1, 2, 3);
         String description = "Java";
@@ -65,9 +66,8 @@ class GitHubJobsClientTest {
         gitHubPositionList.forEach(Assertions::assertNotNull);
     }
 
-    // @DisabledIfEnvironmentVariable(named = "ENV", matches = "ci")
     @Test
-    @Disabled
+    @Disabled("GitHub Jobs is deprecated! New jobs will not be posted from May 19, 2021. It will shut down entirely on August 19, 2021.")
     void invokeGithubJobsApiAsyncAllCompletableFuture() {
 
         List<Integer> pageNumbers = List.of(1, 2, 3);
