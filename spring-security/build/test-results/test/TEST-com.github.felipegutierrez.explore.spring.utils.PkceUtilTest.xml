@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.felipegutierrez.explore.spring.utils.PkceUtilTest" tests="3" skipped="1" failures="0" errors="0" timestamp="2021-07-06T16:03:55" hostname="alreadytaken" time="0.037">
+  <properties/>
+  <testcase name="generateCodeVerifier()" classname="com.github.felipegutierrez.explore.spring.utils.PkceUtilTest" time="0.032"/>
+  <testcase name="generateCodeChallenge()" classname="com.github.felipegutierrez.explore.spring.utils.PkceUtilTest" time="0.002"/>
+  <testcase name="validateCodeChallenge()" classname="com.github.felipegutierrez.explore.spring.utils.PkceUtilTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[_rXbE8A5_j38Eo01NkfFvBpGib9Lj6dVEQYdnYAp7oY
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

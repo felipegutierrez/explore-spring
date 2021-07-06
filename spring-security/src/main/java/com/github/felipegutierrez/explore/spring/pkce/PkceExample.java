@@ -9,14 +9,14 @@ import java.util.logging.Logger;
 
 public class PkceExample {
 
-    public static void main(String[] args) {
+    public void run() {
         try {
             PkceUtil pkce = new PkceUtil();
 
             String codeVerifier = pkce.generateCodeVerifier();
             System.out.println("Code verifier: " + codeVerifier);
 
-            String codeChallenge = pkce.generateCodeChallange(codeVerifier);
+            String codeChallenge = pkce.generateCodeChallenge(codeVerifier);
             System.out.println("Code challenge: " + codeChallenge);
 
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {

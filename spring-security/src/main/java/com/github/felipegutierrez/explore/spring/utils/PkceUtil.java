@@ -16,7 +16,7 @@ public class PkceUtil {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
     }
 
-    public String generateCodeChallange(String codeVerifier) throws UnsupportedEncodingException,
+    public String generateCodeChallenge(String codeVerifier) throws UnsupportedEncodingException,
             NoSuchAlgorithmException {
         byte[] bytes = codeVerifier.getBytes(StandardCharsets.US_ASCII);
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
