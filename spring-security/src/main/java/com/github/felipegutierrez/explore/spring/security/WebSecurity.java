@@ -48,7 +48,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .oauth2ResourceServer()
                 .jwt()
                 /** register the JWT authentication converter */
-                .jwtAuthenticationConverter(jwtAuthenticationConverter)
+               .jwtAuthenticationConverter(jwtAuthenticationConverter)
         ;
     }
 }
