@@ -10,4 +10,5 @@ include(":spring-kafka-library-consumer")
 include(":spring-kafka-stream")
 include(":reactor-only")
 include(":spring-security")
+include(":spring-gateway")
 
