@@ -17,6 +17,12 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
+/**
+ * References:
+ *
+ * https://mromeh.com/2019/12/26/spring-cloud-gateway-with-resilience4j-circuit-breaker/
+ * https://github.com/Romeh/spring-cloud-gateway-resilience4j
+ */
 @Service
 public class BookService {
 
