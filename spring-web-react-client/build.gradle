@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'jacoco'
 	id 'idea' // optional (to generate IntelliJ IDEA project files)
-	id 'org.springframework.boot' version '2.5.2'
+	id 'org.springframework.boot' version '2.5.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
@@ -21,8 +21,13 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "2020.0.3")
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 
 	// security oauth-2.0
 	implementation "org.springframework.boot:spring-boot-starter-security"
@@ -44,8 +49,16 @@ dependencies {
 	// swagger
 	compile 'io.springfox:springfox-boot-starter:3.0.0'
 
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 test {
