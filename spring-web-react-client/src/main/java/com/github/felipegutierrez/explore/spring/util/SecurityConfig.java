@@ -3,16 +3,16 @@ package com.github.felipegutierrez.explore.spring.util;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProvider;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProviderBuilder;
-import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.DefaultReactiveOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
-import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
-import org.springframework.security.web.server.SecurityWebFilterChain;
+//import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+//import org.springframework.security.config.web.server.ServerHttpSecurity;
+//import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager;
+//import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProvider;
+//import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientProviderBuilder;
+//import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
+//import org.springframework.security.oauth2.client.web.DefaultReactiveOAuth2AuthorizedClientManager;
+//import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
+//import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
+//import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -22,7 +22,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 // @EnableWebFluxSecurity
 public class SecurityConfig {
 
-    @Bean
+    /*@Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http.csrf().disable()
                 .formLogin().disable()
@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .oauth2Client();
 
         return http.build();
-    }
+    }*/
 
     /*@Bean
     public WebClientHttpRoutingFilter webClientHttpRoutingFilter(
@@ -41,7 +41,7 @@ public class SecurityConfig {
         return new WebClientHttpRoutingFilter(webClient, headerFilters);
     }*/
 
-    @Bean
+    /*@Bean
     public WebClient webClient(
             @Qualifier("reactiveOAuth2AuthorizedClientManager")
                     ReactiveOAuth2AuthorizedClientManager reactiveOAuth2AuthorizedClientManager) {
@@ -56,9 +56,9 @@ public class SecurityConfig {
         return WebClient.builder()
                 .filter(oauth)
                 .build();
-    }
+    }*/
 
-    @Bean
+    /*@Bean
     public ReactiveOAuth2AuthorizedClientManager reactiveOAuth2AuthorizedClientManager(
             ReactiveClientRegistrationRepository clientRegistrationRepository,
             ServerOAuth2AuthorizedClientRepository authorizedClientRepository) {
@@ -74,5 +74,5 @@ public class SecurityConfig {
         authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
 
         return authorizedClientManager;
-    }
+    }*/
 }
