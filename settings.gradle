@@ -11,4 +11,5 @@ include(":spring-kafka-stream")
 include(":reactor-only")
 include(":spring-security")
 include(":spring-gateway")
+include(":resilience4j-only")
 
