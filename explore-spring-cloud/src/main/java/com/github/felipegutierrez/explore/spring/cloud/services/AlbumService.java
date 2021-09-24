@@ -17,15 +17,22 @@ public class AlbumService {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    @Autowired
     private CircuitBreakerFactory circuitBreakerFactory;
+
+    private CircuitBreaker circuitBreaker;
+
+    @Autowired
+    public AlbumService(CircuitBreakerFactory circuitBreakerFactory) {
+        this.circuitBreakerFactory = circuitBreakerFactory;
+        this.circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
+    }
 
     public String getAlbumList() {
         return getAlbumList("https://jsonplaceholder.typicode.com/albums");
     }
 
     public String getAlbumList(String url) {
-        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
+        // CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
 
         return circuitBreaker.run(() -> restTemplate.getForObject(url, String.class),
                 throwable -> getDefaultAlbumList());
