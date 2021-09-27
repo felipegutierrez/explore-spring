@@ -2,6 +2,7 @@ package com.github.felipegutierrez.explore.spring.cloud.utils;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
+import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
@@ -62,6 +63,5 @@ public class CircuitBreakerGlobalConfig {
                         .timeLimiterConfig(timeLimiterConfig).build(),
                 "circuitBreaker1", "circuitBreaker2", "circuitBreaker3");
     }
-
 }
 

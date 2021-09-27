@@ -7,6 +7,8 @@ plugins {
 group = 'explore-spring-cloud'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+def jerseyVersion = '2.35'
+def reactorVersion = '3.4.5'
 
 configurations {
     compileOnly {
@@ -24,11 +26,23 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.cloud:spring-cloud-loadbalancer'
+    implementation 'org.springframework.cloud:spring-cloud-circuitbreaker-resilience4j'
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
+    implementation "io.projectreactor.addons:reactor-adapter:${reactorVersion}"
+
+    // implementation "org.glassfish.jersey.core:jersey-client:${jerseyVersion}"
+    implementation "org.glassfish.jersey.inject:jersey-hk2:${jerseyVersion}"
+    implementation "org.glassfish.jersey.ext.rx:jersey-rx-client-rxjava:${jerseyVersion}"
+    // implementation "org.glassfish.jersey.ext.rx:jersey-rx-client-rxjava2:${jerseyVersion}"
+    // implementation "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
