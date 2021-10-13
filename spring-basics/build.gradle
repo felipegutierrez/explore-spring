@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'idea' // optional (to generate IntelliJ IDEA project files)
-    id 'org.springframework.boot' version '2.4.4'
+    id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
@@ -22,12 +22,14 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation ("org.springframework.boot:spring-boot-starter-web")
-    implementation ("org.springframework.boot:spring-boot-devtools")
-    implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation('org.springframework.boot:spring-boot-starter')
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-devtools")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE")
+    compile("org.springframework.plugin:spring-plugin-metadata:2.0.0.RELEASE")
 
-    implementation ("com.h2database:h2")
+    implementation("com.h2database:h2")
     implementation("javax.inject:javax.inject:1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
