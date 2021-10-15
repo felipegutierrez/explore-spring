@@ -17,4 +17,12 @@ public class ConferenceUser {
     private List<String> submissions;
     private boolean speaker;
     private boolean admin;
+
+    public ConferenceUser(ConferenceUser user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.submissions = user.getSubmissions();
+        this.speaker = user.isSpeaker();
+        this.admin = user.isAdmin();
+    }
 }
