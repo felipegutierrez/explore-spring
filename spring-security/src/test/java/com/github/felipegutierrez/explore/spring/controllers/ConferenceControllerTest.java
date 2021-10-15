@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,4 +42,5 @@ class ConferenceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Join us online September 1–2!"));
     }
+
 }
