@@ -1,18 +1,18 @@
 package com.github.felipegutierrez.explore.spring.services;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.github.felipegutierrez.explore.spring.domain.ConferenceUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class ConferenceUserService {
-    final static class ConferenceUserDetails extends ConferenceUser implements UserDetails {
+import java.util.Collection;
+import java.util.List;
 
-        ConferenceUserDetails(ConferenceUser user) {
+public class ConferenceUserService {
+    public final static class ConferenceUserDetails extends ConferenceUser implements UserDetails {
+
+        public ConferenceUserDetails(ConferenceUser user) {
             super(user);
         }
 

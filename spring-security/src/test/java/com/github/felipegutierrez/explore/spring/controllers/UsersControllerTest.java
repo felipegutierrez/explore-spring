@@ -25,10 +25,5 @@ class UsersControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    @Test
-    public void greetingWhenUnauthenticatedUserReturns401() throws Exception {
-        this.mockMvc.perform(get("/greeting"))
-                .andExpect(status().isUnauthorized());
-    }
 
 }

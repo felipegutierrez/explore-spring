@@ -2,11 +2,10 @@ package com.github.felipegutierrez.explore.spring.services;
 
 import com.github.felipegutierrez.explore.spring.domain.ConferenceUser;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.util.List;
 import java.util.Set;
-
-import org.springframework.security.core.authority.AuthorityUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
