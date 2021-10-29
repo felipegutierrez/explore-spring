@@ -1,1 +1,1 @@
-dynamodb.endpointURI: http://127.0.0.1:4566
+dynamodb.endpointURI: http://localhost:4566

@@ -33,8 +33,7 @@ public class DynamoDbDemo implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-        //return applicationArguments -> {
-        CreateTableRequest createTableRequest =
+        /*CreateTableRequest createTableRequest =
                 CreateTableRequest.builder()
                         .tableName("book")
                         .keySchema(KeySchemaElement.builder()
@@ -53,8 +52,7 @@ public class DynamoDbDemo implements ApplicationRunner {
         dynamoDbClient.createTable(createTableRequest);
         dynamoDbClient.listTables()
                 .tableNames()
-                .forEach(System.out::println);
-        //};
+                .forEach(System.out::println);*/
     }
 
     @Bean
