@@ -9,6 +9,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 def jerseyVersion = '2.35'
 def reactorVersion = '3.4.5'
+def adobeS3MockVersion = '2.2.2'
 
 configurations {
     compileOnly {
@@ -38,6 +39,11 @@ dependencies {
     // implementation "org.glassfish.jersey.ext.rx:jersey-rx-client-rxjava2:${jerseyVersion}"
     // implementation "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
 
+    // Amazon S3 mock for INT test
+    implementation "com.adobe.testing:s3mock:${adobeS3MockVersion}"
+    testImplementation "com.adobe.testing:s3mock-testcontainers:${adobeS3MockVersion}"
+    testImplementation "com.adobe.testing:s3mock-junit5:${adobeS3MockVersion}"
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -55,4 +61,7 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
