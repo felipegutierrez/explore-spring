@@ -10,6 +10,7 @@ sourceCompatibility = '11'
 def jerseyVersion = '2.35'
 def reactorVersion = '3.4.5'
 def adobeS3MockVersion = '2.2.2'
+def awssdkVersion = "2.17.69"
 
 configurations {
     compileOnly {
@@ -39,10 +40,16 @@ dependencies {
     // implementation "org.glassfish.jersey.ext.rx:jersey-rx-client-rxjava2:${jerseyVersion}"
     // implementation "org.glassfish.jersey.media:jersey-media-json-jackson:${jerseyVersion}"
 
-    // Amazon S3 mock for INT test
+    // Amazon awssdk
+    implementation "software.amazon.awssdk:dynamodb:${awssdkVersion}"
+    implementation "software.amazon.awssdk:s3:${awssdkVersion}"
+
+    // Amazon S3 mock for unit tests
     implementation "com.adobe.testing:s3mock:${adobeS3MockVersion}"
     testImplementation "com.adobe.testing:s3mock-testcontainers:${adobeS3MockVersion}"
     testImplementation "com.adobe.testing:s3mock-junit5:${adobeS3MockVersion}"
+
+    // localstack for INT tests
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
