@@ -44,7 +44,11 @@ dependencies {
 
     // Amazon awssdk
     implementation "software.amazon.awssdk:dynamodb:${awssdk2Version}"
-    implementation "software.amazon.awssdk:s3:${awssdk2Version}"
+    implementation ("software.amazon.awssdk:s3:${awssdk2Version}") {
+        exclude group: 'software.amazon.awssdk', module: 'netty-nio-client'
+        exclude group: 'software.amazon.awssdk', module: 'apache-client'
+    }
+    implementation "software.amazon.awssdk:aws-crt-client:2.17.71-PREVIEW"
 
     // Amazon S3 mock for unit tests
     implementation "com.adobe.testing:s3mock:${adobeS3MockVersion}"
@@ -54,7 +58,10 @@ dependencies {
     // localstack for INT tests
     testImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
     testImplementation "org.testcontainers:localstack:${testcontainersVersion}"
-    testImplementation "com.amazonaws:aws-java-sdk-core:${awssdk1Version}"
+    testImplementation ("com.amazonaws:aws-java-sdk-core:${awssdk1Version}") {
+        exclude group: 'software.amazon.awssdk', module: 'netty-nio-client'
+        exclude group: 'software.amazon.awssdk', module: 'apache-client'
+    }
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

@@ -1,18 +1,20 @@
 package com.github.felipegutierrez.explore.spring.cloud.aws;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import software.amazon.awssdk.core.SdkSystemSetting;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
+@DirtiesContext
 @SpringBootTest
-@Ignore("this test is under development")
 public class DynamoDbUtilServiceTest extends BaseIntegrationTest {
 
     @Autowired
@@ -20,6 +22,11 @@ public class DynamoDbUtilServiceTest extends BaseIntegrationTest {
 
     @Autowired
     private DynamoDbClient dynamoDbClient;
+
+    @BeforeAll
+    public static void setUp() {
+        System.setProperty(SdkSystemSetting.SYNC_HTTP_SERVICE_IMPL.property(), "software.amazon.awssdk.http.apache.ApacheSdkHttpService");
+    }
 
     @Test
     public void foo() {

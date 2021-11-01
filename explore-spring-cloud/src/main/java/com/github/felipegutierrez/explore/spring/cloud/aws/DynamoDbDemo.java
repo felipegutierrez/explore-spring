@@ -10,7 +10,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.dynamodb.model.*;
 import software.amazon.awssdk.services.s3.S3Client;
 
 /**
@@ -25,34 +24,15 @@ import software.amazon.awssdk.services.s3.S3Client;
 public class DynamoDbDemo implements ApplicationRunner {
 
     @Autowired
-    private DynamoDbClient dynamoDbClient;
+    private DynamoDbUtilService dynamoDbUtilService;
 
     public static void main(String[] args) {
         ConfigurableApplicationContext appContext = SpringApplication.run(DynamoDbDemo.class, args);
     }
 
     @Override
-    public void run(ApplicationArguments applicationArguments) throws Exception {
-        /*CreateTableRequest createTableRequest =
-                CreateTableRequest.builder()
-                        .tableName("book")
-                        .keySchema(KeySchemaElement.builder()
-                                .keyType(KeyType.HASH)
-                                .attributeName("id")
-                                .build())
-                        .attributeDefinitions(AttributeDefinition.builder()
-                                .attributeName("id")
-                                .attributeType(ScalarAttributeType.S)
-                                .build())
-                        .provisionedThroughput(ProvisionedThroughput.builder()
-                                .writeCapacityUnits(5L)
-                                .readCapacityUnits(5L)
-                                .build())
-                        .build();
-        dynamoDbClient.createTable(createTableRequest);
-        dynamoDbClient.listTables()
-                .tableNames()
-                .forEach(System.out::println);*/
+    public void run(ApplicationArguments applicationArguments) {
+        dynamoDbUtilService.createDynamoDbTable("book_table_1");
     }
 
     @Bean
